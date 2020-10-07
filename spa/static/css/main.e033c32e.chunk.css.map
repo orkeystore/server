@@ -1,0 +1,1 @@
+{"version":3,"sources":["global.css"],"names":[],"mappings":"AAAA,MACI,gBAAiB,CACjB,eAAgB,CAChB,YAAa,CACb,qBACJ,CAEA,EACI,cACJ","file":"main.e033c32e.chunk.css","sourcesContent":["#root {\n    min-height: 100vh;\n    min-width: 100vh;\n    display: flex;\n    flex-direction: column;\n}\n\na {\n    cursor: pointer;\n}"]}

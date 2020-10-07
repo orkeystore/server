@@ -1,0 +1,10 @@
+#root {
+  min-height: 100vh;
+  min-width: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+a {
+  cursor: pointer;
+}
+/*# sourceMappingURL=main.e033c32e.chunk.css.map */

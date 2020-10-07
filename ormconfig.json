@@ -1,0 +1,7 @@
+{
+  "type": "sqlite",
+  "cli":{
+    "migrationsDir": "src/orm/migrations"
+  }
+}
+
