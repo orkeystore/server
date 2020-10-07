@@ -18,7 +18,7 @@
     "test": "env PASS_LONG_TASKS=1 ENV_FILE=.testing.env jest",
     "test:full": "env ENV_FILE=.testing.env jest",
     "test:watch": "env PASS_LONG_TASKS=1 jest --watch",
-    "test:cov": "jest --coverage",
+    "test:cov": "env ENV_FILE=.testing.env jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "env ENV_FILE=.testing.env TEST_DB=1 jest --config ./test/jest-e2e.json",
     "typeorm": "node --require ts-node/register ./npm install -g node_modules/typeorm/cli.js"

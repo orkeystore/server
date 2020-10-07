@@ -4,5 +4,5 @@ orbs:
 workflows:
   node-tests:
     jobs:
-      - node/test:
-          run-command: test:full
+      node/test:
+        run-command: test:full

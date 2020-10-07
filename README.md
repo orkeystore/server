@@ -1,5 +1,10 @@
 <h1 align="center">Orkeystore</h1>
 <p align="center">Out-of-the-box solution for crypto-keys management, storing and rotation.</p>
+<p align="center">
+    <img src="https://img.shields.io/circleci/build/gh/Porisey/orkeystore/master" />
+    <img src="https://img.shields.io/github/license/Porisey/orkeystore" />
+    <img src="https://img.shields.io/david/Porisey/orkeystore" />
+</p>
 
 ### Motivation
 
