@@ -4,6 +4,7 @@
     <img src="https://img.shields.io/circleci/build/gh/Porisey/orkeystore/master" />
     <img src="https://img.shields.io/github/license/Porisey/orkeystore" />
     <img src="https://img.shields.io/david/Porisey/orkeystore" />
+    <img src="https://img.shields.io/coveralls/github/Porisey/orkeystore" />
 </p>
 
 ### Motivation
