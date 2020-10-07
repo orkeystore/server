@@ -1,4 +1,5 @@
 import fs from 'fs';
+import path from 'path';
 import sqlite3 from 'sqlite3';
 import { SqliteConnectionOptions } from 'typeorm/driver/sqlite/SqliteConnectionOptions';
 import { ConfigService } from '@nestjs/config';
@@ -37,16 +38,16 @@ export class TypeORMConfig {
     }
   }
 
-  async createDB(path: string /* key: string */): Promise<void> {
+  async createDB(database: string /* key: string */): Promise<void> {
     return new Promise((resolve, reject) => {
       try {
         const { Database } = sqlite3.verbose();
 
         if (process.env.DATABASE_PATH !== ':memory:') {
-          fs.mkdirSync(process.env.DATABASE_PATH, { recursive: true });
+          fs.mkdirSync(path.dirname(database), { recursive: true });
         }
 
-        const db = new Database(`${path}`);
+        const db = new Database(`${database}`);
         /*
         if (process.env['SQLCIPHER'] === '1') {
           db.serialize(function() {
