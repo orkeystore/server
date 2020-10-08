@@ -117,8 +117,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint && pretty-quick --staged && env PASS_LONG_TASKS=1 npm run test",
-      "pre-push": "npm run test"
+      "pre-commit": "npm run lint && pretty-quick --staged && env PASS_LONG_TASKS=1 npm run test"
     }
   }
 }
