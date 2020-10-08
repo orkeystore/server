@@ -64,4 +64,13 @@ export class UtilsService {
   ): Promise<ValidationError[]> {
     return validate(plainToClass(DTO, data));
   }
+
+  static mapValidationErrorsToArray = (errors: ValidationError[]): string[] => {
+    return errors.reduce((result: string[], item) => {
+      for (const prop in item.constraints) {
+        result.push(item.constraints[prop]);
+      }
+      return result;
+    }, []);
+  };
 }

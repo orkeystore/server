@@ -24,6 +24,7 @@ import { DTODeleteAccount } from './dto/DTODeleteAccount';
 import { DTOSessionInfo } from './dto/DTOSessionInfo';
 import { plainToClass } from 'class-transformer';
 import { DTOAccountDetails } from './dto/DTOAccountDetails';
+import { DTODeletedAccounts } from './dto/DTODeletedAccounts';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -51,14 +52,16 @@ export class AuthController {
     @Body() _body: DTOAuthUser,
     @Req() req: Express.Request,
   ): Promise<DTOSessionInfo> {
-    return await this.getUserData(req);
+    const result = await this.getUserData(req);
+    return plainToClass(DTOSessionInfo, result);
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('/me')
   @ApiBearerAuth('Authorization')
   async userData(@Req() req: Express.Request): Promise<DTOSessionInfo> {
-    return await this.getUserData(req);
+    const result = await this.getUserData(req);
+    return plainToClass(DTOSessionInfo, result);
   }
 
   @UseGuards(JwtAuthAdminGuard)
@@ -68,22 +71,25 @@ export class AuthController {
     @Body() body: DTOCreateAccountParams,
   ): Promise<DTOAccountDetails> {
     const result = await this.authService.createAccount(body);
-
     return plainToClass(DTOAccountDetails, result);
   }
 
   @UseGuards(JwtAuthAdminGuard)
   @Delete('/accounts')
   @ApiBearerAuth('Authorization')
-  async deleteAccount(@Body() body: DTODeleteAccount): Promise<number[]> {
-    return await this.authService.removeAccounts(body.ids);
+  async deleteAccount(
+    @Body() body: DTODeleteAccount,
+  ): Promise<DTODeletedAccounts> {
+    const result = await this.authService.removeAccounts(body.ids);
+    return { ids: result };
   }
 
   @UseGuards(JwtAuthGuard)
   @Delete('/me')
   @ApiBearerAuth('Authorization')
-  async deleteMe(@Req() req: Express.Request): Promise<number[]> {
-    return await this.authService.removeAccounts([req.user.id]);
+  async deleteMe(@Req() req: Express.Request): Promise<DTODeletedAccounts> {
+    const result = await this.authService.removeAccounts([req.user.id]);
+    return { ids: result };
   }
 
   @UseGuards(JwtAuthAdminGuard)

@@ -4,11 +4,12 @@ import {
   INestApplication,
   LogLevel,
   NestApplicationOptions,
-  ValidationPipe,
 } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { NestFactory } from '@nestjs/core';
+import passport from 'passport';
 
 import { loadEnvConfig } from 'src/modules/config/env.config';
 import { KeysModule } from 'src/modules//keys/keys.module';
@@ -16,16 +17,15 @@ import {
   loadDbConnectionConfig,
   loadTestDbConnectionConfig,
 } from 'src/modules/config/db.config';
+import { initSwagger } from 'src/swagger';
 import { TypeORMConfig } from 'src/modules/config/orm.config';
 import { ReposModule } from 'src/modules/repos/repos.module';
 import { loadConstantsConfig } from 'src/modules/config/constants.config';
-import { UtilsModule } from './modules/utils/utils.module';
-import { NestFactory } from '@nestjs/core';
-import passport from 'passport';
-import { initSwagger } from './swagger';
-import { AuthModule } from './modules/auth/auth.module';
-import { LoggerModule } from './modules/logger/logger.module';
-import { AppLogger } from './modules/logger/logger.service';
+import { UtilsModule } from 'src/modules/utils/utils.module';
+import { AuthModule } from 'src/modules/auth/auth.module';
+import { LoggerModule } from 'src/modules/logger/logger.module';
+import { AppLogger } from 'src/modules/logger/logger.service';
+import { GlobalValidationPipe } from 'src/modules/utils/pipes/GlobalValidationPipe';
 
 export const resolveEnvConfigPath = (): string => {
   return process.env.ENV_FILE || '.env';
@@ -111,12 +111,7 @@ export const prepareApp = async (
   app: INestApplication,
 ): Promise<INestApplication> => {
   app.use(passport.initialize());
-  app.useGlobalPipes(
-    new ValidationPipe({
-      transform: true,
-      transformOptions: { enableImplicitConversion: true },
-    }),
-  );
+  app.useGlobalPipes(new GlobalValidationPipe());
 
   if (process.env.SWAGGER) {
     await initSwagger(app);
