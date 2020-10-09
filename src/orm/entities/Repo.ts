@@ -1,3 +1,4 @@
+import { IsNumber, IsOptional, IsString } from 'class-validator';
 import {
   Column,
   Entity,
@@ -18,18 +19,25 @@ import { Entry } from './Entry';
  */
 @Entity('repos')
 export class Repo {
+  @IsNumber()
   @PrimaryGeneratedColumn()
   id: number;
 
+  @IsString()
   @Column({ type: 'text', nullable: false })
   name: string;
 
+  @IsString()
+  @IsOptional()
   @Column({ type: 'text', nullable: true, unique: true })
   code: string;
 
+  @IsOptional()
+  @IsString()
   @Column({ type: 'text', nullable: true })
   description: string;
 
+  @IsString()
   @Column({
     nullable: false,
     name: 'access_code',
@@ -40,6 +48,7 @@ export class Repo {
   @JoinColumn({ name: 'account_id', referencedColumnName: 'id' })
   account: Account;
 
+  @IsNumber()
   @Column({ name: 'account_id' })
   @RelationId('account')
   accountId: number;

@@ -1,8 +1,9 @@
 import request from 'supertest';
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { DTOCreateKey } from 'src/modules/keys/dto/DTOCreateKey';
-import { Entry } from 'src/orm/entities/Entry';
 import { v4 as uuid } from 'uuid';
+import { DTOEntryDetails } from 'src/modules/keys/dto/DTOEntryDetails';
+import { plainToClass } from 'class-transformer';
 
 export const getItemsDTOCreateKey = (
   qtty = 1,
@@ -27,7 +28,7 @@ export const createKeysSet = async (
   app: INestApplication,
   items: DTOCreateKey[],
   token: string,
-): Promise<Omit<Entry, 'account'>[]> => {
+): Promise<DTOEntryDetails[]> => {
   return Promise.all(
     items.map(async (item) => {
       const res = await request(app.getHttpServer())
@@ -36,7 +37,7 @@ export const createKeysSet = async (
         .send(item)
         .expect(HttpStatus.CREATED);
 
-      return res.body as Omit<Entry, 'account'>;
+      return plainToClass(DTOEntryDetails, res.body);
     }),
   );
 };

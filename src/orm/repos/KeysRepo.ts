@@ -46,11 +46,16 @@ export class KeysRepo extends Repository<RSAKey> {
   async getStorage(
     pagination: IPagerParams,
     filter: IStorageFilter = {},
+    defaultPager: IPagerParams,
   ): Promise<[RSAKey[], Required<IPagerParams>]> {
     const findParams = this.prepareFilterParams(filter);
 
     const count = await this.count(findParams);
-    const pager = UtilsService.getOrmPagination(count, pagination);
+    const pager = UtilsService.getOrmPagination(
+      count,
+      defaultPager,
+      pagination,
+    );
 
     const items = await this.find({
       ...findParams,

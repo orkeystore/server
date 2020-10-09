@@ -1,5 +1,10 @@
-import { IAllKeyFormats } from 'src/modules/keys/services/keys.service';
+import { Type } from 'class-transformer';
+import { IsArray, ValidateNested } from 'class-validator';
+import { DTORepoBanchEntry } from './DTORepoBanchEntry';
 
 export class DTOReposBanchResponse {
-  entries: Required<IAllKeyFormats>[];
+  @IsArray()
+  @Type(() => DTORepoBanchEntry)
+  @ValidateNested()
+  entries: DTORepoBanchEntry[];
 }

@@ -8,17 +8,13 @@ import {
   Query,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-
+import { plainToClass } from 'class-transformer';
 import { JwtAuthGuard } from 'src/modules/auth/guards/jwt.guard';
-import { IPaged } from 'src/types';
+import { DTOAllKeysFormats } from './dto/DTOAllKeysFromats';
 import { DTOQueryKeysStorage } from './dto/DTOQueryKeysStorage';
+import { DTOStorageItems } from './dto/DTOStorageItems';
 import { EntriesService } from './services/entries.service';
-
-import {
-  KeysService,
-  IParsedKey,
-  IAllKeyFormats,
-} from './services/keys.service';
+import { KeysService } from './services/keys.service';
 
 @ApiTags('Keys')
 @Controller('key')
@@ -34,15 +30,15 @@ export class KeysController {
   async getKeybyEntry(
     @Req() req: Express.Request,
     @Param('entryId', ParseIntPipe) entryId: number,
-  ): Promise<IAllKeyFormats> {
+  ): Promise<DTOAllKeysFormats> {
     const entry = await this.entriesService.getEntryWithUserAccessCheck(
       entryId,
       req.user,
     );
 
     const [key] = await this.keysService.getActiveKeysSetByEntry(entry);
-
-    return this.keysService.getAllFormats(key, true);
+    const result = await this.keysService.getAllFormats(key, true);
+    return plainToClass(DTOAllKeysFormats, result);
   }
 
   @Get('storage')
@@ -51,12 +47,15 @@ export class KeysController {
   async getRSAKeysList(
     @Req() req: Express.Request,
     @Query() query: DTOQueryKeysStorage,
-  ): Promise<IPaged<IParsedKey>> {
+  ): Promise<DTOStorageItems> {
     const { page, perPage, search } = query;
-    return await this.keysService.getKeysList(
+
+    const result = await this.keysService.getKeysList(
       { page, perPage },
       { entryName: search, accountId: req.user.id },
     );
+
+    return plainToClass(DTOStorageItems, result);
   }
 
   @Get(':keyId')
@@ -65,10 +64,12 @@ export class KeysController {
   async getKey(
     @Req() req: Express.Request,
     @Param('keyId', ParseIntPipe) keyId: number,
-  ): Promise<IAllKeyFormats> {
+  ): Promise<DTOAllKeysFormats> {
     const key = await this.keysService.getKeyById(keyId, {
       userIdForCheck: req.user.id,
     });
-    return this.keysService.getAllFormats(key, true);
+    const result = await this.keysService.getAllFormats(key, true);
+
+    return plainToClass(DTOAllKeysFormats, result);
   }
 }

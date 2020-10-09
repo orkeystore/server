@@ -16,7 +16,6 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
 import { plainToClass } from 'class-transformer';
-import { IPaged } from 'src/types';
 import { JwtAuthGuard } from 'src/modules/auth/guards/jwt.guard';
 import { KeysService } from './services/keys.service';
 import { DTOCreateKey } from './dto/DTOCreateKey';
@@ -25,6 +24,8 @@ import { PublicEntriesController } from './public.controller';
 import { JwtOpionalGuard } from '../auth/guards/jwt-optional.guard';
 import { DTOEntryDetails } from './dto/DTOEntryDetails';
 import { DTOQueryEntriesList } from './dto/DTOQueryEntriesList';
+import { DTOEntriesList } from './dto/DTOEntriesList';
+import { DTOEntriesByIds } from './dto/DTOEntriesByIds';
 
 export class EntriesController extends PublicEntriesController {
   constructor(keysService: KeysService, entriesService: EntriesService) {
@@ -46,6 +47,7 @@ export class EntriesController extends PublicEntriesController {
       accountId: req.user.id,
       rotationPeriod: body.rotation,
     });
+
     return plainToClass(DTOEntryDetails, result);
   }
 
@@ -90,7 +92,7 @@ export class EntriesController extends PublicEntriesController {
   async getEntries(
     @Req() req: Express.Request,
     @Query() query: DTOQueryEntriesList,
-  ): Promise<IPaged<DTOEntryDetails>> {
+  ): Promise<DTOEntriesList> {
     const result = await this.entriesService.getEntriesList(
       req.user.id,
       {
@@ -101,8 +103,7 @@ export class EntriesController extends PublicEntriesController {
       query.archived === 1,
     );
 
-    result.items = plainToClass(DTOEntryDetails, result.items);
-    return result;
+    return plainToClass(DTOEntriesList, result);
   }
 
   @Get('byIds')
@@ -113,9 +114,9 @@ export class EntriesController extends PublicEntriesController {
     @Req() req: Express.Request,
     @Query('ids', new ParseArrayPipe({ items: Number, separator: ',' }))
     ids: number[],
-  ): Promise<{ items: DTOEntryDetails[] }> {
+  ): Promise<DTOEntriesByIds> {
     const items = await this.entriesService.getEntriesByIds(req.user.id, ids);
-    return { items: plainToClass(DTOEntryDetails, items) };
+    return plainToClass(DTOEntriesByIds, { items });
   }
 
   @Post('private/jwk/:keyId')
