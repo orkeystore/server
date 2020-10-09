@@ -1,23 +1,52 @@
+import { v4 as uuid } from 'uuid';
+import { plainToClass } from 'class-transformer';
+import request from 'supertest';
 import { HttpStatus, INestApplication } from '@nestjs/common';
+
+import { DTOEntryDetails } from 'src/modules/keys/dto/DTOEntryDetails';
+import { DTORepoDetails } from 'src/modules/repos/dto/DTORepoDetails';
 import { DTOReposBanchResponse } from 'src/modules/repos/dto/DTOReposBanchResponse';
 import { DTOReposCreateRequest } from 'src/modules/repos/dto/DTOReposCreateRequest';
 import { DTOReposRemoveRequest } from 'src/modules/repos/dto/DTOReposRemoveRequest';
-import { Entry } from 'src/orm/entities/Entry';
-import { Repo } from 'src/orm/entities/Repo';
-import { IPaged } from 'src/types';
-import request from 'supertest';
-import { prepareTestApp, getAdminToken, getSimpleToken } from './prepare';
+import { DTODeletedRepos } from 'src/modules/repos/dto/DTODeletedRepos';
+import { DTOReposList } from 'src/modules/repos/dto/DTOReposList';
 import { createKeysSet, getItemsDTOCreateKey } from './_.data.mock';
+import { prepareTestApp, getAdminToken, getSimpleToken } from './prepare';
+import { checkServerResponse } from './utils/checkServerResponse';
 
 describe('Repos module', () => {
-  let simpleAccountId: number;
   let app: INestApplication;
   let adminToken: string;
   let simpleToken: string;
-  let nonRotatableNonAdminKeys: Omit<Entry, 'account'>[];
-  let rotatableAdminKeys: Omit<Entry, 'account'>[];
-  let nonAdminRepo: Repo;
-  let adminRepo: Repo;
+  let nonRotatableNonAdminKeys: DTOEntryDetails[];
+  let rotatableAdminKeys: DTOEntryDetails[];
+
+  const createRepo = async (
+    keys: DTOReposCreateRequest['keys'],
+    opts: { isAdmin?: boolean } = {},
+  ): Promise<DTORepoDetails> => {
+    let repo: DTORepoDetails;
+
+    const payload: DTOReposCreateRequest = {
+      name: 'Test repo',
+      description: 'Test repo description',
+      code: uuid(),
+      accessToken: 'access_code_for_repo',
+      keys,
+    };
+
+    await request(app.getHttpServer())
+      .post('/repo/create')
+      .set('Authorization', `Bearer ${opts.isAdmin ? adminToken : simpleToken}`)
+      .send(payload)
+      .then(checkServerResponse(HttpStatus.CREATED, DTORepoDetails))
+      .then((res) => {
+        expect(res.status).toBe(HttpStatus.CREATED);
+        repo = plainToClass(DTORepoDetails, res.body);
+      });
+
+    return repo;
+  };
 
   beforeAll(async () => {
     app = await prepareTestApp();
@@ -26,7 +55,6 @@ describe('Repos module', () => {
     adminToken = await getAdminToken(app);
     const simple = await getSimpleToken(app, adminToken);
     simpleToken = simple.token;
-    simpleAccountId = simple.accountId;
 
     nonRotatableNonAdminKeys = await createKeysSet(
       app,
@@ -41,36 +69,28 @@ describe('Repos module', () => {
     );
   });
 
-  it('should be token and id', () => {
-    expect(typeof simpleToken).toBe('string');
-    expect(typeof simpleAccountId).toBe('number');
-  });
-
   describe('POST /repo/create', () => {
     it('attempt to create repo with non-admin token', async () => {
       const payload: DTOReposCreateRequest = {
         name: 'Test repo',
         description: 'Test repo description',
-        code: 'uniq_repo_code',
+        code: uuid(),
         accessToken: 'access_code_for_repo',
         keys: nonRotatableNonAdminKeys.map(({ code }) => code),
       };
 
-      const res = await request(app.getHttpServer())
+      await request(app.getHttpServer())
         .post('/repo/create')
         .set('Authorization', `Bearer ${simpleToken}`)
         .send(payload)
-        .expect(HttpStatus.CREATED);
-
-      nonAdminRepo = res.body as Repo;
-      expect(nonAdminRepo.entries.length).toBe(nonRotatableNonAdminKeys.length);
+        .then(checkServerResponse(HttpStatus.CREATED, DTORepoDetails));
     });
 
     it('attempt to create repo with admin token', async () => {
       const payload: DTOReposCreateRequest = {
         name: 'Test admin repo',
         description: 'Test admin repo description',
-        code: 'uniq_repo_code_admin',
+        code: uuid(),
         accessToken: 'access_code_for_repo',
         keys: rotatableAdminKeys.map(({ code }) => code),
       };
@@ -79,28 +99,19 @@ describe('Repos module', () => {
         .post('/repo/create')
         .set('Authorization', `Bearer ${adminToken}`)
         .send(payload)
-        .expect((res) => {
-          expect(res.status).toBe(HttpStatus.CREATED);
-
-          adminRepo = res.body as Repo;
-          const { keys, ...rest } = payload;
-          expect(adminRepo).toMatchObject(rest);
-          expect(adminRepo.entries.length).toBe(keys.length);
-          expect(adminRepo.id).toBeDefined();
-        });
+        .then(checkServerResponse(HttpStatus.CREATED, DTORepoDetails));
     });
   });
 
   describe('POST /repo/bunch/:code', () => {
     it(`attempt to get bunch data from non-admin-repo`, async () => {
+      const keys = nonRotatableNonAdminKeys.map(({ code }) => code);
+      const nonAdminRepo = await createRepo(keys);
+
       await request(app.getHttpServer())
         .post(`/repo/bunch/${nonAdminRepo.code}`)
         .send({ accessToken: nonAdminRepo.accessToken })
-        .expect((res) => {
-          expect(res.status).toBe(HttpStatus.ACCEPTED);
-          const result = res.body as DTOReposBanchResponse;
-          expect(result).toBeDefined();
-        });
+        .then(checkServerResponse(HttpStatus.ACCEPTED, DTOReposBanchResponse));
     });
   });
 
@@ -109,39 +120,31 @@ describe('Repos module', () => {
       await request(app.getHttpServer())
         .get(`/repo/list`)
         .set('Authorization', `Bearer ${simpleToken}`)
-        .then((res) => {
-          expect(res.status).toBe(HttpStatus.OK);
-          const result = res.body as IPaged<Repo>;
-          expect(result.items.length).toBeDefined();
-        });
+        .then(checkServerResponse(HttpStatus.OK, DTOReposList));
     });
 
     it('attempt to get repos list with search query', async () => {
-      const res = await request(app.getHttpServer())
+      await request(app.getHttpServer())
         .get(`/repo/list?search=test`)
         .set('Authorization', `Bearer ${simpleToken}`)
-        .expect(HttpStatus.OK);
-
-      const result = res.body as IPaged<Repo>;
-
-      expect(result.items.length).toBeDefined();
+        .then(checkServerResponse(HttpStatus.OK, DTOReposList));
     });
   });
 
   describe(`DELETE /repo/remove`, () => {
     it('attempt to delete repository by owner', async () => {
+      const keys = nonRotatableNonAdminKeys.map(({ code }) => code);
+      const nonAdminRepo = await createRepo(keys);
+
       const params: DTOReposRemoveRequest = {
         ids: [nonAdminRepo.id],
       };
-      const res = await request(app.getHttpServer())
+
+      await request(app.getHttpServer())
         .del(`/repo/remove`)
         .set('Authorization', `Bearer ${simpleToken}`)
         .send(params)
-        .expect(HttpStatus.OK);
-
-      const result = res.body as number[];
-
-      expect(result.length).toBeDefined();
+        .then(checkServerResponse(HttpStatus.OK, DTODeletedRepos));
     });
   });
 });

@@ -13,9 +13,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 
-import { IPaged } from 'src/types';
 import { JwtAuthGuard } from 'src/modules/auth/guards/jwt.guard';
-import { Repo } from 'src/orm/entities/Repo';
 
 import { ReposService } from './repos.service';
 import { DTOReposBanchRequest } from './dto/DTOReposBanchRequest';
@@ -23,6 +21,10 @@ import { DTOReposCreateRequest } from './dto/DTOReposCreateRequest';
 import { DTOReposRemoveRequest } from './dto/DTOReposRemoveRequest';
 import { DTOReposBanchResponse } from './dto/DTOReposBanchResponse';
 import { DTOQueryReposList } from './dto/DTOQueryReposList';
+import { DTORepoDetails } from './dto/DTORepoDetails';
+import { plainToClass } from 'class-transformer';
+import { DTOReposList } from './dto/DTOReposList';
+import { DTODeletedRepos } from './dto/DTODeletedRepos';
 
 @ApiTags('Repos')
 @Controller('repo')
@@ -35,7 +37,8 @@ export class ReposController {
     @Param('code') code: string,
     @Body() body: DTOReposBanchRequest,
   ): Promise<DTOReposBanchResponse> {
-    return await this.reposService.getRepoBunch(code, body.accessToken);
+    const result = await this.reposService.getRepoBunch(code, body.accessToken);
+    return plainToClass(DTOReposBanchResponse, result);
   }
 
   @Post('/create')
@@ -44,8 +47,9 @@ export class ReposController {
   async create(
     @Req() req: Express.Request,
     @Body() body: DTOReposCreateRequest,
-  ): Promise<Repo> {
-    return await this.reposService.createRepo(body, req.user.id);
+  ): Promise<DTORepoDetails> {
+    const result = await this.reposService.createRepo(body, req.user.id);
+    return plainToClass(DTORepoDetails, result);
   }
 
   @Get('/list')
@@ -54,14 +58,16 @@ export class ReposController {
   async list(
     @Req() req: Express.Request,
     @Query() query: DTOQueryReposList,
-  ): Promise<IPaged<Repo>> {
+  ): Promise<DTOReposList> {
     const { page, perPage, search } = query;
 
-    return await this.reposService.getRepos(
+    const result = await this.reposService.getRepos(
       req.user.id,
       { page, perPage },
       search,
     );
+
+    return plainToClass(DTOReposList, result);
   }
 
   @Delete('/remove')
@@ -70,7 +76,9 @@ export class ReposController {
   async remove(
     @Req() req: Express.Request,
     @Body() body: DTOReposRemoveRequest,
-  ): Promise<number[]> {
-    return this.reposService.removeRepos(body.ids, req.user.id);
+  ): Promise<DTODeletedRepos> {
+    const ids = await this.reposService.removeRepos(body.ids, req.user.id);
+
+    return plainToClass(DTODeletedRepos, { ids });
   }
 }
