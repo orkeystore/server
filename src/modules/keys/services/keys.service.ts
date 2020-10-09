@@ -199,8 +199,9 @@ export class KeysService {
     const defaultPager = this.configService.get<IPagerParams>('defaultPager');
 
     const [keys, pager] = await this.rsaKeysRepo.getStorage(
-      pagination || defaultPager,
+      pagination,
       filter,
+      defaultPager,
     );
 
     return {

@@ -65,11 +65,25 @@ export class UtilsService {
     return validate(plainToClass(DTO, data));
   }
 
-  static mapValidationErrorsToArray = (errors: ValidationError[]): string[] => {
+  static mapValidationErrorsToArray = (
+    errors: ValidationError[],
+    level = 0,
+  ): string[] => {
+    const levelPrefix = '  '.repeat(level);
     return errors.reduce((result: string[], item) => {
+      result.push(`${levelPrefix}${item.property}`);
       for (const prop in item.constraints) {
-        result.push(item.constraints[prop]);
+        result.push(`${levelPrefix}  ${item.constraints[prop]}`);
       }
+
+      if (item.children && item.children.length > 0) {
+        const childrenErrors = UtilsService.mapValidationErrorsToArray(
+          item.children,
+          level + 1,
+        );
+        result = result.concat(childrenErrors);
+      }
+
       return result;
     }, []);
   };

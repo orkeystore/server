@@ -42,7 +42,7 @@ export const checkServerResponse = <T>(
       );
   }
 
-  const customMessage = `DTO errors:\n\t${errors.join('\n\t')}`;
+  const customMessage = `${DTO.name} errors:\n\t${errors.join('\n\t')}`;
 
   expect(errorsCount, customMessage).toBe(0);
 

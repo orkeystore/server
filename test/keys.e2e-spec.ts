@@ -1,23 +1,30 @@
 import { HttpStatus, INestApplication } from '@nestjs/common';
-import {
-  IAllKeyFormats,
-  IParsedKey,
-} from 'src/modules/keys/services/keys.service';
-import { Entry } from 'src/orm/entities/Entry';
-import { IPaged } from 'src/types';
+import { plainToClass } from 'class-transformer';
+import { JWK } from 'jose';
 import request from 'supertest';
 import { v4 as uuid } from 'uuid';
 
+import { DTOHttpException } from 'src/modules/errors/dto/DTOHttpException';
+import { DTOAllKeysFormats } from 'src/modules/keys/dto/DTOAllKeysFromats';
+import { DTOEntriesByIds } from 'src/modules/keys/dto/DTOEntriesByIds';
+import { DTOEntriesList } from 'src/modules/keys/dto/DTOEntriesList';
+import { DTOEntryDetails } from 'src/modules/keys/dto/DTOEntryDetails';
+import { DTOJWKRSAKeyPrivate } from 'src/modules/keys/dto/DTOJWKRSAKeyPrivate';
+import { DTOJWKRSAKeyPublic } from 'src/modules/keys/dto/DTOJWKRSAKeyPublic';
+import { DTOJWKSPrivate } from 'src/modules/keys/dto/DTOJWKSPrivate';
+import { DTOJWKSPublic } from 'src/modules/keys/dto/DTOJWKSPublic';
+import { DTOStorageItems } from 'src/modules/keys/dto/DTOStorageItems';
+
 import { getAdminToken, getSimpleToken, prepareTestApp } from './prepare';
+import { checkServerResponse } from './utils/checkServerResponse';
 
 describe('Keys module', () => {
   let simpleAccountId: number;
   let app: INestApplication;
   let adminToken: string;
   let simpleToken: string;
-  let adminRotatableEntry: Omit<Entry, 'account'>;
-  let nonRotatableNonAdminEntry: Omit<Entry, 'account'>;
-  let keyId: string;
+  let adminRotatableEntry: DTOEntryDetails;
+  let nonRotatableNonAdminEntry: DTOEntryDetails;
 
   beforeAll(async () => {
     app = await prepareTestApp();
@@ -27,36 +34,57 @@ describe('Keys module', () => {
     const simple = await getSimpleToken(app, adminToken);
     simpleToken = simple.token;
     simpleAccountId = simple.accountId;
+
+    const res = await request(app.getHttpServer())
+      .post('/entry/create')
+      .set('Authorization', `Bearer ${adminToken}`)
+      .send({
+        name: 'Test entry',
+        code: 'rotatableEntry',
+        accessToken: 'some_secret_code',
+        rotation: '10 days',
+      })
+      .then(checkServerResponse(HttpStatus.CREATED, DTOEntryDetails));
+
+    adminRotatableEntry = res.body;
+
+    const nonRotatableRes = await request(app.getHttpServer())
+      .post('/entry/create')
+      .set('Authorization', `Bearer ${simpleToken}`)
+      .send({
+        name: 'Test entry',
+        code: 'notRotatableEntry',
+        accessToken: 'some_secret_code',
+      })
+      .then(checkServerResponse(HttpStatus.CREATED, DTOEntryDetails));
+
+    nonRotatableNonAdminEntry = nonRotatableRes.body;
   });
 
   describe('POST /entry/create', () => {
     it('attempt to create new valid entry with admin privilege', async () => {
-      const res = await request(app.getHttpServer())
+      await request(app.getHttpServer())
         .post('/entry/create')
         .set('Authorization', `Bearer ${adminToken}`)
         .send({
           name: 'Test entry',
-          code: 'rotatableEntry',
+          code: uuid(),
           accessToken: 'some_secret_code',
           rotation: '10 days',
         })
-        .expect(HttpStatus.CREATED);
-
-      adminRotatableEntry = res.body;
+        .then(checkServerResponse(HttpStatus.CREATED, DTOEntryDetails));
     });
 
     it('attempt to create new valid entry without admin privilege', async () => {
-      const res = await request(app.getHttpServer())
+      await request(app.getHttpServer())
         .post('/entry/create')
         .set('Authorization', `Bearer ${simpleToken}`)
         .send({
           name: 'Test entry',
-          code: 'notRotatableEntry',
+          code: uuid(),
           accessToken: 'some_secret_code',
         })
-        .expect(HttpStatus.CREATED);
-
-      nonRotatableNonAdminEntry = res.body;
+        .then(checkServerResponse(HttpStatus.CREATED, DTOEntryDetails));
     });
 
     it('attempt to create new entry with invalid format', async () => {
@@ -68,103 +96,144 @@ describe('Keys module', () => {
           accessToken: 'some_secret_code',
           rotationPeriod: '10 days',
         })
-        .expect(HttpStatus.BAD_REQUEST);
+        .then(checkServerResponse(HttpStatus.BAD_REQUEST, DTOHttpException));
     });
 
     it('attempt to create new entry with same code', async () => {
+      const code = uuid();
       await request(app.getHttpServer())
         .post('/entry/create')
         .set('Authorization', `Bearer ${simpleToken}`)
         .send({
           name: 'Test entry',
-          code: 'rotatableEntry',
+          code,
           accessToken: 'some_secret_code',
           rotationPeriod: '10 days',
         })
-        .expect(HttpStatus.BAD_REQUEST);
+        .then(checkServerResponse(HttpStatus.CREATED, DTOEntryDetails));
+
+      await request(app.getHttpServer())
+        .post('/entry/create')
+        .set('Authorization', `Bearer ${simpleToken}`)
+        .send({
+          name: 'Test entry',
+          code,
+          accessToken: 'some_secret_code',
+          rotationPeriod: '10 days',
+        })
+        .then(checkServerResponse(HttpStatus.BAD_REQUEST, DTOHttpException));
     });
   });
 
   describe('POST /entry/archive/:id', () => {
     it(`attempt to archive entry`, async () => {
-      await request(app.getHttpServer())
-        .post(`/entry/archive/${nonRotatableNonAdminEntry.id}`)
+      const res = await request(app.getHttpServer())
+        .post('/entry/create')
         .set('Authorization', `Bearer ${simpleToken}`)
-        .expect(HttpStatus.ACCEPTED);
+        .send({
+          name: 'Test entry',
+          code: uuid(),
+          accessToken: 'some_secret_code',
+          rotationPeriod: '10 days',
+        })
+        .then(checkServerResponse(HttpStatus.CREATED, DTOEntryDetails));
+
+      const targetId = (res.body as DTOEntryDetails).id;
+
+      await request(app.getHttpServer())
+        .post(`/entry/archive/${targetId}`)
+        .set('Authorization', `Bearer ${simpleToken}`)
+        .then(checkServerResponse(HttpStatus.ACCEPTED, DTOEntryDetails));
     });
   });
 
   describe('POST /entry/restore/:id', () => {
+    let targetId: number;
+
+    beforeEach(async () => {
+      await request(app.getHttpServer())
+        .post('/entry/create')
+        .set('Authorization', `Bearer ${simpleToken}`)
+        .send({
+          name: 'Test entry',
+          code: uuid(),
+          accessToken: 'some_secret_code',
+          rotationPeriod: '10 days',
+        })
+        .then((res) => {
+          expect(res.status).toBe(HttpStatus.CREATED);
+          targetId = (res.body as DTOEntryDetails).id;
+        });
+
+      await request(app.getHttpServer())
+        .post(`/entry/archive/${targetId}`)
+        .set('Authorization', `Bearer ${simpleToken}`)
+        .then((res) => expect(res.status).toBe(HttpStatus.ACCEPTED));
+    });
+
     it(`attempt to restore entry from another user`, async () => {
       await request(app.getHttpServer())
-        .post(`/entry/restore/${nonRotatableNonAdminEntry.id}`)
+        .post(`/entry/restore/${targetId}`)
         .set('Authorization', `Bearer ${adminToken}`)
-        .expect(HttpStatus.FORBIDDEN);
+        .then(checkServerResponse(HttpStatus.FORBIDDEN, DTOHttpException));
     });
 
     it(`attempt to restore not existed entry`, async () => {
       await request(app.getHttpServer())
         .post(`/entry/restore/100`)
         .set('Authorization', `Bearer ${adminToken}`)
-        .expect(HttpStatus.NOT_FOUND);
+        .then(checkServerResponse(HttpStatus.NOT_FOUND, DTOHttpException));
     });
 
     it(`attempt to restore archived entry`, async () => {
       await request(app.getHttpServer())
         .post(`/entry/restore/${nonRotatableNonAdminEntry.id}`)
         .set('Authorization', `Bearer ${simpleToken}`)
-        .expect(HttpStatus.ACCEPTED);
+        .then(checkServerResponse(HttpStatus.ACCEPTED, DTOEntryDetails));
     });
   });
 
   describe('GET /entry/byIds', () => {
     it('attempt to get entries list by ids', async () => {
-      const res = await request(app.getHttpServer())
+      await request(app.getHttpServer())
         .get(`/entry/byIds?ids=${adminRotatableEntry.id}`)
         .set('Authorization', `Bearer ${adminToken}`)
-        .expect(HttpStatus.OK);
-
-      const { items } = res.body as { items: Entry[] };
-      expect(items.length).toBe(1);
+        .then(checkServerResponse(HttpStatus.OK, DTOEntriesByIds));
     });
   });
 
   describe('GET /entry/list', () => {
+    const checkUserId = (items: DTOEntryDetails[], id: number) => {
+      return items.every(({ accountId }) => accountId === id);
+    };
+
     it('attempt to get entries list', async () => {
-      const res = await request(app.getHttpServer())
+      await request(app.getHttpServer())
         .get(`/entry/list`)
         .set('Authorization', `Bearer ${simpleToken}`)
-        .expect(HttpStatus.OK);
-
-      const { items } = res.body as IPaged<Entry>;
-
-      expect(items.length).toBeGreaterThan(0);
-
-      items.forEach((item) => {
-        expect(item.accountId).toBe(simpleAccountId);
-      });
+        .then(checkServerResponse(HttpStatus.OK, DTOEntriesList))
+        .then((res) => {
+          const { items } = plainToClass(DTOEntriesList, res.body);
+          expect(checkUserId(items, simpleAccountId)).toBeTruthy();
+        });
     });
 
     it('attempt to get entries list with pager', async () => {
-      const res = await request(app.getHttpServer())
+      await request(app.getHttpServer())
         .get(`/entry/list?page=1&perPage=15`)
         .set('Authorization', `Bearer ${simpleToken}`)
-        .expect(HttpStatus.OK);
-
-      const { items } = res.body as IPaged<Entry>;
-
-      expect(items.length).toBeGreaterThan(0);
-
-      items.forEach((item) => {
-        expect(item.accountId).toBe(simpleAccountId);
-      });
+        .then(checkServerResponse(HttpStatus.OK, DTOEntriesList))
+        .then((res) => {
+          const { items } = plainToClass(DTOEntriesList, res.body);
+          expect(checkUserId(items, simpleAccountId)).toBeTruthy();
+        });
     });
 
     it('attempt to get entries list with wrong pager', async () => {
       await request(app.getHttpServer())
         .get(`/entry/list?page=1&perPage=k`)
         .set('Authorization', `Bearer ${simpleToken}`)
-        .expect(HttpStatus.BAD_REQUEST);
+        .then(checkServerResponse(HttpStatus.BAD_REQUEST, DTOHttpException));
     });
   });
 
@@ -172,17 +241,24 @@ describe('Keys module', () => {
     it('GET /public/jwk/:id', async () => {
       await request(app.getHttpServer())
         .get(`/entry/public/jwk/${adminRotatableEntry.code}`)
-        .expect(HttpStatus.OK);
+        .then(checkServerResponse(HttpStatus.OK, DTOJWKRSAKeyPublic));
     });
     it('GET /public/jwks/:id', async () => {
       await request(app.getHttpServer())
         .get(`/entry/public/jwks/${nonRotatableNonAdminEntry.code}`)
-        .expect(HttpStatus.OK);
+        .then(checkServerResponse(HttpStatus.OK, DTOJWKSPublic));
     });
     it('GET /public/pem/:id', async () => {
       await request(app.getHttpServer())
         .get(`/entry/public/pem/${adminRotatableEntry.code}`)
-        .expect(HttpStatus.OK);
+        .expect(HttpStatus.OK)
+        .then((res) => {
+          let key: JWK.RSAKey;
+          expect(() => {
+            key = JWK.asKey(res.text) as JWK.RSAKey;
+          }).not.toThrow();
+          expect(key.public).toBe(true);
+        });
     });
   });
 
@@ -191,32 +267,45 @@ describe('Keys module', () => {
       await request(app.getHttpServer())
         .post(`/entry/private/jwk/${nonRotatableNonAdminEntry.code}`)
         .send({ accessToken: nonRotatableNonAdminEntry.accessCode })
-        .expect(HttpStatus.ACCEPTED);
+        .then(checkServerResponse(HttpStatus.ACCEPTED, DTOJWKRSAKeyPrivate));
     });
     it('POST /private/jwks/:id', async () => {
       await request(app.getHttpServer())
         .post(`/entry/private/jwks/${nonRotatableNonAdminEntry.code}`)
         .send({ accessToken: nonRotatableNonAdminEntry.accessCode })
-        .expect(HttpStatus.ACCEPTED);
+        .then(checkServerResponse(HttpStatus.ACCEPTED, DTOJWKSPrivate));
     });
     it('POST /private/pem/:id', async () => {
       await request(app.getHttpServer())
         .post(`/entry/private/pem/${nonRotatableNonAdminEntry.code}`)
         .send({ accessToken: nonRotatableNonAdminEntry.accessCode })
-        .expect(HttpStatus.ACCEPTED);
+        .then((res) => {
+          let key: JWK.RSAKey;
+          expect(() => {
+            key = JWK.asKey(res.text) as JWK.RSAKey;
+          }).not.toThrow();
+          expect(key.private).toBe(true);
+        });
     });
     it('POST /private/pem/:id (wrong user access check)', async () => {
       await request(app.getHttpServer())
         .post(`/entry/private/pem/${adminRotatableEntry.code}`)
         .set('Authorization', `Bearer ${simpleToken}`)
-        .expect(HttpStatus.FORBIDDEN);
+        .then(checkServerResponse(HttpStatus.FORBIDDEN, DTOHttpException));
     });
 
     it('POST /private/pem/:id (correct user access check)', async () => {
       await request(app.getHttpServer())
         .post(`/entry/private/pem/${adminRotatableEntry.code}`)
         .set('Authorization', `Bearer ${adminToken}`)
-        .expect(HttpStatus.ACCEPTED);
+        .expect(HttpStatus.ACCEPTED)
+        .then((res) => {
+          let key: JWK.RSAKey;
+          expect(() => {
+            key = JWK.asKey(res.text) as JWK.RSAKey;
+          }).not.toThrow();
+          expect(key.private).toBe(true);
+        });
     });
   });
 
@@ -225,14 +314,14 @@ describe('Keys module', () => {
       await request(app.getHttpServer())
         .get(`/key/byEntry/${nonRotatableNonAdminEntry.id}`)
         .set('Authorization', `Bearer ${simpleToken}`)
-        .expect(HttpStatus.OK);
+        .then(checkServerResponse(HttpStatus.OK, DTOAllKeysFormats));
     });
 
     it('attemt to get key details by non-existed entry', async () => {
       await request(app.getHttpServer())
-        .get(`/key/byEntry/10`)
+        .get(`/key/byEntry/10000`)
         .set('Authorization', `Bearer ${simpleToken}`)
-        .expect(HttpStatus.NOT_FOUND);
+        .then(checkServerResponse(HttpStatus.NOT_FOUND, DTOHttpException));
     });
   });
 
@@ -241,32 +330,49 @@ describe('Keys module', () => {
       await request(app.getHttpServer())
         .get(`/key/storage`)
         .set('Authorization', `Bearer ${simpleToken}`)
-        .then((res) => {
-          expect(res.status).toBe(HttpStatus.OK);
-          const { items } = res.body as IPaged<IParsedKey>;
-          keyId = items[0].key.kid;
-          expect(items.length).toBeDefined();
-        });
+        .then(checkServerResponse(HttpStatus.OK, DTOStorageItems));
     });
 
     it('attempt to get entries storage with search query', async () => {
       await request(app.getHttpServer())
         .get(`/key/storage?search=test`)
         .set('Authorization', `Bearer ${simpleToken}`)
-        .expect(HttpStatus.OK);
+        .then(checkServerResponse(HttpStatus.OK, DTOStorageItems));
     });
   });
 
   describe('GET /key/:keyId', () => {
+    let nonAdminEntry: DTOEntryDetails;
+    let keyId: string;
+
+    beforeAll(async () => {
+      await request(app.getHttpServer())
+        .post('/entry/create')
+        .set('Authorization', `Bearer ${simpleToken}`)
+        .send({
+          name: 'Test entry',
+          code: uuid(),
+          accessToken: 'some_secret_code',
+        })
+        .then((res) => {
+          expect(res.status).toBe(HttpStatus.CREATED);
+          nonAdminEntry = plainToClass(DTOEntryDetails, res.body);
+        });
+
+      await request(app.getHttpServer())
+        .get(`/key/byEntry/${nonAdminEntry.id}`)
+        .set('Authorization', `Bearer ${simpleToken}`)
+        .then((res) => {
+          expect(res.status).toBe(HttpStatus.OK);
+          keyId = plainToClass(DTOAllKeysFormats, res.body).publicKey.jwk.kid;
+        });
+    });
+
     it('attempt to get key details by id', async () => {
-      const res = await request(app.getHttpServer())
+      await request(app.getHttpServer())
         .get(`/key/${keyId}`)
         .set('Authorization', `Bearer ${simpleToken}`)
-        .expect(HttpStatus.OK);
-
-      const { entryId } = res.body as IAllKeyFormats;
-
-      expect(entryId).toBeDefined();
+        .then(checkServerResponse(HttpStatus.OK, DTOAllKeysFormats));
     });
   });
 
@@ -275,26 +381,56 @@ describe('Keys module', () => {
       await request(app.getHttpServer())
         .delete(`/entry/${nonRotatableNonAdminEntry.id}`)
         .set('Authorization', `Bearer ${adminToken}`)
-        .expect(HttpStatus.FORBIDDEN);
+        .then(checkServerResponse(HttpStatus.FORBIDDEN, DTOHttpException));
     });
 
     it('attempt to delete entry belong to another user as non-admin', async () => {
       await request(app.getHttpServer())
         .delete(`/entry/${adminRotatableEntry.id}`)
         .set('Authorization', `Bearer ${simpleToken}`)
-        .expect(HttpStatus.FORBIDDEN);
+        .then(checkServerResponse(HttpStatus.FORBIDDEN, DTOHttpException));
     });
 
     it(`attempt to delete non-admin user's entry`, async () => {
+      let entryId: number;
+
       await request(app.getHttpServer())
-        .delete(`/entry/${nonRotatableNonAdminEntry.id}`)
+        .post('/entry/create')
+        .set('Authorization', `Bearer ${simpleToken}`)
+        .send({
+          name: 'Test entry',
+          code: uuid(),
+          accessToken: 'some_secret_code',
+        })
+        .then((res) => {
+          expect(res.status).toBe(HttpStatus.CREATED);
+          entryId = plainToClass(DTOEntryDetails, res.body).id;
+        });
+
+      await request(app.getHttpServer())
+        .delete(`/entry/${entryId}`)
         .set('Authorization', `Bearer ${simpleToken}`)
         .expect(HttpStatus.OK);
     });
 
     it(`attempt to delete admin user's entry`, async () => {
+      let entryId: number;
+
       await request(app.getHttpServer())
-        .delete(`/entry/${adminRotatableEntry.id}`)
+        .post('/entry/create')
+        .set('Authorization', `Bearer ${adminToken}`)
+        .send({
+          name: 'Test entry',
+          code: uuid(),
+          accessToken: 'some_secret_code',
+        })
+        .then((res) => {
+          expect(res.status).toBe(HttpStatus.CREATED);
+          entryId = plainToClass(DTOEntryDetails, res.body).id;
+        });
+
+      await request(app.getHttpServer())
+        .delete(`/entry/${entryId}`)
         .set('Authorization', `Bearer ${adminToken}`)
         .expect(HttpStatus.OK);
     });
