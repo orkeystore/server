@@ -11,7 +11,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       secretOrKeyProvider: (
         _req: Express.Request,
         _rawJwtToken: string,
-        done: (err: any, key: Secret) => void,
+        done: (err: unknown, key: Secret) => void,
       ) => {
         this.authService.getSystemKey().then(({ key }) => {
           done(null, key.toPEM());

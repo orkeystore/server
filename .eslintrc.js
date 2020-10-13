@@ -17,9 +17,8 @@ module.exports = {
     jest: true,
   },
   rules: {
+    'no-console': [2, { allow: ['warn', 'error'] }],
     '@typescript-eslint/interface-name-prefix': 'off',
-    '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-unused-vars': [
       2,
       { args: 'all', argsIgnorePattern: '^_' },

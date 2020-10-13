@@ -9,8 +9,8 @@ export class DTOHttpException {
 
   @IsString()
   @IsOptional()
-  error?: any;
+  error?: string;
 
   @IsOptional()
-  errors?: any;
+  errors?: string[];
 }

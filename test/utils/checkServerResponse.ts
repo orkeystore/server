@@ -2,6 +2,7 @@ import { Response } from 'supertest';
 import { plainToClass } from 'class-transformer';
 import { validate, ValidatorOptions } from 'class-validator';
 import { UtilsService } from 'src/modules/utils/utils.service';
+import 'jest-expect-message';
 
 export const checkServerResponse = <T>(
   status: number,
@@ -11,6 +12,7 @@ export const checkServerResponse = <T>(
   expect(res.status).toBe(status);
   const result = plainToClass(DTO, res.body);
   let targets: T[] = [];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   if ((result as any).length === undefined) {
     targets = [result];
   } else {

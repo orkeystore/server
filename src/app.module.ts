@@ -38,14 +38,14 @@ export interface IAppRegisterOptions {
 
 const getStaticImports = (opts: IAppRegisterOptions) => {
   const envFilePath = resolveEnvConfigPath();
+  const dbConfig = opts.isTestDB
+    ? loadTestDbConnectionConfig
+    : loadDbConnectionConfig;
+
   return [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [
-        loadConstantsConfig,
-        loadEnvConfig,
-        opts.isTestDB ? loadTestDbConnectionConfig : loadDbConnectionConfig,
-      ],
+      load: [loadConstantsConfig, loadEnvConfig, dbConfig],
       envFilePath,
     }),
     UtilsModule,
@@ -96,7 +96,7 @@ export async function bootstrap(
   const logger = isDev ? devLogLevels : prodLogLevels;
   const params: NestApplicationOptions = {
     logger,
-    cors: { origin: isDev, credentials: true },
+    cors: { origin: isDev, credentials: isDev },
   };
   const module = opts.isPublic
     ? AppModule.registerPublic()

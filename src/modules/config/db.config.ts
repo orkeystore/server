@@ -1,5 +1,4 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { v4 as uuid } from 'uuid';
 import entities from 'src/orm/entities';
 
 import { baseTables1595845436493 } from 'src/orm/migrations/1595845436493-baseTables';
@@ -8,7 +7,6 @@ export const loadDbConnectionConfig = async (): Promise<{
   db: TypeOrmModuleOptions;
 }> => {
   const databaseDir = process.env.DATABASE_PATH || '/opt/orkeystore';
-
   const conf: TypeOrmModuleOptions & { databaseDir: string } = {
     type: 'sqlite',
     database: `${databaseDir}/orkeystore.db`,
@@ -19,6 +17,7 @@ export const loadDbConnectionConfig = async (): Promise<{
     synchronize: false,
     migrations: [baseTables1595845436493],
     migrationsRun: true,
+    keepConnectionAlive: true,
   };
 
   return { db: conf };
@@ -35,7 +34,7 @@ export const loadTestDbConnectionConfig = async (): Promise<{
     migrations: [baseTables1595845436493],
     migrationsRun: true,
     autoLoadEntities: true,
-    name: uuid(),
+    keepConnectionAlive: true,
   };
 
   return { db: conf };

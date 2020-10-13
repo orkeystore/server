@@ -337,7 +337,14 @@ describe('Keys module', () => {
       await request(app.getHttpServer())
         .get(`/key/storage?search=test`)
         .set('Authorization', `Bearer ${simpleToken}`)
-        .then(checkServerResponse(HttpStatus.OK, DTOStorageItems));
+        .then(checkServerResponse(HttpStatus.OK, DTOStorageItems))
+        .then((res) => {
+          const data = plainToClass(DTOStorageItems, res.body);
+          const checkQuery = data.items.every((item) =>
+            new RegExp('test', 'ig').test(item.entry.name),
+          );
+          expect(checkQuery).toBeTruthy();
+        });
     });
   });
 

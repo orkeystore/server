@@ -41,13 +41,16 @@ export class TypeORMConfig {
   async createDB(database: string /* key: string */): Promise<void> {
     return new Promise((resolve, reject) => {
       try {
+        const isInMemory = process.env.DATABASE_PATH !== ':memory:';
+        const targetDbPath = isInMemory ? process.env.DATABASE_PATH : database;
         const { Database } = sqlite3.verbose();
 
-        if (process.env.DATABASE_PATH !== ':memory:') {
+        if (!isInMemory) {
           fs.mkdirSync(path.dirname(database), { recursive: true });
         }
 
-        const db = new Database(`${database}`);
+        const db = new Database(`${targetDbPath}`);
+
         /*
         if (process.env['SQLCIPHER'] === '1') {
           db.serialize(function() {
@@ -55,6 +58,7 @@ export class TypeORMConfig {
           });
         }
         */
+
         db.close(() => {
           resolve();
         });

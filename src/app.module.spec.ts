@@ -1,5 +1,5 @@
-import { INestApplication } from '@nestjs/common';
-import { bootstrap, resolveEnvConfigPath } from './app.module';
+import { NestFactory } from '@nestjs/core';
+import { AppModule, bootstrap, resolveEnvConfigPath } from './app.module';
 
 type Route = {
   path: string;
@@ -7,34 +7,20 @@ type Route = {
 };
 
 describe('AppModule', () => {
-  let publicApp: INestApplication;
-
-  it('should return default filename for env file', () => {
-    const storeVal = process.env['ENV_FILE'];
-    delete process.env['ENV_FILE'];
-    expect(resolveEnvConfigPath()).toBe('.env');
-    process.env['ENV_FILE'] = storeVal;
-  });
-
   it('should init app without errors', async () => {
-    process.env['ENV_FILE'] = '.develop.env';
-    process.env['SWAGGER'] = '1';
-    await expect(
-      (async () => {
-        const app = await bootstrap(undefined, { logger: false });
-        await app.close();
-        delete process.env['SWAGGER'];
-        publicApp = await bootstrap({ isPublic: true }, { logger: false });
-        await publicApp.init();
-      })(),
-    ).resolves.not.toThrow();
+    const module = AppModule.registerPrivate();
+    const app = await NestFactory.createApplicationContext(module);
+    await app.close();
   });
 
   it('should return only public routes', async () => {
+    const publicApp = await bootstrap({ isPublic: true }, { logger: true });
+    await publicApp.init();
     const server = publicApp.getHttpServer();
     const { stack } = server._events.request._router;
 
     const availableRoutes: [] = stack
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .map((layer: any): Route | undefined => {
         if (layer.route) {
           return {
@@ -45,10 +31,15 @@ describe('AppModule', () => {
         return undefined;
       })
       .filter((item: Route | undefined) => item !== undefined);
+
     expect(availableRoutes.length).toBe(3);
+    await publicApp.close();
   });
 
-  afterAll(async () => {
-    publicApp.close();
+  it('should return default filename for env file', () => {
+    const storeVal = process.env['ENV_FILE'];
+    delete process.env['ENV_FILE'];
+    expect(resolveEnvConfigPath()).toBe('.env');
+    process.env['ENV_FILE'] = storeVal;
   });
 });

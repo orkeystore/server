@@ -59,7 +59,7 @@ export class UtilsService {
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   static async validateDataByDTO<T>(
-    data: any,
+    data: unknown,
     DTO: new () => T,
   ): Promise<ValidationError[]> {
     return validate(plainToClass(DTO, data));
