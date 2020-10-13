@@ -23,10 +23,10 @@ export const loadEnvConfig = (): IEnvConfig => {
     },
     hosts: {
       private: process.env.PRIVATE_HOST
-        ? `${process.env.PRIVATE_HOST}:3000`
+        ? `${process.env.PRIVATE_HOST}`
         : undefined,
       public: process.env.PUBLIC_HOST
-        ? `${process.env.PUBLIC_HOST}:3100`
+        ? `${process.env.PUBLIC_HOST}`
         : undefined,
     },
     systemKeyRotationPeriod,
