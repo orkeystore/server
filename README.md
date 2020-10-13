@@ -1,10 +1,14 @@
 <h1 align="center">WIP: Orkeystore</h1>
 <p align="center">Out-of-the-box solution for crypto-keys management, storing and rotation.</p>
 <p align="center">
-    <img src="https://img.shields.io/circleci/build/gh/Porisey/orkeystore/master" />
-    <img src="https://img.shields.io/github/license/Porisey/orkeystore" />
-    <img src="https://img.shields.io/david/Porisey/orkeystore" />
-    <img src="https://img.shields.io/coveralls/github/Porisey/orkeystore" />
+    <a href="https://app.circleci.com/pipelines/github/Porisey/orkeystore" target="_blank">
+        <img src="https://img.shields.io/circleci/build/gh/Porisey/orkeystore/master" alt="Build" />
+    </a>
+    <img src="https://img.shields.io/github/license/Porisey/orkeystore" alt="License" />
+    <img src="https://img.shields.io/david/Porisey/orkeystore" alt="Dependencies"/>
+    <a href="https://coveralls.io/github/Porisey/orkeystore" target="_blank">
+        <img src="https://img.shields.io/coveralls/github/Porisey/orkeystore" alt="Coverage" />
+    </a>
 </p>
 
 ### Motivation
