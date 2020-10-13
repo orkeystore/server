@@ -6,11 +6,13 @@ import { baseTables1595845436493 } from 'src/orm/migrations/1595845436493-baseTa
 export const loadDbConnectionConfig = async (): Promise<{
   db: TypeOrmModuleOptions;
 }> => {
+  const isInMemory = process.env.DATABASE_PATH === ':memory:';
   const databaseDir = process.env.DATABASE_PATH || '/opt/orkeystore';
-  const conf: TypeOrmModuleOptions & { databaseDir: string } = {
+  const targetDb = isInMemory ? ':memory:' : `${databaseDir}/orkeystore.db`;
+
+  const conf: TypeOrmModuleOptions = {
     type: 'sqlite',
-    database: `${databaseDir}/orkeystore.db`,
-    databaseDir,
+    database: targetDb,
     entities,
     // key: process.env.DATABASE_KEY, // TODO: db encription
     // logging: "all",

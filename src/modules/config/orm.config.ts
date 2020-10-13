@@ -30,7 +30,7 @@ export class TypeORMConfig {
     } catch (err) {
       if (err.code === 'ENOENT') {
         this.logger.log(`Create sqlite database in ${conf.database}`);
-        await this.createDB(`${conf.database}`);
+        await this.createDB(conf.database);
         return;
       }
       /* istanbul ignore next */
@@ -41,15 +41,14 @@ export class TypeORMConfig {
   async createDB(database: string /* key: string */): Promise<void> {
     return new Promise((resolve, reject) => {
       try {
-        const isInMemory = process.env.DATABASE_PATH !== ':memory:';
-        const targetDbPath = isInMemory ? process.env.DATABASE_PATH : database;
+        const isInMemory = database === ':memory:';
         const { Database } = sqlite3.verbose();
 
         if (!isInMemory) {
           fs.mkdirSync(path.dirname(database), { recursive: true });
         }
 
-        const db = new Database(`${targetDbPath}`);
+        const db = new Database(database);
 
         /*
         if (process.env['SQLCIPHER'] === '1') {

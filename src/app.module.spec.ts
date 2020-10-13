@@ -1,5 +1,4 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule, bootstrap, resolveEnvConfigPath } from './app.module';
+import { bootstrap, resolveEnvConfigPath } from './app.module';
 
 type Route = {
   path: string;
@@ -8,13 +7,12 @@ type Route = {
 
 describe('AppModule', () => {
   it('should init app without errors', async () => {
-    const module = AppModule.registerPrivate();
-    const app = await NestFactory.createApplicationContext(module);
+    const app = await bootstrap({ isPublic: false }, { logger: false });
     await app.close();
   });
 
   it('should return only public routes', async () => {
-    const publicApp = await bootstrap({ isPublic: true }, { logger: true });
+    const publicApp = await bootstrap({ isPublic: true }, { logger: false });
     await publicApp.init();
     const server = publicApp.getHttpServer();
     const { stack } = server._events.request._router;
