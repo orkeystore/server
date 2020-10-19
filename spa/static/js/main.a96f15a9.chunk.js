@@ -13,14 +13,14 @@
         r = a.n(n),
         c = a(21),
         o = a.n(c),
-        i = a(12),
-        u = a(425),
-        l = a(150),
+        i = a(11),
+        l = a(425),
+        u = a(150),
         s = a(106),
-        m = a(60),
-        f = a(435),
-        p = (a(332), a(333), a(32)),
-        d = a(293),
+        m = a(61),
+        d = a(435),
+        f = (a(332), a(333), a(33)),
+        p = a(293),
         b = a(314),
         h = a(100),
         g = (a(294), a(5)),
@@ -28,23 +28,23 @@
         v = a(9),
         j = a(2),
         E = a(23),
-        y = a(81),
+        y = a(68),
         x = a(130),
         k = a(131),
-        C = (a(335), a(132)),
+        w = (a(335), a(132)),
         S = a(295),
-        w = a(315),
+        C = a(315),
         P = a(316),
         I = (function (e) {
           Object(S.a)(a, e);
-          var t = Object(w.a)(a);
+          var t = Object(C.a)(a);
           function a(e, n) {
             var r;
             return (
               Object(x.a)(this, a),
               ((r = t.call(this, n)).status = e),
               (r.message = n),
-              Object.setPrototypeOf(Object(C.a)(r), a.prototype),
+              Object.setPrototypeOf(Object(w.a)(r), a.prototype),
               r
             );
           }
@@ -188,7 +188,7 @@
                                 break;
                               case 22:
                                 return (
-                                  ht.dispatch(
+                                  vt.dispatch(
                                     te.setSessionExpired({ isExpired: !0 }),
                                   ),
                                   e.abrupt('break', 24)
@@ -215,7 +215,7 @@
             e
           );
         })())(),
-        M = (function () {
+        A = (function () {
           var e = Object(v.a)(
             O.a.mark(function e(t) {
               var a;
@@ -253,7 +253,7 @@
             return e.apply(this, arguments);
           };
         })(),
-        A = Object(v.a)(
+        M = Object(v.a)(
           O.a.mark(function e() {
             return O.a.wrap(function (e) {
               for (;;)
@@ -273,7 +273,7 @@
         ),
         T = Object(v.a)(
           O.a.mark(function e() {
-            var t, a;
+            var t, a, n;
             return O.a.wrap(function (e) {
               for (;;)
                 switch ((e.prev = e.next)) {
@@ -287,9 +287,12 @@
                     return (
                       (a = JSON.parse(t)),
                       R.setHeader('Authorization', 'Bearer '.concat(a.token)),
-                      e.abrupt('return', a)
+                      (e.next = 7),
+                      R.fetchJson('{api}/auth/me', { method: 'GET' })
                     );
-                  case 6:
+                  case 7:
+                    return (n = e.sent), e.abrupt('return', n);
+                  case 9:
                   case 'end':
                     return e.stop();
                 }
@@ -383,13 +386,13 @@
           })(),
           account: N,
           accounts: L,
-          login: M,
-          logout: A,
+          login: A,
+          logout: M,
           me: T,
         },
         K = a(51),
-        z = a.n(K),
-        W = {
+        W = a.n(K),
+        z = {
           auth: F,
           keys: {
             list: Object(v.a)(
@@ -401,18 +404,18 @@
                   c,
                   o,
                   i,
-                  u = arguments;
+                  l = arguments;
                 return O.a.wrap(function (e) {
                   for (;;)
                     switch ((e.prev = e.next)) {
                       case 0:
                         return (
-                          (t = u.length > 0 && void 0 !== u[0] ? u[0] : {}),
+                          (t = l.length > 0 && void 0 !== l[0] ? l[0] : {}),
                           (a = t.page),
                           (n = t.perPage),
                           (r = t.search),
                           (c = t.isArchived),
-                          (o = z.a.stringify(
+                          (o = W.a.stringify(
                             {
                               page: a,
                               perPage: n,
@@ -502,7 +505,7 @@
                       switch ((e.prev = e.next)) {
                         case 0:
                           return (
-                            (a = z.a.stringify(t, { addQueryPrefix: !0 })),
+                            (a = W.a.stringify(t, { addQueryPrefix: !0 })),
                             (e.next = 3),
                             R.fetchJson('{api}/key/storage'.concat(a), {
                               method: 'GET',
@@ -617,7 +620,7 @@
                         case 0:
                           return (
                             (a = t.ids),
-                            (n = z.a.stringify(
+                            (n = W.a.stringify(
                               { ids: a },
                               { addQueryPrefix: !0 },
                             )),
@@ -685,7 +688,7 @@
                         case 0:
                           return (
                             (t = r.length > 0 && void 0 !== r[0] ? r[0] : {}),
-                            (a = z.a.stringify(t, { addQueryPrefix: !0 })),
+                            (a = W.a.stringify(t, { addQueryPrefix: !0 })),
                             (e.next = 4),
                             R.fetchJson('{api}/repo/list'.concat(a))
                           );
@@ -736,17 +739,17 @@
           },
         },
         B = '/auth',
-        U = '/auth/login',
-        H = '/dashboard',
+        H = '/auth/login',
+        U = '/dashboard',
         J = '/dashboard/accounts',
-        G = '/dashboard/keys',
-        _ = '/dashboard/repos',
-        V = '/dashboard/journal',
-        q = '/dashboard/archive',
-        D = [
+        _ = '/dashboard/keys',
+        q = '/dashboard/repos',
+        G = '/dashboard/journal',
+        V = '/dashboard/archive',
+        Y = [
           {
             id: 1,
-            path: G,
+            path: _,
             name: 'keys',
             title: 'Active keys',
             icon: 'vpn_key',
@@ -754,7 +757,7 @@
           },
           {
             id: 3,
-            path: q,
+            path: V,
             name: 'archive',
             title: 'Archived keys',
             icon: 'unarchive',
@@ -762,7 +765,7 @@
           },
           {
             id: 2,
-            path: _,
+            path: q,
             name: 'repos',
             title: 'Repositories',
             icon: 'apps',
@@ -770,14 +773,14 @@
           },
           {
             id: 4,
-            path: V,
+            path: G,
             name: 'storage',
             title: 'Storage',
             icon: 'inbox',
             isAdminOnly: !1,
           },
         ],
-        Y = {
+        D = {
           isUserAuthorized: !1,
           isAlreadyFetched: !1,
           isSessionExpired: !1,
@@ -800,7 +803,7 @@
               a = Boolean(
                 null === (t = e.account) || void 0 === t ? void 0 : t.isAdmin,
               ),
-              n = D.filter(function (e) {
+              n = Y.filter(function (e) {
                 return a || !e.isAdminOnly;
               });
             return Object(j.a)(Object(j.a)({}, e), {}, { mainMenuLinks: n });
@@ -828,7 +831,7 @@
                   for (;;)
                     switch ((e.prev = e.next)) {
                       case 0:
-                        return (e.next = 2), W.auth.login(t);
+                        return (e.next = 2), z.auth.login(t);
                       case 2:
                         return e.abrupt('return', e.sent);
                       case 3:
@@ -851,7 +854,7 @@
                 for (;;)
                   switch ((e.prev = e.next)) {
                     case 0:
-                      return (e.next = 2), W.auth.me();
+                      return (e.next = 2), z.auth.me();
                     case 2:
                       return e.abrupt('return', e.sent);
                     case 3:
@@ -870,7 +873,7 @@
                 for (;;)
                   switch ((e.prev = e.next)) {
                     case 0:
-                      return (e.next = 2), W.auth.logout();
+                      return (e.next = 2), z.auth.logout();
                     case 2:
                       return e.abrupt('return', e.sent);
                     case 3:
@@ -882,7 +885,7 @@
           ),
         ),
         ee = Object(E.b)({
-          initialState: Y,
+          initialState: D,
           name: 'SESSION',
           reducers: Q,
           extraReducers: function (e) {
@@ -936,7 +939,7 @@
                             : 'Wrong login/password pair.',
                       };
                   return Object(j.a)(
-                    Object(j.a)({}, Y),
+                    Object(j.a)({}, D),
                     {},
                     {
                       isAlreadyFetched: !0,
@@ -970,7 +973,7 @@
                   for (;;)
                     switch ((e.prev = e.next)) {
                       case 0:
-                        return (e.next = 2), W.auth.account(t);
+                        return (e.next = 2), z.auth.account(t);
                       case 2:
                         return (n = e.sent), (e.next = 5), a.dispatch(ce());
                       case 5:
@@ -997,7 +1000,7 @@
                   for (;;)
                     switch ((e.prev = e.next)) {
                       case 0:
-                        return (e.next = 2), W.auth.remove(t);
+                        return (e.next = 2), z.auth.remove(t);
                       case 2:
                         return (n = e.sent), (e.next = 5), a.dispatch(ce());
                       case 5:
@@ -1023,7 +1026,7 @@
                 for (;;)
                   switch ((e.prev = e.next)) {
                     case 0:
-                      return (e.next = 2), W.auth.accounts();
+                      return (e.next = 2), z.auth.accounts();
                     case 2:
                       return (t = e.sent), e.abrupt('return', t);
                     case 4:
@@ -1102,19 +1105,23 @@
             fetchRemoveAccounts: re,
           },
         ),
-        ue = oe.reducer,
-        le = [4, 8, 16],
+        le = oe.reducer,
+        ue = [4, 8, 16],
         se = {
           create: { error: null, loading: !1 },
           list: {
+            initial: !0,
             error: null,
             loading: !1,
             items: [],
-            pager: { page: 1, perPage: le[0] },
-            pagerOptions: le,
+            pager: { page: 1, perPage: ue[0] },
+            pagerOptions: ue,
           },
         },
         me = {
+          resetState: function () {
+            return se;
+          },
           toggleEditModal: function (e, t) {
             var a = t.payload.isOpened;
             return Object(j.a)(
@@ -1149,13 +1156,16 @@
                 list: Object(j.a)(
                   Object(j.a)({}, e.list),
                   {},
-                  { search: t.payload.search },
+                  {
+                    loading: t.payload.search !== e.list.search,
+                    search: t.payload.search,
+                  },
                 ),
               },
             );
           },
         },
-        fe = Object(E.a)(
+        de = Object(E.a)(
           ''.concat('REPOS', '/FETCH_LIST'),
           (function () {
             var e = Object(v.a)(
@@ -1164,7 +1174,7 @@
                   for (;;)
                     switch ((e.prev = e.next)) {
                       case 0:
-                        return (e.next = 2), W.repos.list(t);
+                        return (e.next = 2), z.repos.list(t);
                       case 2:
                         return e.abrupt('return', e.sent);
                       case 3:
@@ -1179,7 +1189,7 @@
             };
           })(),
         ),
-        pe = Object(E.a)(
+        fe = Object(E.a)(
           ''.concat('REPOS', '/SUBMIT_REPO'),
           (function () {
             var e = Object(v.a)(
@@ -1189,7 +1199,7 @@
                   for (;;)
                     switch ((e.prev = e.next)) {
                       case 0:
-                        return (e.next = 2), W.repos.create(t);
+                        return (e.next = 2), z.repos.create(t);
                       case 2:
                         return (a = e.sent), e.abrupt('return', a);
                       case 4:
@@ -1204,7 +1214,7 @@
             };
           })(),
         ),
-        de = Object(E.a)(
+        pe = Object(E.a)(
           ''.concat('REPOS', '/REMOVE_REPOS'),
           (function () {
             var e = Object(v.a)(
@@ -1214,7 +1224,7 @@
                   for (;;)
                     switch ((e.prev = e.next)) {
                       case 0:
-                        return (e.next = 2), W.repos.remove(t);
+                        return (e.next = 2), z.repos.remove(t);
                       case 2:
                         return (a = e.sent), e.abrupt('return', a);
                       case 4:
@@ -1234,7 +1244,7 @@
           name: 'REPOS',
           reducers: me,
           extraReducers: function (e) {
-            e.addCase(pe.fulfilled, function (e, t) {
+            e.addCase(fe.fulfilled, function (e, t) {
               return null === t.payload
                 ? Object(j.a)(
                     Object(j.a)({}, e),
@@ -1253,7 +1263,20 @@
                     { error: null, loading: !1 },
                   );
             }),
-              e.addCase(fe.fulfilled, function (e, t) {
+              e.addCase(de.pending, function (e) {
+                return Object(j.a)(
+                  Object(j.a)({}, e),
+                  {},
+                  {
+                    list: Object(j.a)(
+                      Object(j.a)({}, e.list),
+                      {},
+                      { error: null, loading: !0 },
+                    ),
+                  },
+                );
+              }),
+              e.addCase(de.fulfilled, function (e, t) {
                 return Object(j.a)(
                   Object(j.a)({}, e),
                   {},
@@ -1262,6 +1285,7 @@
                       Object(j.a)({}, e.list),
                       {},
                       {
+                        initial: !1,
                         error: null,
                         loading: !1,
                         items: t.payload.items,
@@ -1276,10 +1300,22 @@
         he = Object(j.a)(
           Object(j.a)({}, be.actions),
           {},
-          { fetchCreateRepo: pe, fetchListRepo: fe, fetchRemoveRepos: de },
+          { fetchCreateRepo: fe, fetchListRepo: de, fetchRemoveRepos: pe },
         ),
         ge = be.reducer,
         Oe = {
+          loading: !0,
+          initial: !0,
+          error: null,
+          items: [],
+          pager: { page: 1, perPage: 10 },
+          pagerOptions: [10, 25, 50],
+          filter: {},
+        },
+        ve = {
+          resetState: function () {
+            return Oe;
+          },
           changePager: function (e, t) {
             return Object(j.a)(
               Object(j.a)({}, e),
@@ -1292,13 +1328,14 @@
               Object(j.a)({}, e),
               {},
               {
+                loading: t.payload.entryName !== e.filter.entryName,
                 pager: Object(j.a)(Object(j.a)({}, e.pager), {}, { page: 1 }),
                 filter: Object(j.a)(Object(j.a)({}, e.filter), t.payload),
               },
             );
           },
         },
-        ve = Object(E.a)(
+        je = Object(E.a)(
           ''.concat('STORAGE', '/FETCH_STORAGE'),
           (function () {
             var e = Object(v.a)(
@@ -1307,7 +1344,7 @@
                   for (;;)
                     switch ((e.prev = e.next)) {
                       case 0:
-                        return (e.next = 2), W.keys.storage(t);
+                        return (e.next = 2), z.keys.storage(t);
                       case 2:
                         return e.abrupt('return', e.sent);
                       case 3:
@@ -1322,45 +1359,44 @@
             };
           })(),
         ),
-        je = Object(E.b)({
-          initialState: {
-            items: [],
-            pager: { page: 1, perPage: 10 },
-            pagerOptions: [10, 25, 50],
-            filter: {},
-          },
+        Ee = Object(E.b)({
+          initialState: Oe,
           name: 'STORAGE',
-          reducers: Oe,
+          reducers: ve,
           extraReducers: function (e) {
-            e.addCase(ve.fulfilled, function (e, t) {
-              var a = t.payload,
-                n = a.items,
-                r = a.pager;
-              return Object(j.a)(
-                Object(j.a)({}, e),
-                {},
-                { items: n, pager: r },
-              );
-            });
+            e.addCase(je.pending, function (e) {
+              return Object(j.a)(Object(j.a)({}, e), {}, { loading: !0 });
+            }),
+              e.addCase(je.fulfilled, function (e, t) {
+                var a = t.payload,
+                  n = a.items,
+                  r = a.pager;
+                return Object(j.a)(
+                  Object(j.a)({}, e),
+                  {},
+                  { initial: !1, loading: !1, items: n, pager: r },
+                );
+              });
           },
         }),
-        Ee = Object(j.a)(
-          Object(j.a)({}, je.actions),
+        ye = Object(j.a)(
+          Object(j.a)({}, Ee.actions),
           {},
-          { fetchStorageItems: ve },
+          { fetchStorageItems: je },
         ),
-        ye = je.reducer,
-        xe = {
+        xe = Ee.reducer,
+        ke = {
+          initial: { keys: !0, archive: !0 },
           list: {
-            loading: { keys: !0 },
+            loading: { keys: !0, archive: !0 },
             errors: { keys: null },
             items: [],
             pager: { page: 1, perPage: 4 },
-            pagerOptions: le,
+            pagerOptions: ue,
           },
           edit: { isModalOpened: !1, loading: !1, error: null },
         },
-        ke = {
+        we = {
           changePager: function (e, t) {
             return Object(j.a)(
               Object(j.a)({}, e),
@@ -1401,6 +1437,11 @@
                   Object(j.a)({}, e.list),
                   {},
                   {
+                    loading: Object(j.a)(
+                      Object(j.a)({}, e.list.loading),
+                      {},
+                      { keys: t.payload.search !== e.list.query },
+                    ),
                     query: t.payload.search,
                     pager: Object(j.a)(
                       Object(j.a)({}, e.list.pager),
@@ -1420,10 +1461,10 @@
             );
           },
           reset: function () {
-            return xe;
+            return ke;
           },
         },
-        Ce = Object(E.a)(
+        Se = Object(E.a)(
           ''.concat('KEYS', '/SUBMIT_KEY'),
           (function () {
             var e = Object(v.a)(
@@ -1433,7 +1474,7 @@
                   for (;;)
                     switch ((e.prev = e.next)) {
                       case 0:
-                        return (e.next = 2), W.keys.create(t);
+                        return (e.next = 2), z.keys.create(t);
                       case 2:
                         return (a = e.sent), e.abrupt('return', a);
                       case 4:
@@ -1448,7 +1489,7 @@
             };
           })(),
         ),
-        Se = Object(E.a)(
+        Ce = Object(E.a)(
           ''.concat('KEYS', '/FETCH_KEYS'),
           (function () {
             var e = Object(v.a)(
@@ -1457,7 +1498,7 @@
                   for (;;)
                     switch ((e.prev = e.next)) {
                       case 0:
-                        return (e.next = 2), W.keys.list(t);
+                        return (e.next = 2), z.keys.list(t);
                       case 2:
                         return e.abrupt('return', e.sent);
                       case 3:
@@ -1472,7 +1513,7 @@
             };
           })(),
         ),
-        we = Object(E.a)(
+        Pe = Object(E.a)(
           ''.concat('KEYS', '/REMOVE_KEY'),
           (function () {
             var e = Object(v.a)(
@@ -1482,7 +1523,7 @@
                   for (;;)
                     switch ((e.prev = e.next)) {
                       case 0:
-                        return (e.next = 2), W.keys.remove(t);
+                        return (e.next = 2), z.keys.remove(t);
                       case 2:
                         return (
                           (a = e.sent), e.abrupt('return', a || { deleted: [] })
@@ -1499,7 +1540,7 @@
             };
           })(),
         ),
-        Pe = Object(E.a)(
+        Ie = Object(E.a)(
           ''.concat('KEYS', '/ARCHIVE_KEY'),
           (function () {
             var e = Object(v.a)(
@@ -1508,7 +1549,7 @@
                   for (;;)
                     switch ((e.prev = e.next)) {
                       case 0:
-                        return (e.next = 2), W.keys.archive(t);
+                        return (e.next = 2), z.keys.archive(t);
                       case 2:
                         return e.abrupt('return', e.sent);
                       case 3:
@@ -1523,7 +1564,7 @@
             };
           })(),
         ),
-        Ie = Object(E.a)(
+        Re = Object(E.a)(
           ''.concat('KEYS', '/RESTORE_KEY'),
           (function () {
             var e = Object(v.a)(
@@ -1532,7 +1573,7 @@
                   for (;;)
                     switch ((e.prev = e.next)) {
                       case 0:
-                        return (e.next = 2), W.keys.restore(t);
+                        return (e.next = 2), z.keys.restore(t);
                       case 2:
                         return e.abrupt('return', e.sent);
                       case 3:
@@ -1547,12 +1588,12 @@
             };
           })(),
         ),
-        Re = Object(E.b)({
-          initialState: xe,
+        Ae = Object(E.b)({
+          initialState: ke,
           name: 'KEYS',
-          reducers: ke,
+          reducers: we,
           extraReducers: function (e) {
-            e.addCase(Se.pending, function (e) {
+            e.addCase(Ce.pending, function (e) {
               return Object(j.a)(
                 Object(j.a)({}, e),
                 {},
@@ -1571,14 +1612,20 @@
                 },
               );
             }),
-              e.addCase(Se.fulfilled, function (e, t) {
+              e.addCase(Ce.fulfilled, function (e, t) {
                 var a = t.payload,
                   n = a.items,
-                  r = a.pager;
+                  r = a.pager,
+                  c = t.meta.arg.isArchived ? 'archive' : 'keys';
                 return Object(j.a)(
                   Object(j.a)({}, e),
                   {},
                   {
+                    initial: Object(j.a)(
+                      Object(j.a)({}, e.initial),
+                      {},
+                      Object(y.a)({}, c, !1),
+                    ),
                     list: Object(j.a)(
                       Object(j.a)({}, e.list),
                       {},
@@ -1595,7 +1642,7 @@
                   },
                 );
               }),
-              e.addCase(we.fulfilled, function (e, t) {
+              e.addCase(Pe.fulfilled, function (e, t) {
                 var a = t.meta.arg.id,
                   n = e.list.pager.totalItems;
                 return Object(j.a)(
@@ -1613,26 +1660,6 @@
                           Object(j.a)({}, e.list.pager),
                           {},
                           { totalItems: n ? n - 1 : void 0 },
-                        ),
-                      },
-                    ),
-                  },
-                );
-              }),
-              e.addCase(Pe.fulfilled, function (e) {
-                var t = e.list.pager.totalItems;
-                return Object(j.a)(
-                  Object(j.a)({}, e),
-                  {},
-                  {
-                    list: Object(j.a)(
-                      Object(j.a)({}, e.list),
-                      {},
-                      {
-                        pager: Object(j.a)(
-                          Object(j.a)({}, e.list.pager),
-                          {},
-                          { totalItems: t ? t - 1 : void 0 },
                         ),
                       },
                     ),
@@ -1659,7 +1686,27 @@
                   },
                 );
               }),
-              e.addCase(Ce.fulfilled, function (e, t) {
+              e.addCase(Re.fulfilled, function (e) {
+                var t = e.list.pager.totalItems;
+                return Object(j.a)(
+                  Object(j.a)({}, e),
+                  {},
+                  {
+                    list: Object(j.a)(
+                      Object(j.a)({}, e.list),
+                      {},
+                      {
+                        pager: Object(j.a)(
+                          Object(j.a)({}, e.list.pager),
+                          {},
+                          { totalItems: t ? t - 1 : void 0 },
+                        ),
+                      },
+                    ),
+                  },
+                );
+              }),
+              e.addCase(Se.fulfilled, function (e, t) {
                 var a = e.list.pager.totalItems;
                 return Object(j.a)(
                   Object(j.a)({}, e),
@@ -1687,18 +1734,18 @@
           },
         }),
         Me = Object(j.a)(
-          Object(j.a)({}, Re.actions),
+          Object(j.a)({}, Ae.actions),
           {},
           {
-            fetchKeysList: Se,
-            fetchRemoveKeyItem: we,
-            fetchArchiveKeyItem: Pe,
-            fetchRestoreKeyItem: Ie,
-            fetchCreateKey: Ce,
+            fetchKeysList: Ce,
+            fetchRemoveKeyItem: Pe,
+            fetchArchiveKeyItem: Ie,
+            fetchRestoreKeyItem: Re,
+            fetchCreateKey: Se,
           },
         ),
-        Ae = Re.reducer,
-        Te = {
+        Te = Ae.reducer,
+        Ne = {
           toggleModal: function (e, t) {
             var a = t.payload.isOpen;
             return Object(j.a)(
@@ -1721,7 +1768,7 @@
             );
           },
         },
-        Ne = Object(E.a)(
+        Le = Object(E.a)(
           ''.concat('KEY_PREVIEW', '/FETCH_KEY'),
           (function () {
             var e = Object(v.a)(
@@ -1731,7 +1778,7 @@
                   for (;;)
                     switch ((e.prev = e.next)) {
                       case 0:
-                        return (e.next = 2), W.keys.preview(t);
+                        return (e.next = 2), z.keys.preview(t);
                       case 2:
                         return (n = e.sent), e.abrupt('return', n);
                       case 4:
@@ -1746,7 +1793,7 @@
             };
           })(),
         ),
-        Le = Object(E.b)({
+        Fe = Object(E.b)({
           initialState: {
             availFormats: [
               { id: 'jwk', label: 'JWK' },
@@ -1761,9 +1808,9 @@
             details: { error: null, loading: !1 },
           },
           name: 'KEY_PREVIEW',
-          reducers: Te,
+          reducers: Ne,
           extraReducers: function (e) {
-            e.addCase(Ne.fulfilled, function (e, t) {
+            e.addCase(Le.fulfilled, function (e, t) {
               return Object(j.a)(
                 Object(j.a)({}, e),
                 {},
@@ -1778,43 +1825,43 @@
             });
           },
         }),
-        Fe = Object(j.a)(
-          Object(j.a)({}, Le.actions),
+        Ke = Object(j.a)(
+          Object(j.a)({}, Fe.actions),
           {},
-          { fetchKeyPreview: Ne },
+          { fetchKeyPreview: Le },
         ),
-        Ke = {
+        We = {
           session: ae,
-          keys: Ae,
-          accounts: ue,
+          keys: Te,
+          accounts: le,
           repos: ge,
-          storage: ye,
-          keyPreview: Le.reducer,
+          storage: xe,
+          keyPreview: Fe.reducer,
         },
-        ze = Object(p.combineReducers)(Ke),
-        We = a(26),
-        Be = O.a.mark(He),
-        Ue = O.a.mark(Je);
-      function He() {
+        ze = Object(f.combineReducers)(We),
+        Be = a(26),
+        He = O.a.mark(Je),
+        Ue = O.a.mark(_e);
+      function Je() {
         return O.a.wrap(function (e) {
           for (;;)
             switch ((e.prev = e.next)) {
               case 0:
-                return (e.next = 2), Object(We.a)(Je);
+                return (e.next = 2), Object(Be.a)(_e);
               case 2:
               case 'end':
                 return e.stop();
             }
-        }, Be);
+        }, He);
       }
-      function Je() {
+      function _e() {
         return O.a.wrap(function (e) {
           for (;;)
             switch ((e.prev = e.next)) {
               case 0:
                 return (
                   (e.next = 2),
-                  Object(We.d)(
+                  Object(Be.d)(
                     [te.fetchLoginUser.fulfilled, te.fetchMe.fulfilled],
                     O.a.mark(function e() {
                       return O.a.wrap(function (e) {
@@ -1822,7 +1869,7 @@
                           switch ((e.prev = e.next)) {
                             case 0:
                               return (
-                                (e.next = 2), Object(We.b)(te.defineMenuLinks())
+                                (e.next = 2), Object(Be.b)(te.defineMenuLinks())
                               );
                             case 2:
                             case 'end':
@@ -1838,38 +1885,41 @@
             }
         }, Ue);
       }
-      var Ge = a(17),
-        _e = function (e) {
+      var qe = a(14),
+        Ge = function (e) {
           return e.keys;
         },
         Ve =
-          (Object(Ge.createSelector)(_e, function (e) {
+          (Object(qe.createSelector)(Ge, function (e) {
             return e.list.items;
           }),
-          Object(Ge.createSelector)(_e, function (e) {
+          Object(qe.createSelector)(Ge, function (e) {
             return e.list;
           })),
-        qe = Object(Ge.createSelector)(_e, function (e) {
+        Ye = Object(qe.createSelector)(Ge, function (e) {
           return e.list.pager;
         }),
-        De = Object(Ge.createSelector)(_e, function (e) {
+        De = Object(qe.createSelector)(Ge, function (e) {
           return e.list.query;
         }),
-        Ye = Object(Ge.createSelector)(_e, function (e) {
-          return e.edit.isModalOpened;
+        Qe = Object(qe.createSelector)(Ge, function (e) {
+          return e.initial;
         }),
-        Qe = Object(Ge.createSelector)(_e, function (e) {
+        Xe = Object(qe.createSelector)(Ge, function (e) {
           return e.isRouteParsed;
         }),
-        Xe = Object(Ge.createSelector)(_e, function (e) {
+        Ze = Object(qe.createSelector)(Ge, function (e) {
+          return e.edit.isModalOpened;
+        }),
+        $e = Object(qe.createSelector)(Ge, function (e) {
           return e.list.pagerOptions;
         }),
-        Ze = Object(Ge.createSelector)(De, Ve, function (e, t) {
+        et = Object(qe.createSelector)(De, Ve, function (e, t) {
           return (
             (!e || 0 === e.length) && !t.loading.keys && 0 === t.items.length
           );
         }),
-        $e = Object(Ge.createSelector)(Ve, function (e) {
+        tt = Object(qe.createSelector)(Ve, function (e) {
           return {
             loading: e.loading.keys,
             error: e.errors.keys,
@@ -1877,28 +1927,28 @@
             pager: e.pager,
           };
         }),
-        et = O.a.mark(at),
-        tt = O.a.mark(nt);
-      function at() {
+        at = O.a.mark(rt),
+        nt = O.a.mark(ct);
+      function rt() {
         return O.a.wrap(function (e) {
           for (;;)
             switch ((e.prev = e.next)) {
               case 0:
-                return (e.next = 2), Object(We.a)(nt);
+                return (e.next = 2), Object(Be.a)(ct);
               case 2:
               case 'end':
                 return e.stop();
             }
-        }, et);
+        }, at);
       }
-      function nt() {
+      function ct() {
         return O.a.wrap(function (e) {
           for (;;)
             switch ((e.prev = e.next)) {
               case 0:
                 return (
                   (e.next = 2),
-                  Object(We.d)(
+                  Object(Be.d)(
                     [
                       Me.fetchCreateKey.fulfilled,
                       Me.fetchRemoveKeyItem.fulfilled,
@@ -1911,7 +1961,7 @@
                         for (;;)
                           switch ((e.prev = e.next)) {
                             case 0:
-                              return (e.next = 2), Object(We.c)(qe);
+                              return (e.next = 2), Object(Be.c)(Ye);
                             case 2:
                               if (
                                 ((a = e.sent),
@@ -1942,21 +1992,21 @@
                               }
                               return (
                                 (e.next = 10),
-                                Object(We.b)(Me.changePager({ page: c }))
+                                Object(Be.b)(Me.changePager({ page: c }))
                               );
                             case 10:
                               e.next = 14;
                               break;
                             case 12:
                               return (
-                                (e.next = 14), Object(We.b)(Me.fetchKeysList(r))
+                                (e.next = 14), Object(Be.b)(Me.fetchKeysList(r))
                               );
                             case 14:
                               e.next = 18;
                               break;
                             case 16:
                               return (
-                                (e.next = 18), Object(We.b)(Me.fetchKeysList(r))
+                                (e.next = 18), Object(Be.b)(Me.fetchKeysList(r))
                               );
                             case 18:
                             case 'end':
@@ -1970,59 +2020,62 @@
               case 'end':
                 return e.stop();
             }
-        }, tt);
+        }, nt);
       }
-      var rt = function (e) {
+      var ot = function (e) {
           return e.repos;
         },
-        ct =
-          (Object(Ge.createSelector)(rt, function (e) {
+        it =
+          (Object(qe.createSelector)(ot, function (e) {
             return e.create;
           }),
-          Object(Ge.createSelector)(rt, function (e) {
+          Object(qe.createSelector)(ot, function (e) {
             return e.list;
           })),
-        ot = Object(Ge.createSelector)(ct, function (e) {
+        lt = Object(qe.createSelector)(it, function (e) {
           return e.pager;
         }),
-        it = Object(Ge.createSelector)(ct, function (e) {
+        ut = Object(qe.createSelector)(it, function (e) {
           return e.search;
         }),
-        ut =
-          (Object(Ge.createSelector)(ct, function (e) {
+        st =
+          (Object(qe.createSelector)(it, function (e) {
             return e.pagerOptions;
           }),
-          Object(Ge.createSelector)(rt, function (e) {
-            return Boolean(e.isEditModalOpened);
+          Object(qe.createSelector)(it, function (e) {
+            return e.initial;
           })),
-        lt = Object(Ge.createSelector)(ct, function (e) {
+        mt = Object(qe.createSelector)(ot, function (e) {
+          return Boolean(e.isEditModalOpened);
+        }),
+        dt = Object(qe.createSelector)(it, function (e) {
           var t = e.search,
             a = e.loading,
             n = e.items;
           return (!t || 0 === t.length) && !a && 0 === n.length;
         }),
-        st = O.a.mark(ft),
-        mt = O.a.mark(pt);
-      function ft() {
+        ft = O.a.mark(bt),
+        pt = O.a.mark(ht);
+      function bt() {
         return O.a.wrap(function (e) {
           for (;;)
             switch ((e.prev = e.next)) {
               case 0:
-                return (e.next = 2), Object(We.a)(pt);
+                return (e.next = 2), Object(Be.a)(ht);
               case 2:
               case 'end':
                 return e.stop();
             }
-        }, st);
+        }, ft);
       }
-      function pt() {
+      function ht() {
         return O.a.wrap(function (e) {
           for (;;)
             switch ((e.prev = e.next)) {
               case 0:
                 return (
                   (e.next = 2),
-                  Object(We.d)(
+                  Object(Be.d)(
                     [
                       he.fetchCreateRepo.fulfilled,
                       he.fetchRemoveRepos.fulfilled,
@@ -2033,10 +2086,10 @@
                         for (;;)
                           switch ((e.prev = e.next)) {
                             case 0:
-                              return (e.next = 2), Object(We.c)(ot);
+                              return (e.next = 2), Object(Be.c)(lt);
                             case 2:
                               return (
-                                (a = e.sent), (e.next = 5), Object(We.c)(it)
+                                (a = e.sent), (e.next = 5), Object(Be.c)(ut)
                               );
                             case 5:
                               if (
@@ -2057,14 +2110,14 @@
                               return (
                                 (o = Math.ceil(a.totalItems + 1 / a.perPage)),
                                 (e.next = 12),
-                                Object(We.b)(he.changePager({ page: o }))
+                                Object(Be.b)(he.changePager({ page: o }))
                               );
                             case 12:
                               e.next = 16;
                               break;
                             case 14:
                               return (
-                                (e.next = 16), Object(We.b)(he.fetchListRepo(c))
+                                (e.next = 16), Object(Be.b)(he.fetchListRepo(c))
                               );
                             case 16:
                             case 'end':
@@ -2078,74 +2131,74 @@
               case 'end':
                 return e.stop();
             }
-        }, mt);
+        }, pt);
       }
-      var dt = O.a.mark(bt);
-      function bt() {
+      var gt = O.a.mark(Ot);
+      function Ot() {
         return O.a.wrap(function (e) {
           for (;;)
             switch ((e.prev = e.next)) {
               case 0:
-                return (e.next = 2), Object(We.a)(He);
+                return (e.next = 2), Object(Be.a)(Je);
               case 2:
-                return (e.next = 4), Object(We.a)(at);
+                return (e.next = 4), Object(Be.a)(rt);
               case 4:
-                return (e.next = 6), Object(We.a)(ft);
+                return (e.next = 6), Object(Be.a)(bt);
               case 6:
               case 'end':
                 return e.stop();
             }
-        }, dt);
+        }, gt);
       }
-      var ht = (function () {
+      var vt = (function () {
           var e =
               arguments.length > 0 && void 0 !== arguments[0]
                 ? arguments[0]
                 : {},
             t = Object(b.a)(),
             a = [h.a, t],
-            n = p.applyMiddleware.apply(void 0, a),
-            r = Object(p.createStore)(ze, e, Object(d.composeWithDevTools)(n));
-          return t.run(bt), r;
+            n = f.applyMiddleware.apply(void 0, a),
+            r = Object(f.createStore)(ze, e, Object(p.composeWithDevTools)(n));
+          return t.run(Ot), r;
         })(),
-        gt = function () {
+        jt = function () {
           return Object(i.b)();
         },
-        Ot = a(313),
-        vt = a(13),
-        jt = '#FFFFFF',
-        Et = {
+        Et = a(313),
+        yt = a(13),
+        xt = '#FFFFFF',
+        kt = {
           black: '#000000',
-          white: jt,
+          white: xt,
           primary: {
-            contrastText: jt,
-            dark: vt.a.indigo[900],
-            main: vt.a.indigo[500],
-            light: vt.a.indigo[100],
+            contrastText: xt,
+            dark: yt.a.indigo[900],
+            main: yt.a.indigo[500],
+            light: yt.a.indigo[100],
           },
           secondary: {
-            contrastText: jt,
-            dark: vt.a.blue[900],
-            main: vt.a.blue.A400,
-            light: vt.a.blue.A400,
+            contrastText: xt,
+            dark: yt.a.blue[900],
+            main: yt.a.blue.A400,
+            light: yt.a.blue.A400,
           },
           error: {
-            contrastText: jt,
-            dark: vt.a.red[900],
-            main: vt.a.red[600],
-            light: vt.a.red[400],
+            contrastText: xt,
+            dark: yt.a.red[900],
+            main: yt.a.red[600],
+            light: yt.a.red[400],
           },
           text: {
-            primary: vt.a.blueGrey[900],
-            secondary: vt.a.blueGrey[600],
-            link: vt.a.blue[600],
+            primary: yt.a.blueGrey[900],
+            secondary: yt.a.blueGrey[600],
+            link: yt.a.blue[600],
           },
-          link: vt.a.blue[800],
-          icon: vt.a.blueGrey[600],
-          background: { default: '#F4F6F8', paper: jt },
-          divider: vt.a.grey[200],
+          link: yt.a.blue[800],
+          icon: yt.a.blueGrey[600],
+          background: { default: '#F4F6F8', paper: xt },
+          divider: yt.a.grey[200],
         },
-        yt = function (e) {
+        wt = function (e) {
           return {
             h1: {
               color: e.text.primary,
@@ -2231,79 +2284,80 @@
             },
           };
         },
-        xt = {
-          MuiTableHead: { root: { backgroundColor: vt.a.grey[50] } },
+        St = {
+          MuiTableHead: { root: { backgroundColor: yt.a.grey[50] } },
           MuiTableCell: {
             root: { fontSize: 14 },
-            body: { borderBottom: '1px solid '.concat(vt.a.grey[200]) },
+            body: { borderBottom: '1px solid '.concat(yt.a.grey[200]) },
             head: {
               paddingTop: 10,
               paddingBottom: 10,
-              borderBottom: '1px solid '.concat(vt.a.grey[200]),
-              color: vt.a.blueGrey[500],
+              borderBottom: '1px solid '.concat(yt.a.grey[200]),
+              color: yt.a.blueGrey[500],
             },
           },
           MuiCardHeader: {
-            root: { borderBottom: '1px solid '.concat(vt.a.grey[200]) },
+            root: { borderBottom: '1px solid '.concat(yt.a.grey[200]) },
             action: { marginRight: 0, marginTop: 0 },
           },
         },
-        kt = Object(Ot.a)({ palette: Et, typography: yt, overrides: xt }),
-        Ct = a(396),
-        St = a(398),
-        wt = a(50),
-        Pt = a(399),
-        It = function (e) {
+        Ct = Object(Et.a)({ palette: kt, typography: wt, overrides: St }),
+        Pt = a(396),
+        It = a(398),
+        Rt = a(50),
+        At = a(399),
+        Mt = function (e) {
           return e.session;
         },
-        Rt = Object(Ge.createSelector)(It, function (e) {
+        Tt = Object(qe.createSelector)(Mt, function (e) {
           return e.isUserAuthorized;
         }),
-        Mt = Object(Ge.createSelector)(It, function (e) {
+        Nt = Object(qe.createSelector)(Mt, function (e) {
           return e.isAlreadyFetched;
         }),
-        At = Object(Ge.createSelector)(It, function (e) {
+        Lt = Object(qe.createSelector)(Mt, function (e) {
           return e.isSessionExpired;
         }),
-        Tt = Object(Ge.createSelector)(It, function (e) {
+        Ft = Object(qe.createSelector)(Mt, function (e) {
           return e.account;
         }),
-        Nt = Object(Ge.createSelector)(It, function (e) {
-          return e.host;
-        }),
-        Lt = Object(Ge.createSelector)(It, function (e) {
-          return e.mainMenuLinks;
-        }),
-        Ft = Object(Ge.createSelector)(It, function (e) {
+        Kt =
+          (Object(qe.createSelector)(Mt, function (e) {
+            return e.host;
+          }),
+          Object(qe.createSelector)(Mt, function (e) {
+            return e.mainMenuLinks;
+          })),
+        Wt = Object(qe.createSelector)(Mt, function (e) {
           return e.errors;
         }),
-        Kt =
-          (Object(Ge.createSelector)(It, function (e) {
+        zt =
+          (Object(qe.createSelector)(Mt, function (e) {
             return e.token || null;
           }),
-          Object(Ge.createSelector)(It, function (e) {
+          Object(qe.createSelector)(Mt, function (e) {
             return e.token || null;
           })),
-        zt = Object(Ge.createSelector)(It, function (e) {
+        Bt = Object(qe.createSelector)(Mt, function (e) {
           return e.privateHost;
         }),
-        Wt = Object(Ge.createSelector)(It, function (e) {
-          return e.publicHost;
+        Ht = Object(qe.createSelector)(Mt, function (e) {
+          return e.publicHost ? e.publicHost : e.privateHost;
         }),
-        Bt = a(22),
-        Ut = a(24);
-      function Ht() {
-        var e = Object(Bt.a)(['\n  flex-grow: 1;\n']);
+        Ut = a(22),
+        Jt = a(24);
+      function _t() {
+        var e = Object(Ut.a)(['\n  flex-grow: 1;\n']);
         return (
-          (Ht = function () {
+          (_t = function () {
             return e;
           }),
           e
         );
       }
-      var Jt = Ut.a.div(Ht()),
+      var qt = Jt.a.div(_t()),
         Gt = function () {
-          var e = gt();
+          var e = jt();
           return {
             logout: Object(n.useCallback)(
               function () {
@@ -2325,47 +2379,38 @@
             ),
           };
         },
-        _t = function () {
+        Vt = function () {
           return { logout: Gt().logout };
         },
-        Vt = function () {
-          var e = Object(i.c)(Tt),
-            t = _t().logout,
+        Yt = function () {
+          var e = Object(i.c)(Ft),
+            t = Vt().logout,
             a = void 0 !== e;
           return r.a.createElement(
-            Ct.a,
+            Pt.a,
             { position: 'static' },
             r.a.createElement(
-              St.a,
+              It.a,
               null,
               r.a.createElement(
-                wt.a,
+                Rt.a,
                 { variant: 'h4', color: 'inherit' },
                 'Orkeystore',
               ),
-              r.a.createElement(Jt, null),
+              r.a.createElement(qt, null),
               a &&
                 r.a.createElement(
-                  Pt.a,
+                  At.a,
                   { color: 'inherit', onClick: t },
                   'Logout',
                 ),
             ),
           );
         };
-      function qt() {
-        var e = Object(Bt.a)([
+      function Dt() {
+        var e = Object(Ut.a)([
           '\n  flex-grow: 1;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n',
         ]);
-        return (
-          (qt = function () {
-            return e;
-          }),
-          e
-        );
-      }
-      function Dt() {
-        var e = Object(Bt.a)(['\n']);
         return (
           (Dt = function () {
             return e;
@@ -2373,52 +2418,37 @@
           e
         );
       }
-      function Yt() {
-        var e = Object(Bt.a)([
+      function Qt() {
+        var e = Object(Ut.a)(['\n']);
+        return (
+          (Qt = function () {
+            return e;
+          }),
+          e
+        );
+      }
+      function Xt() {
+        var e = Object(Ut.a)([
           '\n  display: flex;\n  flex-direction: column;\n  flex-grow: 1;\n',
         ]);
         return (
-          (Yt = function () {
+          (Xt = function () {
             return e;
           }),
           e
         );
       }
-      var Qt = Ut.a.div(Yt()),
-        Xt = Ut.a.div(Dt()),
-        Zt = Ut.a.div(qt()),
-        $t = a(25),
-        ea = a(301),
-        ta = a.n(ea),
-        aa = a(107),
-        na = a(440);
-      function ra() {
-        var e = Object(Bt.a)([
-          '\n  display: flex;\n  flex-direction: row;\n  align-items: flex-start;\n',
-        ]);
-        return (
-          (ra = function () {
-            return e;
-          }),
-          e
-        );
-      }
-      function ca() {
-        var e = Object(Bt.a)([
-          '\n  padding-left: 15px;\n  padding-top: 2px;\n',
-        ]);
-        return (
-          (ca = function () {
-            return e;
-          }),
-          e
-        );
-      }
+      var Zt = Jt.a.div(Xt()),
+        $t = Jt.a.div(Qt()),
+        ea = Jt.a.div(Dt()),
+        ta = a(25),
+        aa = a(301),
+        na = a.n(aa),
+        ra = a(107),
+        ca = a(440);
       function oa() {
-        var e = Object(Bt.a)([
-          '\n  padding: 10px;\n  flex-grow: 1;\n  background-color: ',
-          ';\n  color: ',
-          ';\n',
+        var e = Object(Ut.a)([
+          '\n  display: flex;\n  flex-direction: row;\n  align-items: flex-start;\n',
         ]);
         return (
           (oa = function () {
@@ -2427,40 +2457,53 @@
           e
         );
       }
-      var ia = Object(Ut.a)(aa.a)(
-          oa(),
-          kt.palette.error.light,
-          kt.palette.error.contrastText,
-        ),
-        ua = Object(Ut.a)(wt.a)(ca()),
-        la = Object(Ut.a)(na.a)(ra()),
-        sa = function (e) {
-          return r.a.createElement(
-            ia,
-            Object.assign({ elevation: e.elevation }, e.root),
-            r.a.createElement(
-              la,
-              null,
-              r.a.createElement(ta.a, { color: 'inherit' }),
-              r.a.createElement(ua, { color: 'inherit' }, e.children),
-            ),
-          );
-        };
-      sa.defaultProps = { elevation: 0, severnity: 'error' };
-      var ma = sa;
-      function fa() {
-        var e = Object(Bt.a)(['\n  width: 100%;\n']);
+      function ia() {
+        var e = Object(Ut.a)([
+          '\n  padding-left: 15px;\n  padding-top: 2px;\n',
+        ]);
         return (
-          (fa = function () {
+          (ia = function () {
             return e;
           }),
           e
         );
       }
-      function pa() {
-        var e = Object(Bt.a)([
-          '\n  flex-grow: 1;\n  margin-bottom: 10px;\n  &:last-child {\n    margin-bottom: 0;\n  }\n',
+      function la() {
+        var e = Object(Ut.a)([
+          '\n  padding: 10px;\n  flex-grow: 1;\n  background-color: ',
+          ';\n  color: ',
+          ';\n',
         ]);
+        return (
+          (la = function () {
+            return e;
+          }),
+          e
+        );
+      }
+      var ua = Object(Jt.a)(ra.a)(
+          la(),
+          Ct.palette.error.light,
+          Ct.palette.error.contrastText,
+        ),
+        sa = Object(Jt.a)(Rt.a)(ia()),
+        ma = Object(Jt.a)(ca.a)(oa()),
+        da = function (e) {
+          return r.a.createElement(
+            ua,
+            Object.assign({ elevation: e.elevation }, e.root),
+            r.a.createElement(
+              ma,
+              null,
+              r.a.createElement(na.a, { color: 'inherit' }),
+              r.a.createElement(sa, { color: 'inherit' }, e.children),
+            ),
+          );
+        };
+      da.defaultProps = { elevation: 0, severnity: 'error' };
+      var fa = da;
+      function pa() {
+        var e = Object(Ut.a)(['\n  width: 100%;\n']);
         return (
           (pa = function () {
             return e;
@@ -2468,19 +2511,10 @@
           e
         );
       }
-      function da() {
-        var e = Object(Bt.a)([
-          '\n  display: flex;\n  flex-direction: column;\n  margin-bottom: 20px;\n  &:last-child {\n    margin-bottom: 0;\n  }\n',
-        ]);
-        return (
-          (da = function () {
-            return e;
-          }),
-          e
-        );
-      }
       function ba() {
-        var e = Object(Bt.a)(['']);
+        var e = Object(Ut.a)([
+          '\n  flex-grow: 1;\n  margin-bottom: 10px;\n  &:last-child {\n    margin-bottom: 0;\n  }\n',
+        ]);
         return (
           (ba = function () {
             return e;
@@ -2489,7 +2523,9 @@
         );
       }
       function ha() {
-        var e = Object(Bt.a)(['\n  margin-bottom: 20px;\n']);
+        var e = Object(Ut.a)([
+          '\n  display: flex;\n  flex-direction: column;\n  margin-bottom: 20px;\n  &:last-child {\n    margin-bottom: 0;\n  }\n',
+        ]);
         return (
           (ha = function () {
             return e;
@@ -2498,7 +2534,7 @@
         );
       }
       function ga() {
-        var e = Object(Bt.a)(['\n  width: 300px;\n']);
+        var e = Object(Ut.a)(['']);
         return (
           (ga = function () {
             return e;
@@ -2506,17 +2542,35 @@
           e
         );
       }
-      var Oa = Ut.a.div(ga()),
-        va = (Ut.a.div(ha()), Ut.a.div(ba())),
-        ja = Ut.a.div(da()),
-        Ea = Ut.a.div(pa()),
-        ya = Object(Ut.a)(Pt.a)(fa()),
-        xa = a(401),
-        ka = a(402),
+      function Oa() {
+        var e = Object(Ut.a)(['\n  margin-bottom: 20px;\n']);
+        return (
+          (Oa = function () {
+            return e;
+          }),
+          e
+        );
+      }
+      function va() {
+        var e = Object(Ut.a)(['\n  width: 300px;\n']);
+        return (
+          (va = function () {
+            return e;
+          }),
+          e
+        );
+      }
+      var ja = Jt.a.div(va()),
+        Ea = (Jt.a.div(Oa()), Jt.a.div(ga())),
+        ya = Jt.a.div(ha()),
+        xa = Jt.a.div(ba()),
+        ka = Object(Jt.a)(At.a)(pa()),
+        wa = a(401),
+        Sa = a(402),
         Ca = a(403),
-        Sa = a(404),
-        wa = { username: '', password: '' },
-        Pa = function () {
+        Pa = a(404),
+        Ia = { username: '', password: '' },
+        Ra = function () {
           var e = Gt().fetchLoginUser,
             t = Object(n.useCallback)(
               (function () {
@@ -2554,44 +2608,44 @@
             handleSubmit: t,
           };
         },
-        Ia = function () {
-          var e = Object(i.c)(Ft),
-            t = Pa(),
+        Aa = function () {
+          var e = Object(i.c)(Wt),
+            t = Ra(),
             a = t.handleSubmit,
             n = t.validate;
           return r.a.createElement(
-            xa.a,
+            wa.a,
             null,
-            r.a.createElement(ka.a, {
-              title: r.a.createElement(wt.a, { variant: 'h3' }, 'Sign in'),
+            r.a.createElement(Sa.a, {
+              title: r.a.createElement(Rt.a, { variant: 'h3' }, 'Sign in'),
             }),
             r.a.createElement(
               Ca.a,
               null,
               r.a.createElement(
-                Oa,
+                ja,
                 null,
                 r.a.createElement(
-                  va,
+                  Ea,
                   null,
                   r.a.createElement(
-                    $t.c,
-                    { initialValues: wa, validate: n, onSubmit: a },
+                    ta.c,
+                    { initialValues: Ia, validate: n, onSubmit: a },
                     function (t) {
                       return r.a.createElement(
-                        $t.b,
+                        ta.b,
                         null,
                         r.a.createElement(
-                          ja,
+                          ya,
                           null,
                           r.a.createElement(
-                            $t.a,
+                            ta.a,
                             { name: 'username' },
                             function (e) {
                               var t = e.field,
                                 a = e.meta;
                               return r.a.createElement(
-                                Sa.a,
+                                Pa.a,
                                 Object.assign(
                                   {
                                     error: Boolean(a.touched && a.error),
@@ -2606,16 +2660,16 @@
                           ),
                         ),
                         r.a.createElement(
-                          ja,
+                          ya,
                           null,
                           r.a.createElement(
-                            $t.a,
+                            ta.a,
                             { name: 'password' },
                             function (e) {
                               var t = e.field,
                                 a = e.meta;
                               return r.a.createElement(
-                                Sa.a,
+                                Pa.a,
                                 Object.assign(
                                   {
                                     label: 'Password',
@@ -2632,18 +2686,18 @@
                         ),
                         e.loginForm &&
                           r.a.createElement(
-                            ja,
+                            ya,
                             null,
-                            r.a.createElement(ma, null, e.loginForm),
+                            r.a.createElement(fa, null, e.loginForm),
                           ),
                         r.a.createElement(
-                          ja,
+                          ya,
                           null,
                           r.a.createElement(
-                            Ea,
+                            xa,
                             null,
                             r.a.createElement(
-                              ya,
+                              ka,
                               {
                                 color: 'secondary',
                                 size: 'large',
@@ -2662,87 +2716,74 @@
             ),
           );
         },
-        Ra = function () {
+        Ma = function () {
           return r.a.createElement(
-            Qt,
+            Zt,
             null,
-            r.a.createElement(Xt, null, r.a.createElement(Vt, null)),
-            r.a.createElement(Zt, null, r.a.createElement(Ia, null)),
+            r.a.createElement($t, null, r.a.createElement(Yt, null)),
+            r.a.createElement(ea, null, r.a.createElement(Aa, null)),
           );
         },
-        Ma = a(406),
-        Aa = function () {
-          var e = Object(i.c)(At);
+        Ta = a(406),
+        Na = function () {
+          var e = Object(i.c)(Lt);
           return r.a.createElement(
-            Ma.a,
+            Ta.a,
             { open: e },
-            r.a.createElement(Ia, null),
+            r.a.createElement(Aa, null),
           );
         },
-        Ta = a(407),
-        Na = a(380),
-        La = a(383),
-        Fa = a(408),
-        Ka = a(410),
-        za = a(409),
-        Wa = Object(Ta.a)(function () {
+        La = a(380),
+        Fa = a(383),
+        Ka = a(407),
+        Wa = a(409),
+        za = a(410),
+        Ba = a(408),
+        Ha = Object(za.a)(function () {
           return { iconWrap: { maxWidth: 40, minWidth: 40 } };
         }),
-        Ba = function () {
+        Ua = function () {
           var e = Object(s.f)(),
-            t = Object(i.c)(Lt),
-            a = Wa();
+            t = Object(i.c)(Kt),
+            a = Ha(),
+            n = Object(s.g)();
           return r.a.createElement(
-            Na.a,
+            La.a,
             { component: 'nav' },
             t.map(function (t) {
+              var c = t.path === n.pathname,
+                o = c ? 'primary' : 'action';
               return r.a.createElement(
-                La.a,
+                Fa.a,
                 {
                   key: t.id,
                   button: !0,
-                  onClick: function () {
-                    return e.push(t.path);
-                  },
+                  onClick: c
+                    ? void 0
+                    : function () {
+                        return e.push(t.path);
+                      },
                 },
                 r.a.createElement(
-                  Fa.a,
+                  Ka.a,
                   { className: a.iconWrap },
-                  r.a.createElement(za.a, null, t.icon),
+                  r.a.createElement(Ba.a, { color: o }, t.icon),
                 ),
-                r.a.createElement(Ka.a, null, t.title),
+                r.a.createElement(
+                  Wa.a,
+                  {
+                    primaryTypographyProps: {
+                      color: c ? 'primary' : 'initial',
+                    },
+                  },
+                  t.title,
+                ),
               );
             }),
           );
         };
-      function Ua() {
-        var e = Object(Bt.a)([
-          '\n  display: flex;\n  background-color: ',
-          ';\n  flex: 1 1 auto;\n  min-width: 0;\n',
-        ]);
-        return (
-          (Ua = function () {
-            return e;
-          }),
-          e
-        );
-      }
-      function Ha() {
-        var e = Object(Bt.a)([
-          '\n  flex: 0 0 250px;\n  background-color: ',
-          ';\n',
-        ]);
-        return (
-          (Ha = function () {
-            return e;
-          }),
-          e
-        );
-      }
       function Ja() {
-        var e = Object(Bt.a)([
-          '\n  flex: 1 1 auto;\n  display: flex;\n  min-width: 0;\n',
-        ]);
+        var e = Object(Ut.a)(['']);
         return (
           (Ja = function () {
             return e;
@@ -2750,18 +2791,9 @@
           e
         );
       }
-      function Ga() {
-        var e = Object(Bt.a)(['']);
-        return (
-          (Ga = function () {
-            return e;
-          }),
-          e
-        );
-      }
       function _a() {
-        var e = Object(Bt.a)([
-          '\n  display: flex;\n  flex-direction: column;\n  flex: 1 1 auto;\n',
+        var e = Object(Ut.a)([
+          '\n  position: relative;\n  flex-grow: 1;\n  display: flex;\n  flex-direction: column;\n',
         ]);
         return (
           (_a = function () {
@@ -2770,38 +2802,104 @@
           e
         );
       }
-      var Va = Ut.a.div(_a()),
-        qa = Ut.a.div(Ga()),
-        Da = Ut.a.div(Ja()),
-        Ya = Ut.a.div(Ha(), kt.palette.background.paper),
-        Qa = Ut.a.main(Ua(), kt.palette.background.default),
-        Xa = function (e) {
+      function qa() {
+        var e = Object(Ut.a)([
+          '\n  display: flex;\n  flex-direction: column;\n  background-color: ',
+          ';\n  flex: 1 1 auto;\n  min-width: 0;\n',
+        ]);
+        return (
+          (qa = function () {
+            return e;
+          }),
+          e
+        );
+      }
+      function Ga() {
+        var e = Object(Ut.a)([
+          '\n  flex: 0 0 250px;\n  background-color: ',
+          ';\n',
+        ]);
+        return (
+          (Ga = function () {
+            return e;
+          }),
+          e
+        );
+      }
+      function Va() {
+        var e = Object(Ut.a)([
+          '\n  flex: 1 1 auto;\n  display: flex;\n  min-width: 0;\n',
+        ]);
+        return (
+          (Va = function () {
+            return e;
+          }),
+          e
+        );
+      }
+      function Ya() {
+        var e = Object(Ut.a)(['']);
+        return (
+          (Ya = function () {
+            return e;
+          }),
+          e
+        );
+      }
+      function Da() {
+        var e = Object(Ut.a)([
+          '\n  display: flex;\n  flex-direction: column;\n  flex: 1 1 auto;\n',
+        ]);
+        return (
+          (Da = function () {
+            return e;
+          }),
+          e
+        );
+      }
+      var Qa = Jt.a.div(Da()),
+        Xa = Jt.a.div(Ya()),
+        Za = Jt.a.div(Va()),
+        $a = Jt.a.div(Ga(), Ct.palette.background.paper),
+        en = Jt.a.main(qa(), Ct.palette.background.default),
+        tn = Jt.a.div(_a()),
+        an = Jt.a.div(Ja()),
+        nn = function (e) {
           var t = e.route;
           return r.a.createElement(
-            Va,
+            Qa,
             null,
-            r.a.createElement(Aa, null),
-            r.a.createElement(qa, null, r.a.createElement(Vt, null)),
+            r.a.createElement(Na, null),
+            r.a.createElement(Xa, null, r.a.createElement(Yt, null)),
             r.a.createElement(
-              Da,
+              Za,
               null,
-              r.a.createElement(Ya, null, r.a.createElement(Ba, null)),
+              r.a.createElement($a, null, r.a.createElement(Ua, null)),
               r.a.createElement(
-                Qa,
+                en,
                 null,
-                t && t.routes && Object(l.a)(t.routes),
+                r.a.createElement(
+                  tn,
+                  null,
+                  t && t.routes && Object(u.a)(t.routes),
+                ),
+                r.a.createElement(
+                  an,
+                  null,
+                  r.a.createElement('div', { id: 'layout_dashboard_footer' }),
+                ),
               ),
             ),
           );
         },
-        Za = a(428),
-        $a = a(192),
-        en = a(418),
-        tn = a(92),
-        an = a.n(tn),
-        nn = a(437),
-        rn = a(436),
-        cn = function (e) {
+        rn = a(418),
+        cn = a(426),
+        on = a(427),
+        ln = a(57),
+        un = a.n(ln),
+        sn = a(437),
+        mn = a(436),
+        dn = function (e) {
           for (
             var t =
                 arguments.length > 1 && void 0 !== arguments[1]
@@ -2816,34 +2914,34 @@
             a += t.charAt(Math.floor(Math.random() * r));
           return a;
         },
-        on = function () {
-          var e = gt(),
-            t = Object(i.c)(qe),
+        fn = function () {
+          var e = jt(),
+            t = Object(i.c)(Ye),
             a = Object(i.c)(De),
-            r = Object(i.c)(Kt),
-            c = Object(i.c)(Qe),
-            o = Object(i.c)(Ye),
-            u = Object(s.f)(),
-            l = Object(s.g)(),
+            r = Object(i.c)(zt),
+            c = Object(i.c)(Xe),
+            o = Object(i.c)(Ze),
+            l = Object(s.f)(),
+            u = Object(s.g)(),
             m = Object(n.useCallback)(
               function (t) {
                 return e(Me.fetchKeysList(t));
               },
               [e, r],
             ),
-            f = Object(n.useCallback)(
+            d = Object(n.useCallback)(
               function (t) {
                 return e(Me.toggleEditModal(t));
               },
               [e],
             ),
-            p = Object(n.useCallback)(
+            f = Object(n.useCallback)(
               function (t) {
                 return e(Me.setInitialRouteParsing(t));
               },
               [e],
             ),
-            d = Object(n.useCallback)(
+            p = Object(n.useCallback)(
               function () {
                 var e = { page: t.page, perPage: t.perPage, search: a };
                 return m(e);
@@ -2872,7 +2970,7 @@
                         switch ((t.prev = t.next)) {
                           case 0:
                             return (
-                              (n = cn(64)),
+                              (n = dn(64)),
                               (t.next = 3),
                               e(
                                 Me.fetchCreateKey(
@@ -2947,7 +3045,7 @@
               },
               [e],
             ),
-            C = Object(n.useCallback)(
+            w = Object(n.useCallback)(
               function (t) {
                 return e(Me.changeSearch(t));
               },
@@ -2961,7 +3059,7 @@
                       for (;;)
                         switch ((e.prev = e.next)) {
                           case 0:
-                            return e.abrupt('return', W.keys.list(t));
+                            return e.abrupt('return', z.keys.list(t));
                           case 1:
                           case 'end':
                             return e.stop();
@@ -2975,7 +3073,7 @@
               })(),
               [],
             ),
-            w = Object(n.useCallback)(
+            C = Object(n.useCallback)(
               (function () {
                 var e = Object(v.a)(
                   O.a.mark(function e(t) {
@@ -2983,7 +3081,7 @@
                       for (;;)
                         switch ((e.prev = e.next)) {
                           case 0:
-                            return (e.next = 2), W.keys.byIds(t);
+                            return (e.next = 2), z.keys.byIds(t);
                           case 2:
                             return e.abrupt('return', e.sent);
                           case 3:
@@ -3007,7 +3105,7 @@
             );
           return {
             routeParser: Object(n.useCallback)(function () {
-              var e = z.a.parse(l.search, { ignoreQueryPrefix: !0 });
+              var e = W.a.parse(u.search, { ignoreQueryPrefix: !0 });
               ['page', 'perPage'].forEach(function (t) {
                 var a = e[t];
                 if (void 0 !== a) {
@@ -3017,15 +3115,15 @@
               }),
                 e.search &&
                   'string' === typeof e.search &&
-                  C({ search: e.search }),
-                e.newEntry && f({ isOpened: !0 }),
-                p({ isParsed: !0 });
+                  w({ search: e.search }),
+                e.newEntry && d({ isOpened: !0 }),
+                f({ isParsed: !0 });
             }, []),
             routeWatcher: Object(n.useCallback)(
               function () {
-                var e = xe.list.pager.page,
-                  n = xe.list.pager.perPage,
-                  r = z.a.stringify(
+                var e = ke.list.pager.page,
+                  n = ke.list.pager.perPage,
+                  r = W.a.stringify(
                     {
                       page: t.page === e ? void 0 : t.page,
                       perPage: t.perPage === n ? void 0 : t.perPage,
@@ -3034,47 +3132,48 @@
                     },
                     { addQueryPrefix: !0 },
                   );
-                c && u.push({ search: r });
+                c && l.push({ search: r });
               },
-              [u, t.page, t.perPage, a, c, o],
+              [l, t.page, t.perPage, a, c, o],
             ),
             resetList: P,
             changePager: k,
-            changeSearch: C,
+            changeSearch: w,
             fetchKeysList: m,
-            fetchKeysListWatch: d,
+            fetchKeysListWatch: p,
             fetchArchiveListWatch: b,
             fetchCreateKey: h,
             fetchRemoveKeyItem: g,
             fetchRestoreKeyItem: x,
             fetchArchiveKeyItem: E,
             requestKeysList: S,
-            requestKeysByIds: w,
-            toggleEditModal: f,
+            requestKeysByIds: C,
+            toggleEditModal: d,
           };
         },
-        un = a(64),
-        ln = a.n(un),
-        sn = a(420),
-        mn = a(441),
-        fn = a(422),
-        pn = a(423),
-        dn = a(424),
-        bn = a(188),
-        hn = a.n(bn),
-        gn = a(307),
-        On = a.n(gn),
-        vn = a(412),
-        jn = a(386),
-        En = a(305),
+        pn = a(65),
+        bn = a.n(pn),
+        hn = a(420),
+        gn = a(441),
+        On = a(422),
+        vn = a(423),
+        jn = a(424),
+        En = a(188),
         yn = a.n(En),
-        xn = a(36),
-        kn = a(411),
-        Cn = a(304),
-        Sn = a.n(Cn),
-        wn = function (e) {
+        xn = a(307),
+        kn = a.n(xn),
+        wn = a(412),
+        Sn = a(386),
+        Cn = a(192),
+        Pn = a(305),
+        In = a.n(Pn),
+        Rn = a(30),
+        An = a(411),
+        Mn = a(304),
+        Tn = a.n(Mn),
+        Nn = function (e) {
           var t = Object(n.useState)(!1),
-            a = Object(xn.a)(t, 2),
+            a = Object(Rn.a)(t, 2),
             r = a[0],
             c = a[1],
             o = Object(n.useCallback)(
@@ -3094,8 +3193,8 @@
             handleCloseSnack: i,
           };
         },
-        Pn = function (e) {
-          var t = wn(e),
+        Ln = function (e) {
+          var t = Nn(e),
             a = t.isCopied,
             n = t.handleCopy,
             c = t.handleCloseSnack;
@@ -3103,7 +3202,7 @@
             r.a.Fragment,
             null,
             r.a.createElement(
-              kn.a,
+              An.a,
               {
                 anchorOrigin: { horizontal: 'center', vertical: 'bottom' },
                 open: a,
@@ -3111,23 +3210,23 @@
                 onClose: c,
               },
               r.a.createElement(
-                nn.a,
+                sn.a,
                 { onClose: c, severity: 'success' },
                 r.a.createElement(
-                  wt.a,
+                  Rt.a,
                   { variant: 'h6', component: 'div' },
                   e.message,
                 ),
               ),
             ),
             r.a.createElement(
-              jn.a,
+              Sn.a,
               { onClick: n },
-              r.a.createElement(Sn.a, { fontSize: 'small' }),
+              r.a.createElement(Tn.a, { fontSize: 'small' }),
             ),
           );
         },
-        In = function (e) {
+        Fn = function (e) {
           var t = Object(n.useCallback)(function (e) {
             e.target.select();
           }, []);
@@ -3143,25 +3242,25 @@
             handleFocus: t,
           };
         },
-        Rn = Object($a.a)(function () {
+        Kn = Object(Cn.a)(function () {
           return {
             list: { padding: 0, paddingBottom: 10, width: '100%' },
             item: { padding: 0, paddingBottom: 10, paddingTop: 10 },
           };
         }),
-        Mn = function (e) {
-          var t = Rn(),
-            a = In(e),
+        Wn = function (e) {
+          var t = Kn(),
+            a = Fn(e),
             n = a.inputRefs,
             c = a.handleFocus;
           return r.a.createElement(
-            Na.a,
+            La.a,
             { className: t.list },
             e.items.map(function (e, a) {
               return r.a.createElement(
-                La.a,
+                Fa.a,
                 { className: t.item, key: e.code },
-                r.a.createElement(Sa.a, {
+                r.a.createElement(Pa.a, {
                   value: e.url,
                   label: e.label,
                   fullWidth: !0,
@@ -3170,21 +3269,21 @@
                   InputProps: {
                     inputRef: n[a],
                     endAdornment: r.a.createElement(
-                      vn.a,
+                      wn.a,
                       { position: 'end' },
-                      r.a.createElement(Pn, {
+                      r.a.createElement(Ln, {
                         inputRef: n[a],
                         message: 'URL has been copied!',
                       }),
                       !e.isPrivate &&
                         r.a.createElement(
-                          jn.a,
+                          Sn.a,
                           {
                             onClick: function () {
                               window.open(e.url, '_blank');
                             },
                           },
-                          r.a.createElement(yn.a, { fontSize: 'small' }),
+                          r.a.createElement(In.a, { fontSize: 'small' }),
                         ),
                     ),
                   },
@@ -3193,12 +3292,12 @@
             }),
           );
         },
-        An = a(413),
-        Tn = a(414),
-        Nn = a(415),
-        Ln = function (e) {
+        zn = a(413),
+        Bn = a(414),
+        Hn = a(415),
+        Un = function (e) {
           var t = Object(n.useState)(!1),
-            a = Object(xn.a)(t, 2),
+            a = Object(Rn.a)(t, 2),
             c = a[0],
             o = a[1],
             i = e.onSubmit;
@@ -3206,7 +3305,7 @@
             r.a.Fragment,
             null,
             r.a.createElement(
-              Ma.a,
+              Ta.a,
               {
                 open: c,
                 onClose: function () {
@@ -3215,20 +3314,20 @@
               },
               e.title &&
                 r.a.createElement(
-                  An.a,
+                  zn.a,
                   null,
                   r.a.createElement(
-                    wt.a,
+                    Rt.a,
                     { variant: 'h4', component: 'div' },
                     e.title,
                   ),
                 ),
-              e.content && r.a.createElement(Tn.a, null, e.content),
+              e.content && r.a.createElement(Bn.a, null, e.content),
               r.a.createElement(
-                Nn.a,
+                Hn.a,
                 null,
                 r.a.createElement(
-                  Pt.a,
+                  At.a,
                   {
                     onClick: function () {
                       return o(!1);
@@ -3238,7 +3337,7 @@
                   'Cancel',
                 ),
                 r.a.createElement(
-                  Pt.a,
+                  At.a,
                   {
                     onClick: function () {
                       i && i(), o(!1);
@@ -3261,9 +3360,9 @@
             ),
           );
         },
-        Fn = a(416),
-        Kn = a(369),
-        zn = Object(Kn.a)(function (e) {
+        Jn = a(416),
+        _n = a(369),
+        qn = Object(_n.a)(function (e) {
           return {
             tooltip: {
               backgroundColor: 'white',
@@ -3274,13 +3373,13 @@
               padding: 20,
             },
           };
-        })(Fn.a),
-        Wn = function (e) {
-          return r.a.createElement(zn, e);
+        })(Jn.a),
+        Gn = function (e) {
+          return r.a.createElement(qn, e);
         },
-        Bn = a(419),
-        Un = function (e) {
-          return Object(Ta.a)(function () {
+        Vn = a(419),
+        Yn = function (e) {
+          return Object(za.a)(function () {
             return {
               root: { padding: '5px 0' },
               pre: {
@@ -3291,25 +3390,25 @@
                 },
                 whiteSpace: 'pre',
                 padding: '15px 20px',
-                background: vt.a.grey[100],
+                background: yt.a.grey[100],
               },
               code: { background: 'none' },
             };
           });
         },
-        Hn = function (e) {
-          var t = Un(e)();
+        Dn = function (e) {
+          var t = Yn(e)();
           return r.a.createElement(
             'pre',
             { className: t.pre },
             r.a.createElement('code', { className: t.code }, e.children),
           );
         },
-        Jn = a(303),
-        Gn = a(417),
-        _n = function () {
+        Qn = a(303),
+        Xn = a(417),
+        Zn = function () {
           return {
-            styles: Vn(),
+            styles: $n(),
             menuStaticProps: Object(n.useMemo)(function () {
               return {
                 anchorOrigin: { horizontal: 'right', vertical: 'top' },
@@ -3318,15 +3417,15 @@
             }, []),
           };
         },
-        Vn = Object(Ta.a)(function () {
+        $n = Object(za.a)(function () {
           return { menu: { width: 150 } };
         }),
-        qn = function (e) {
-          var t = _n(),
+        er = function (e) {
+          var t = Zn(),
             a = t.menuStaticProps,
             n = t.styles;
           return r.a.createElement(
-            Jn.a,
+            Qn.a,
             Object.assign({}, a, {
               keepMounted: !0,
               anchorEl: e.anchorEl,
@@ -3336,7 +3435,7 @@
             }),
             e.menu.map(function (t) {
               return r.a.createElement(
-                Gn.a,
+                Xn.a,
                 {
                   key: t.id,
                   onClick: function () {
@@ -3344,26 +3443,26 @@
                       e.handleClose();
                   },
                 },
-                r.a.createElement(wt.a, { variant: 'button' }, t.label),
+                r.a.createElement(Rt.a, { variant: 'button' }, t.label),
               );
             }),
           );
         },
-        Dn = function (e) {
+        tr = function (e) {
           var t = e.menu,
             a = e.currentMenuLabel,
             n = e.fieldProps,
             c = e.inputProps,
             o = e.disabled,
             i = r.a.useState(null),
-            u = Object(xn.a)(i, 2),
-            l = u[0],
-            s = u[1];
+            l = Object(Rn.a)(i, 2),
+            u = l[0],
+            s = l[1];
           return r.a.createElement(
             r.a.Fragment,
             null,
             r.a.createElement(
-              Sa.a,
+              Pa.a,
               Object.assign({ fullWidth: !0 }, n, {
                 variant: 'outlined',
                 disabled: o,
@@ -3371,11 +3470,11 @@
                   {
                     endAdornment: a
                       ? r.a.createElement(
-                          vn.a,
+                          wn.a,
                           { position: 'end' },
                           e.beforeOptions,
                           r.a.createElement(
-                            Pt.a,
+                            At.a,
                             {
                               size: 'small',
                               disabled: o,
@@ -3394,8 +3493,8 @@
               }),
             ),
             t &&
-              r.a.createElement(qn, {
-                anchorEl: l,
+              r.a.createElement(er, {
+                anchorEl: u,
                 menu: t,
                 onSelectMenuItem: e.onSelectMenuItem,
                 handleClose: function () {
@@ -3404,23 +3503,23 @@
               }),
           );
         },
-        Yn = function () {
-          var e = gt(),
+        ar = function () {
+          var e = jt(),
             t = Object(n.useCallback)(
               function (t) {
-                e(Fe.toggleModal({ isOpen: t }));
+                e(Ke.toggleModal({ isOpen: t }));
               },
               [e],
             ),
             a = Object(n.useCallback)(
               function (t) {
-                return e(Fe.fetchKeyPreview(t));
+                return e(Ke.fetchKeyPreview(t));
               },
               [e],
             ),
             r = Object(n.useCallback)(
               function (t) {
-                e(Fe.setParams(t));
+                e(Ke.setParams(t));
               },
               [e],
             ),
@@ -3453,53 +3552,53 @@
             setPreviewParams: r,
           };
         },
-        Qn = [
+        nr = [
           { id: 'jwk', label: 'JWK' },
           { id: 'jwks', label: 'JWKs' },
           { id: 'pem', label: 'PEM' },
         ],
-        Xn = function (e) {
-          var t = Object(n.useState)(Qn[0].id),
-            a = Object(xn.a)(t, 2),
+        rr = function (e) {
+          var t = Object(n.useState)(nr[0].id),
+            a = Object(Rn.a)(t, 2),
             r = a[0],
             c = a[1],
-            o = Yn().openKeyPreview,
-            u = Object(n.useMemo)(
+            o = ar().openKeyPreview,
+            l = Object(n.useMemo)(
               function () {
                 return (
-                  Qn.find(function (e) {
+                  nr.find(function (e) {
                     return e.id === r;
-                  }) || Qn[0]
+                  }) || nr[0]
                 );
               },
               [r],
             ),
-            l = Object(i.c)(zt) || '',
+            u = Object(i.c)(Bt) || '',
             s = Object(n.useRef)(null),
             m = Object(n.useRef)(null),
-            f = Object(n.useCallback)(function (e) {
+            d = Object(n.useCallback)(function (e) {
               e.target.select();
             }, []),
+            f = Object(n.useMemo)(
+              function () {
+                return { label: 'Target URL', onFocus: d };
+              },
+              [d],
+            ),
             p = Object(n.useMemo)(
               function () {
-                return { label: 'Target URL', onFocus: f };
-              },
-              [f],
-            ),
-            d = Object(n.useMemo)(
-              function () {
                 return ''
-                  .concat(l, '/entry/private/')
-                  .concat(u.id, '/')
+                  .concat(u, '/entry/private/')
+                  .concat(l.id, '/')
                   .concat(e.item.code);
               },
-              [l, u.id, e.item.code],
+              [u, l.id, e.item.code],
             ),
             b = Object(n.useMemo)(
               function () {
-                return { value: d, inputRef: s };
+                return { value: p, inputRef: s };
               },
-              [d],
+              [p],
             ),
             h = Object(n.useCallback)(
               function (e) {
@@ -3519,21 +3618,21 @@
               [o, e.item.id, r],
             );
           return {
-            keysHost: l,
+            keysHost: u,
             inputProps: b,
             formatId: r,
-            fieldProps: p,
-            format: u,
-            targetUrl: d,
+            fieldProps: f,
+            format: l,
+            targetUrl: p,
             urlRef: s,
             accessRef: m,
             setFormat: c,
-            handleFocus: f,
+            handleFocus: d,
             handleSetFormat: h,
             handleOpenPreviewModal: g,
           };
         },
-        Zn = Object($a.a)(function () {
+        cr = Object(Cn.a)(function () {
           return {
             exampleMessage: {
               display: 'flex',
@@ -3541,38 +3640,38 @@
             },
           };
         }),
-        $n = function (e) {
-          var t = Xn(e),
+        or = function (e) {
+          var t = rr(e),
             a = t.fieldProps,
             n = t.inputProps,
             c = t.format,
             o = t.targetUrl,
             i = t.urlRef,
-            u = t.accessRef,
-            l = t.handleSetFormat,
+            l = t.accessRef,
+            u = t.handleSetFormat,
             s = t.handleOpenPreviewModal,
             m = t.handleFocus,
-            f = Zn(),
-            p = e.item;
+            d = cr(),
+            f = e.item;
           return r.a.createElement(
-            en.a,
+            rn.a,
             { container: !0, spacing: 3 },
             r.a.createElement(
-              en.a,
+              rn.a,
               { item: !0, xs: 12 },
-              r.a.createElement(Sa.a, {
+              r.a.createElement(Pa.a, {
                 fullWidth: !0,
                 label: 'Access key',
                 variant: 'outlined',
-                value: p.accessCode,
+                value: f.accessCode,
                 onFocus: m,
                 InputProps: {
-                  inputRef: u,
+                  inputRef: l,
                   endAdornment: r.a.createElement(
-                    vn.a,
+                    wn.a,
                     { position: 'end' },
-                    r.a.createElement(Pn, {
-                      inputRef: u,
+                    r.a.createElement(Ln, {
+                      inputRef: l,
                       message: 'URL has been copied!',
                     }),
                   ),
@@ -3580,40 +3679,40 @@
               }),
             ),
             r.a.createElement(
-              en.a,
+              rn.a,
               { item: !0, xs: 12 },
-              r.a.createElement(Dn, {
-                menu: Qn,
+              r.a.createElement(tr, {
+                menu: nr,
                 currentMenuLabel: c.label,
-                onSelectMenuItem: l,
+                onSelectMenuItem: u,
                 fieldProps: a,
                 inputProps: n,
-                afterOptions: r.a.createElement(Pn, {
+                afterOptions: r.a.createElement(Ln, {
                   inputRef: i,
                   message: 'URL has been copied!',
                 }),
               }),
             ),
-            p.accessCode &&
+            f.accessCode &&
               r.a.createElement(
-                en.a,
+                rn.a,
                 { item: !0, xs: 12 },
                 r.a.createElement(
                   'div',
-                  { className: f.exampleMessage },
+                  { className: d.exampleMessage },
                   r.a.createElement(
-                    wt.a,
+                    Rt.a,
                     null,
                     'Key can be fetched via POST with access code.',
                   ),
-                  r.a.createElement(Bn.a, { onClick: s }, 'Preview'),
+                  r.a.createElement(Vn.a, { onClick: s }, 'Preview'),
                 ),
                 r.a.createElement(
-                  Hn,
+                  Dn,
                   null,
                   'curl -d \'{ "accessToken":"'
                     .concat(
-                      p.accessCode,
+                      f.accessCode,
                       '" }\' -H "Content-Type: application/json" -X POST ',
                     )
                     .concat(o),
@@ -3621,15 +3720,15 @@
               ),
           );
         },
-        er = function (e) {
-          var t = Object(i.c)(Wt),
-            a = on(),
+        ir = function (e) {
+          var t = Object(i.c)(Ht),
+            a = fn(),
             r = a.fetchRemoveKeyItem,
             c = a.fetchArchiveKeyItem,
             o = a.fetchRestoreKeyItem,
-            u = e.data,
-            l = u ? u.rotateInterval : null,
-            s = u ? u.code : null,
+            l = e.data,
+            u = l ? l.rotateInterval : null,
+            s = l ? l.code : null,
             m = Object(n.useMemo)(
               function () {
                 return void 0 === t || null === s
@@ -3654,19 +3753,19 @@
               },
               [s, t],
             ),
-            f = Object(n.useCallback)(
+            d = Object(n.useCallback)(
               function (e) {
                 return r({ id: e });
               },
               [r],
             ),
-            p = Object(n.useCallback)(
+            f = Object(n.useCallback)(
               function (e) {
                 return c({ id: e });
               },
               [c],
             ),
-            d = Object(n.useCallback)(
+            p = Object(n.useCallback)(
               function (e) {
                 return o({ id: e });
               },
@@ -3675,22 +3774,22 @@
             b = Object(n.useMemo)(
               function () {
                 return (
-                  l &&
-                  'Rotation period: '.concat(ln.a.duration(l, 's').humanize())
+                  u &&
+                  'Rotation period: '.concat(bn.a.duration(u, 's').humanize())
                 );
               },
-              [l],
+              [u],
             );
           return {
             host: t,
             rotation: b,
             publicUrls: m,
-            deleteItem: f,
-            archiveItem: p,
-            restoreItem: d,
+            deleteItem: d,
+            archiveItem: f,
+            restoreItem: p,
           };
         },
-        tr = Object(Ta.a)(function () {
+        lr = Object(za.a)(function () {
           return {
             actions: { justifyContent: 'flex-end' },
             privateWrap: { width: '100%' },
@@ -3703,62 +3802,62 @@
             codeHolder: { textAlign: 'right' },
           };
         }),
-        ar = function (e) {
-          var t = tr(),
-            a = er(e),
+        ur = function (e) {
+          var t = lr(),
+            a = ir(e),
             n = a.deleteItem,
             c = a.archiveItem,
             o = a.restoreItem,
             i = a.rotation,
-            u = a.publicUrls,
-            l = e.data;
-          return l
+            l = a.publicUrls,
+            u = e.data;
+          return u
             ? r.a.createElement(
-                xa.a,
+                wa.a,
                 null,
                 r.a.createElement(
                   Ca.a,
                   null,
                   r.a.createElement(
-                    en.a,
+                    rn.a,
                     { container: !0, spacing: 2, justify: 'space-between' },
                     r.a.createElement(
-                      en.a,
+                      rn.a,
                       { item: !0 },
-                      r.a.createElement(wt.a, { variant: 'caption' }, 'Name'),
-                      r.a.createElement(wt.a, { variant: 'h5' }, l.name),
+                      r.a.createElement(Rt.a, { variant: 'caption' }, 'Name'),
+                      r.a.createElement(Rt.a, { variant: 'h5' }, u.name),
                     ),
                     r.a.createElement(
-                      en.a,
+                      rn.a,
                       { item: !0, className: t.codeHolder },
                       r.a.createElement(
-                        wt.a,
+                        Rt.a,
                         { variant: 'caption' },
                         'Unique code',
                       ),
-                      r.a.createElement(wt.a, { variant: 'h5' }, l.code),
+                      r.a.createElement(Rt.a, { variant: 'h5' }, u.code),
                     ),
                   ),
-                  r.a.createElement(sn.a, { className: t.divider }),
+                  r.a.createElement(hn.a, { className: t.divider }),
                   r.a.createElement(
-                    wt.a,
+                    Rt.a,
                     { variant: 'caption' },
-                    l.rotateInterval ? i : 'Non rotatable key',
+                    u.rotateInterval ? i : 'Non rotatable key',
                   ),
-                  r.a.createElement(sn.a, { className: t.divider }),
+                  r.a.createElement(hn.a, { className: t.divider }),
                   r.a.createElement(
-                    mn.a,
+                    gn.a,
                     null,
                     r.a.createElement(
-                      fn.a,
-                      { expandIcon: r.a.createElement(hn.a, null) },
-                      r.a.createElement(wt.a, { variant: 'h6' }, 'Public key'),
+                      On.a,
+                      { expandIcon: r.a.createElement(yn.a, null) },
+                      r.a.createElement(Rt.a, { variant: 'h6' }, 'Public key'),
                       r.a.createElement(
-                        Wn,
+                        Gn,
                         {
                           placement: 'top-start',
                           title: r.a.createElement(
-                            wt.a,
+                            Rt.a,
                             {
                               gutterBottom: !0,
                               variant: 'body1',
@@ -3767,7 +3866,7 @@
                             'Anyone can get public key by GET request in formats listed below. Rotatable response contain "expires" header.',
                           ),
                         },
-                        r.a.createElement(On.a, {
+                        r.a.createElement(kn.a, {
                           className: t.tooltip,
                           color: 'primary',
                           fontSize: 'small',
@@ -3775,84 +3874,84 @@
                       ),
                     ),
                     r.a.createElement(
-                      pn.a,
+                      vn.a,
                       null,
                       r.a.createElement(
                         'div',
                         { style: { flexGrow: 1 } },
-                        r.a.createElement(Mn, { items: u }),
+                        r.a.createElement(Wn, { items: l }),
                       ),
                     ),
                   ),
                   r.a.createElement(
-                    mn.a,
+                    gn.a,
                     null,
                     r.a.createElement(
-                      fn.a,
-                      { expandIcon: r.a.createElement(hn.a, null) },
-                      r.a.createElement(wt.a, { variant: 'h6' }, 'Private key'),
+                      On.a,
+                      { expandIcon: r.a.createElement(yn.a, null) },
+                      r.a.createElement(Rt.a, { variant: 'h6' }, 'Private key'),
                     ),
                     r.a.createElement(
-                      pn.a,
+                      vn.a,
                       null,
                       r.a.createElement(
                         'div',
                         { className: t.privateWrap },
-                        r.a.createElement($n, { item: l }),
+                        r.a.createElement(or, { item: u }),
                       ),
                     ),
                   ),
                 ),
                 r.a.createElement(
-                  dn.a,
+                  jn.a,
                   { className: t.actions },
-                  null !== l.archivedAt &&
+                  null !== u.archivedAt &&
                     r.a.createElement(
                       r.a.Fragment,
                       null,
                       r.a.createElement(
-                        Ln,
+                        Un,
                         {
                           title: 'Are you sure want to delete key?',
                           content: 'Every associated keys will be unavailable',
                           onSubmit: function () {
-                            return n(l.id);
+                            return n(u.id);
                           },
                         },
-                        r.a.createElement(Pt.a, { size: 'small' }, 'Delete'),
+                        r.a.createElement(At.a, { size: 'small' }, 'Delete'),
                       ),
                       r.a.createElement(
-                        Pt.a,
+                        At.a,
                         {
                           size: 'small',
                           onClick: function () {
-                            return o(l.id);
+                            return o(u.id);
                           },
                         },
                         'Restore',
                       ),
                     ),
-                  null === l.archivedAt &&
+                  null === u.archivedAt &&
                     r.a.createElement(
-                      Ln,
+                      Un,
                       {
                         title: 'Are you sure want to archive entry in storage?',
                         content:
                           'Associated keys will be marked as archived and unavailable. You can restore entry from the archive at any time.',
                         onSubmit: function () {
-                          return c(l.id);
+                          return c(u.id);
                         },
                       },
-                      r.a.createElement(Pt.a, { size: 'small' }, 'Archive'),
+                      r.a.createElement(At.a, { size: 'small' }, 'Archive'),
                     ),
                 ),
               )
             : null;
         },
-        nr = a(389),
-        rr = a(153),
-        cr = a.n(rr),
-        or = function (e) {
+        sr = a(389),
+        mr = a(153),
+        dr = a.n(mr),
+        fr = function (e) {
           var t = e.onSelect;
           return {
             handleChange: Object(n.useCallback)(
@@ -3863,49 +3962,49 @@
             ),
           };
         },
-        ir = Object($a.a)(function () {
+        pr = Object(Cn.a)(function () {
           return { label: { marginRight: 10, fontSize: 12 } };
         }),
-        ur = function (e) {
-          var t = ir(),
+        br = function (e) {
+          var t = pr(),
             a = e.current,
             n = e.options,
-            c = or(e).handleChange;
+            c = fr(e).handleChange;
           return r.a.createElement(
-            na.a,
+            ca.a,
             null,
             r.a.createElement(
-              cr.a,
+              dr.a,
               { container: !0, alignItems: 'center' },
               r.a.createElement(
-                cr.a,
+                dr.a,
                 { item: !0, className: t.label },
                 'Items per page:',
               ),
               r.a.createElement(
-                cr.a,
+                dr.a,
                 { item: !0 },
                 r.a.createElement(
-                  nr.a,
+                  sr.a,
                   { value: a, onChange: c },
                   n.map(function (e) {
-                    return r.a.createElement(Gn.a, { key: e, value: e }, e);
+                    return r.a.createElement(Xn.a, { key: e, value: e }, e);
                   }),
                 ),
               ),
             ),
           );
         },
-        lr = a(317),
-        sr = a(309),
-        mr = a.n(sr),
-        fr = a(308),
-        pr = a.n(fr),
-        dr = function (e) {
+        hr = a(317),
+        gr = a(309),
+        Or = a.n(gr),
+        vr = a(308),
+        jr = a.n(vr),
+        Er = function (e) {
           var t = e.InputProps,
             a = e.onChange,
             c = e.onThrottledChange,
-            o = Object(lr.a)(e, [
+            o = Object(hr.a)(e, [
               'InputProps',
               'onChange',
               'onThrottledChange',
@@ -3915,9 +4014,9 @@
                 return Object(j.a)(
                   {
                     startAdornment: r.a.createElement(
-                      vn.a,
+                      wn.a,
                       { position: 'start' },
-                      r.a.createElement(mr.a, null),
+                      r.a.createElement(Or.a, null),
                     ),
                   },
                   t,
@@ -3925,8 +4024,8 @@
               },
               [t],
             ),
-            u = Object(n.useCallback)(
-              pr()(function (e) {
+            l = Object(n.useCallback)(
+              jr()(function (e) {
                 c && c(e);
               }, 500),
               [c],
@@ -3937,14 +4036,14 @@
             handleChange: Object(n.useCallback)(
               function (e) {
                 var t = e.target.value;
-                a && a(e), u(t);
+                a && a(e), l(t);
               },
-              [u, a],
+              [l, a],
             ),
           };
         },
-        br = function (e) {
-          var t = dr(e),
+        yr = function (e) {
+          var t = Er(e),
             a = t.InputPropsMemo,
             n = t.restProps,
             c = t.handleChange;
@@ -3952,7 +4051,7 @@
             r.a.Fragment,
             null,
             r.a.createElement(
-              Sa.a,
+              Pa.a,
               Object.assign({}, n, {
                 onChange: c,
                 size: 'small',
@@ -3962,9 +4061,92 @@
             ),
           );
         },
-        hr = function () {
-          var e = Object(i.c)(Ye),
-            t = on(),
+        xr = function (e) {
+          var t = e.id,
+            a = Object(n.useState)(null),
+            r = Object(Rn.a)(a, 2),
+            c = r[0],
+            i = r[1];
+          return (
+            Object(n.useLayoutEffect)(
+              function () {
+                var e = document.getElementById(t);
+                e && i(e);
+              },
+              [i, t],
+            ),
+            c && o.a.createPortal(e.children, c)
+          );
+        },
+        kr = Object(Cn.a)(function () {
+          return { text: { maxWidth: 600 }, buttonBox: { marginTop: 30 } };
+        }),
+        wr = function (e) {
+          var t = kr();
+          return r.a.createElement(
+            ca.a,
+            null,
+            r.a.createElement(
+              Rt.a,
+              { component: 'div', variant: 'h4' },
+              'There are no available key entries',
+            ),
+            r.a.createElement(
+              ca.a,
+              { className: t.text },
+              r.a.createElement(
+                'p',
+                null,
+                'Key entry simplifies work with rotatable keys. When you create a key entry, the server generates keys with a defined lifetime. After the key expires, the server will replace it with the new one and you can get a renewed key with the same request.',
+              ),
+            ),
+            r.a.createElement(
+              ca.a,
+              { className: t.buttonBox },
+              r.a.createElement(
+                At.a,
+                {
+                  variant: 'outlined',
+                  startIcon: r.a.createElement(un.a, null),
+                  onClick: e.onAddNewOne,
+                },
+                'Add key entry',
+              ),
+            ),
+          );
+        },
+        Sr = Object(za.a)(function () {
+          return { text: { maxWidth: 600 } };
+        }),
+        Cr = function () {
+          var e = Sr();
+          return r.a.createElement(
+            ca.a,
+            null,
+            r.a.createElement(
+              Rt.a,
+              { component: 'div', variant: 'h4' },
+              'There are no archived entries',
+            ),
+            r.a.createElement(
+              ca.a,
+              { className: e.text },
+              r.a.createElement(
+                'p',
+                null,
+                'You can mark key entry as archived. In that case, it will be no longer available, but server will keep all associated keys in storage. Also, you could restore archived key entry at any moment.',
+              ),
+              r.a.createElement(
+                'p',
+                null,
+                'All archived entries will be listed here.',
+              ),
+            ),
+          );
+        },
+        Pr = function () {
+          var e = Object(i.c)(Ze),
+            t = fn(),
             a = t.changePager,
             r = t.changeSearch,
             c = t.toggleEditModal,
@@ -3974,7 +4156,7 @@
               },
               [e, c],
             ),
-            u = Object(n.useCallback)(
+            l = Object(n.useCallback)(
               function (e, t) {
                 return a({ page: t });
               },
@@ -3994,42 +4176,52 @@
               [r],
             ),
             handleModalToggle: o,
-            handlePagerChange: u,
+            handlePagerChange: l,
           };
         },
-        gr = Object(Ta.a)(function () {
+        Ir = Object(za.a)(function () {
           return {
+            notFound: { marginTop: 20 },
+            footerWrap: { paddingTop: 20, paddingBottom: 20 },
+            loaderWrap: {
+              textAlign: 'center',
+              minHeight: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              paddingBottom: 145,
+            },
             pagerHolder: { marginLeft: 'auto' },
             searchHolder: { marginLeft: 'auto', marginTop: 'auto' },
             wrap: { maxWidth: '100%', flexGrow: 1 },
             noItems: { marginTop: 20 },
           };
         }),
-        Or = function (e) {
-          var t = gr(),
-            a = Object(i.c)($e),
+        Rr = function (e) {
+          var t = Ir(),
+            a = Object(i.c)(tt),
             n = a.loading,
             c = a.data,
             o = a.error,
-            u = a.pager,
-            l = Object(i.c)(Xe),
+            l = a.pager,
+            u = Object(i.c)($e),
             s = Object(i.c)(De),
-            m = Object(i.c)(Ze),
-            f = hr(),
-            p = f.handleModalToggle,
-            d = f.handlePagerChange,
-            b = f.handleChangePerPage,
-            h = f.handleChangeSearch;
+            m = Object(i.c)(et),
+            d = Pr(),
+            f = d.handleModalToggle,
+            p = d.handlePagerChange,
+            b = d.handleChangePerPage,
+            h = d.handleChangeSearch;
           return o
-            ? r.a.createElement(nn.a, { severity: 'error' }, o)
+            ? r.a.createElement(sn.a, { severity: 'error' }, o)
             : r.a.createElement(
-                na.a,
+                ca.a,
                 { className: t.wrap },
                 r.a.createElement(
-                  en.a,
+                  rn.a,
                   { container: !0, spacing: 2 },
                   r.a.createElement(
-                    en.a,
+                    rn.a,
                     {
                       item: !0,
                       container: !0,
@@ -4037,135 +4229,149 @@
                       xs: 12,
                       alignItems: 'center',
                     },
-                    !e.archive &&
+                    !m &&
+                      !e.archive &&
                       r.a.createElement(
-                        en.a,
+                        rn.a,
                         { item: !0 },
                         r.a.createElement(
-                          Pt.a,
+                          At.a,
                           {
                             variant: 'outlined',
-                            startIcon: r.a.createElement(an.a, null),
-                            onClick: p,
+                            startIcon: r.a.createElement(un.a, null),
+                            onClick: f,
                           },
                           'Add key entry',
                         ),
                       ),
                     !m &&
                       r.a.createElement(
-                        en.a,
+                        rn.a,
                         { item: !0 },
-                        r.a.createElement(br, {
+                        r.a.createElement(yr, {
                           defaultValue: s,
                           onThrottledChange: h,
                           placeholder: 'Search by name...',
                         }),
                       ),
+                    n &&
+                      r.a.createElement(
+                        rn.a,
+                        { item: !0 },
+                        r.a.createElement(cn.a, { size: 24 }),
+                      ),
                   ),
-                  !n &&
+                  m &&
+                    !e.archive &&
                     r.a.createElement(
-                      r.a.Fragment,
-                      null,
-                      m &&
-                        !e.archive &&
-                        r.a.createElement(
-                          en.a,
-                          { item: !0, xs: 12, className: t.noItems },
-                          r.a.createElement(
-                            wt.a,
-                            { variant: 'h5' },
-                            'There is no key entries. Add your first one!',
-                          ),
-                        ),
-                      m &&
-                        e.archive &&
-                        r.a.createElement(
-                          en.a,
-                          { item: !0, xs: 12, className: t.noItems },
-                          r.a.createElement(
-                            wt.a,
-                            { variant: 'h5' },
-                            'Archive is empty!',
-                          ),
-                        ),
+                      rn.a,
+                      { item: !0, xs: 12 },
+                      r.a.createElement(wr, { onAddNewOne: f }),
+                    ),
+                  m &&
+                    e.archive &&
+                    r.a.createElement(
+                      rn.a,
+                      { item: !0, xs: 12 },
+                      r.a.createElement(Cr, null),
+                    ),
+                  !m &&
+                    r.a.createElement(
+                      rn.a,
+                      { item: !0, xs: 12 },
                       c.items.length > 0 &&
                         r.a.createElement(
-                          en.a,
-                          { item: !0, xs: 12 },
-                          r.a.createElement(
-                            en.a,
-                            { container: !0, spacing: 2 },
-                            c.items.map(function (e) {
-                              return r.a.createElement(
-                                en.a,
-                                { item: !0, key: e.id, xs: 6 },
-                                r.a.createElement(ar, { data: e }),
-                              );
-                            }),
-                          ),
+                          rn.a,
+                          { container: !0, spacing: 2 },
+                          c.items.map(function (e) {
+                            return r.a.createElement(
+                              rn.a,
+                              { item: !0, key: e.id, xs: 6 },
+                              r.a.createElement(ur, { data: e }),
+                            );
+                          }),
+                        ),
+                      0 === c.items.length &&
+                        r.a.createElement(
+                          Rt.a,
+                          { className: t.notFound },
+                          'No items found',
                         ),
                     ),
-                  void 0 !== u.totalPages &&
-                    u.totalPages > 0 &&
+                  Boolean(l.totalPages) &&
                     r.a.createElement(
-                      en.a,
-                      { container: !0, item: !0, xs: 12, alignItems: 'center' },
+                      xr,
+                      { id: 'layout_dashboard_footer' },
                       r.a.createElement(
-                        en.a,
-                        { item: !0 },
-                        r.a.createElement(ur, {
-                          current: u.perPage,
-                          options: l,
-                          onSelect: b,
-                        }),
-                      ),
-                      r.a.createElement(
-                        en.a,
-                        { item: !0, className: t.pagerHolder },
-                        u.totalPages > 1 &&
-                          r.a.createElement(rn.a, {
-                            onChange: d,
-                            count: u.totalPages,
-                            page: u.page,
-                          }),
+                        on.a,
+                        { className: t.footerWrap },
+                        r.a.createElement(
+                          rn.a,
+                          {
+                            container: !0,
+                            item: !0,
+                            xs: 12,
+                            alignItems: 'center',
+                          },
+                          r.a.createElement(
+                            rn.a,
+                            { item: !0 },
+                            r.a.createElement(br, {
+                              current: l.perPage,
+                              options: u,
+                              onSelect: b,
+                            }),
+                          ),
+                          r.a.createElement(
+                            rn.a,
+                            { item: !0, className: t.pagerHolder },
+                            void 0 !== l.totalPages &&
+                              l.totalPages > 1 &&
+                              r.a.createElement(mn.a, {
+                                onChange: p,
+                                count: l.totalPages,
+                                page: l.page,
+                              }),
+                          ),
+                        ),
                       ),
                     ),
                 ),
               );
         },
-        vr = function (e) {
+        Ar = function (e) {
           return e.keyPreview;
         },
-        jr = Object(Ge.createSelector)(vr, function (e) {
+        Mr = Object(qe.createSelector)(Ar, function (e) {
           return e.modal;
         }),
-        Er = Object(Ge.createSelector)(vr, function (e) {
+        Tr = Object(qe.createSelector)(Ar, function (e) {
           return e.details;
         }),
-        yr = Object(Ge.createSelector)(vr, function (e) {
+        Nr = Object(qe.createSelector)(Ar, function (e) {
           return e.params;
         }),
-        xr = Object(Ge.createSelector)(vr, function (e) {
+        Lr = Object(qe.createSelector)(Ar, function (e) {
           return e.availFormats;
         }),
-        kr = Object(Ge.createSelector)(vr, function (e) {
+        Fr = Object(qe.createSelector)(Ar, function (e) {
           return e.availPrivacy;
         }),
-        Cr = function () {
+        Kr = function () {
           var e,
             t,
-            a = Pr(),
-            n = wr(),
+            a = Br(),
+            n = zr(),
             c = n.availFormats,
             o = n.availPrivacy,
             i = n.keyData,
-            u = n.previewParams,
-            l = n.keyInputRef,
+            l = n.previewParams,
+            u = n.keyInputRef,
             s = n.formatsBtnRef,
             m = n.privacyBtnRef,
-            f = n.targetKey,
-            p = n.isFormatsMenuOpen,
-            d = n.isPrivacyMenuOpen,
+            d = n.targetKey,
+            f = n.isFormatsMenuOpen,
+            p = n.isPrivacyMenuOpen,
             b = n.handleFormatsMenuClose,
             h = n.handleFormatsMenuOpen,
             g = n.handlePrivacyMenuClose,
@@ -4179,54 +4385,54 @@
               null,
               'Data error in KeyPreview component',
             );
-          if (void 0 === f)
+          if (void 0 === d)
             return r.a.createElement('div', null, 'Key data unavailable');
           var y =
-              null === (e = u.format) || void 0 === e
+              null === (e = l.format) || void 0 === e
                 ? void 0
                 : e.toUpperCase(),
             x =
-              null === (t = u.privacy) || void 0 === t
+              null === (t = l.privacy) || void 0 === t
                 ? void 0
                 : t.toUpperCase(),
-            k = ln.a.unix(i.data.activatesAt).format('LLL'),
-            C = i.data.expiresAt && ln.a.unix(i.data.expiresAt).format('LLL');
+            k = bn.a.unix(i.data.activatesAt).format('LLL'),
+            w = i.data.expiresAt && bn.a.unix(i.data.expiresAt).format('LLL');
           return r.a.createElement(
-            aa.a,
+            ra.a,
             { className: a.wrap },
-            r.a.createElement(qn, {
-              anchorEl: p ? s.current : null,
+            r.a.createElement(er, {
+              anchorEl: f ? s.current : null,
               handleClose: b,
               onSelectMenuItem: v,
               menu: c,
             }),
-            r.a.createElement(qn, {
-              anchorEl: d ? m.current : null,
+            r.a.createElement(er, {
+              anchorEl: p ? m.current : null,
               handleClose: g,
               onSelectMenuItem: j,
               menu: o,
             }),
             r.a.createElement(
-              en.a,
+              rn.a,
               { container: !0, spacing: 2 },
               r.a.createElement(
-                en.a,
+                rn.a,
                 { container: !0, item: !0, xs: 12, alignItems: 'center' },
                 r.a.createElement(
-                  en.a,
+                  rn.a,
                   { item: !0, xs: 6 },
-                  r.a.createElement(wt.a, { variant: 'h3' }, 'Key preview'),
+                  r.a.createElement(Rt.a, { variant: 'h3' }, 'Key preview'),
                 ),
                 r.a.createElement(
-                  en.a,
+                  rn.a,
                   { container: !0, item: !0, xs: 6, justify: 'flex-end' },
                   r.a.createElement(
-                    Pt.a,
+                    At.a,
                     { size: 'small', ref: m, onClick: O },
                     x,
                   ),
                   r.a.createElement(
-                    Pt.a,
+                    At.a,
                     { size: 'small', ref: s, onClick: h },
                     y,
                   ),
@@ -4235,19 +4441,19 @@
                     { className: a.copyHolder },
                     r.a.createElement('textarea', {
                       readOnly: !0,
-                      ref: l,
-                      value: f,
+                      ref: u,
+                      value: d,
                       className: a.keyInput,
                     }),
-                    r.a.createElement(Pn, {
-                      inputRef: l,
+                    r.a.createElement(Ln, {
+                      inputRef: u,
                       message: 'Key has been copied!',
                     }),
                   ),
                 ),
               ),
               r.a.createElement(
-                en.a,
+                rn.a,
                 {
                   item: !0,
                   container: !0,
@@ -4256,63 +4462,63 @@
                   spacing: 2,
                 },
                 r.a.createElement(
-                  en.a,
+                  rn.a,
                   { item: !0 },
                   r.a.createElement(
-                    wt.a,
+                    Rt.a,
                     { variant: 'caption' },
                     'Activates at: ',
                     k,
                   ),
                 ),
                 r.a.createElement(
-                  en.a,
+                  rn.a,
                   { item: !0 },
                   r.a.createElement(
-                    wt.a,
+                    Rt.a,
                     { variant: 'caption' },
-                    C ? 'Expires at: '.concat(C) : 'No expiration',
+                    w ? 'Expires at: '.concat(w) : 'No expiration',
                   ),
                 ),
               ),
               r.a.createElement(
-                en.a,
+                rn.a,
                 { item: !0, xs: 12 },
-                r.a.createElement(Hn, null, f),
+                r.a.createElement(Dn, null, d),
               ),
               r.a.createElement(
-                en.a,
+                rn.a,
                 { item: !0, container: !0, xs: 12, justify: 'flex-end' },
-                r.a.createElement(Pt.a, { onClick: E }, 'Close'),
+                r.a.createElement(At.a, { onClick: E }, 'Close'),
               ),
             ),
           );
         },
-        Sr = function (e) {
-          var t = wr(),
+        Wr = function (e) {
+          var t = zr(),
             a = t.modalState,
             n = t.handleDialogClose;
           return r.a.createElement(
-            Ma.a,
+            Ta.a,
             Object.assign({ open: Boolean(a.isOpen), onClose: n }, e),
-            r.a.createElement(Cr, null),
+            r.a.createElement(Kr, null),
           );
         },
-        wr = function () {
-          var e = Object(i.c)(Er),
-            t = Object(i.c)(jr),
-            a = Object(i.c)(yr),
-            r = Object(i.c)(xr),
-            c = Object(i.c)(kr),
+        zr = function () {
+          var e = Object(i.c)(Tr),
+            t = Object(i.c)(Mr),
+            a = Object(i.c)(Nr),
+            r = Object(i.c)(Lr),
+            c = Object(i.c)(Fr),
             o = Object(n.useState)(!1),
-            u = Object(xn.a)(o, 2),
-            l = u[0],
-            s = u[1],
+            l = Object(Rn.a)(o, 2),
+            u = l[0],
+            s = l[1],
             m = Object(n.useState)(!1),
-            f = Object(xn.a)(m, 2),
-            p = f[0],
-            d = f[1],
-            b = Yn(),
+            d = Object(Rn.a)(m, 2),
+            f = d[0],
+            p = d[1],
+            b = ar(),
             h = b.setPreviewParams,
             g = b.toggleModal,
             O = Object(n.useCallback)(
@@ -4335,15 +4541,15 @@
             ),
             E = Object(n.useCallback)(
               function () {
-                d(!1);
+                p(!1);
               },
-              [d],
+              [p],
             ),
             y = Object(n.useCallback)(
               function () {
-                d(!0);
+                p(!0);
               },
-              [d],
+              [p],
             ),
             x = Object(n.useCallback)(
               function (e) {
@@ -4357,14 +4563,14 @@
               },
               [h],
             ),
-            C = Object(n.useRef)(null),
+            w = Object(n.useRef)(null),
             S = Object(n.useRef)(null),
-            w = Object(n.useRef)(null);
+            C = Object(n.useRef)(null);
           return {
             availFormats: r,
             availPrivacy: c,
-            isPrivacyMenuOpen: p,
-            isFormatsMenuOpen: l,
+            isPrivacyMenuOpen: f,
+            isFormatsMenuOpen: u,
             targetKey: Object(n.useMemo)(
               function () {
                 if (void 0 !== e.data) {
@@ -4386,8 +4592,8 @@
             modalState: t,
             keyData: e,
             previewParams: a,
-            keyInputRef: C,
-            privacyBtnRef: w,
+            keyInputRef: w,
+            privacyBtnRef: C,
             formatsBtnRef: S,
             handleFormatsMenuClose: v,
             handleFormatsMenuOpen: j,
@@ -4397,11 +4603,11 @@
             handlePrivacyMenuItemSelect: k,
             handleDialogClose: O,
             toggleFormatsMenu: s,
-            togglePrivacyMenu: d,
+            togglePrivacyMenu: p,
             togglePreviewModal: g,
           };
         },
-        Pr = Object(Ta.a)(function () {
+        Br = Object(za.a)(function () {
           return {
             wrap: { width: '600px', padding: '20px' },
             copyHolder: { position: 'relative' },
@@ -4416,43 +4622,42 @@
             },
           };
         }),
-        Ir = a(426),
-        Rr = a(438),
-        Mr = a(427),
-        Ar = a(189),
-        Tr = a.n(Ar);
-      function Nr() {
-        var e = Object(Bt.a)(['[w]*'], ['[\\w]*']);
+        Hr = a(428),
+        Ur = a(438),
+        Jr = a(189),
+        _r = a.n(Jr);
+      function qr() {
+        var e = Object(Ut.a)(['[w]*'], ['[\\w]*']);
         return (
-          (Nr = function () {
+          (qr = function () {
             return e;
           }),
           e
         );
       }
-      function Lr() {
-        var e = Object(Bt.a)(['[d,.]*'], ['[\\d,.]*']);
+      function Gr() {
+        var e = Object(Ut.a)(['[d,.]*'], ['[\\d,.]*']);
         return (
-          (Lr = function () {
+          (Gr = function () {
             return e;
           }),
           e
         );
       }
-      var Fr = { h: 'hours', d: 'days', w: 'weeks', m: 'months' },
-        Kr = { name: '', code: '', rotation: '', unit: 'd', rotatable: '1' },
-        zr = function (e) {
-          var t = Jr(),
-            a = Br(e),
+      var Vr = { h: 'hours', d: 'days', w: 'weeks', m: 'months' },
+        Yr = { name: '', code: '', rotation: '', unit: 'd', rotatable: '1' },
+        Dr = function (e) {
+          var t = ec(),
+            a = Xr(e),
             n = a.menuItems,
             c = a.validate,
             o = a.handleSubmit;
           return r.a.createElement(
-            xa.a,
+            wa.a,
             { style: { width: 400 } },
-            r.a.createElement(ka.a, {
+            r.a.createElement(Sa.a, {
               title: r.a.createElement(
-                wt.a,
+                Rt.a,
                 { variant: 'h3' },
                 'Add new key entry',
               ),
@@ -4461,24 +4666,24 @@
               Ca.a,
               null,
               r.a.createElement(
-                $t.c,
-                { initialValues: Kr, validate: c, onSubmit: o },
+                ta.c,
+                { initialValues: Yr, validate: c, onSubmit: o },
                 function (e) {
                   var a = e.isSubmitting;
                   return r.a.createElement(
-                    $t.b,
+                    ta.b,
                     null,
                     r.a.createElement(
-                      en.a,
+                      rn.a,
                       { container: !0, spacing: 2 },
                       r.a.createElement(
-                        en.a,
+                        rn.a,
                         { item: !0, xs: 12 },
-                        r.a.createElement($t.a, { name: 'name' }, function (e) {
+                        r.a.createElement(ta.a, { name: 'name' }, function (e) {
                           var a = e.field,
                             n = e.meta;
                           return r.a.createElement(
-                            Sa.a,
+                            Pa.a,
                             Object.assign(
                               {
                                 className: t.textfield,
@@ -4492,13 +4697,13 @@
                         }),
                       ),
                       r.a.createElement(
-                        en.a,
+                        rn.a,
                         { item: !0, xs: 12 },
-                        r.a.createElement($t.a, { name: 'code' }, function (e) {
+                        r.a.createElement(ta.a, { name: 'code' }, function (e) {
                           var a = e.field,
                             n = e.meta;
                           return r.a.createElement(
-                            Sa.a,
+                            Pa.a,
                             Object.assign(
                               {
                                 className: t.textfield,
@@ -4507,7 +4712,7 @@
                                 variant: 'outlined',
                                 InputProps: {
                                   inputRef: function (e) {
-                                    e && Hr.mask(e);
+                                    e && $r.mask(e);
                                   },
                                 },
                               },
@@ -4517,25 +4722,25 @@
                         }),
                       ),
                       r.a.createElement(
-                        en.a,
+                        rn.a,
                         { item: !0, xs: 12 },
-                        r.a.createElement($t.a, { name: 'rotation' }, function (
+                        r.a.createElement(ta.a, { name: 'rotation' }, function (
                           t,
                         ) {
                           var a = t.field,
                             c = t.meta,
                             o = '1' === e.values.rotatable;
-                          return r.a.createElement(Dn, {
+                          return r.a.createElement(tr, {
                             menu: n,
                             onSelectMenuItem: function (t) {
                               'string' === typeof t.id &&
                                 e.setFieldValue('unit', t.id);
                             },
                             disabled: !o,
-                            currentMenuLabel: Fr[e.values.unit],
+                            currentMenuLabel: Vr[e.values.unit],
                             inputProps: {
                               inputRef: function (e) {
-                                e && Ur.mask(e);
+                                e && Zr.mask(e);
                               },
                             },
                             fieldProps: Object(j.a)(
@@ -4549,15 +4754,15 @@
                         }),
                       ),
                       r.a.createElement(
-                        en.a,
+                        rn.a,
                         { item: !0, xs: 12 },
                         r.a.createElement(
-                          $t.a,
+                          ta.a,
                           { name: 'rotatable' },
                           function (t) {
                             var a = t.field;
-                            return r.a.createElement(Ir.a, {
-                              control: r.a.createElement(Rr.a, {
+                            return r.a.createElement(Hr.a, {
+                              control: r.a.createElement(Ur.a, {
                                 checked: '1' === a.value,
                                 onChange: function (t, a) {
                                   e.setFieldValue('rotatable', a ? '1' : '0');
@@ -4572,7 +4777,7 @@
                       ),
                       e.errors.server &&
                         r.a.createElement(
-                          en.a,
+                          rn.a,
                           {
                             item: !0,
                             container: !0,
@@ -4580,13 +4785,13 @@
                             style: { alignItems: 'center' },
                           },
                           r.a.createElement(
-                            ma,
+                            fa,
                             { root: { style: { flexGrow: 1 } } },
                             e.errors.server,
                           ),
                         ),
                       r.a.createElement(
-                        en.a,
+                        rn.a,
                         {
                           item: !0,
                           container: !0,
@@ -4594,7 +4799,7 @@
                           style: { alignItems: 'center' },
                         },
                         r.a.createElement(
-                          Pt.a,
+                          At.a,
                           {
                             disabled: a,
                             size: 'large',
@@ -4606,7 +4811,7 @@
                           },
                           !a && 'Submit',
                           a &&
-                            r.a.createElement(Mr.a, {
+                            r.a.createElement(cn.a, {
                               className: t.progress,
                               size: 26,
                             }),
@@ -4619,9 +4824,9 @@
             ),
           );
         },
-        Wr = function () {
-          var e = Object(i.c)(Ye),
-            t = on().toggleEditModal,
+        Qr = function () {
+          var e = Object(i.c)(Ze),
+            t = fn().toggleEditModal,
             a = Object(n.useCallback)(
               function () {
                 t({ isOpened: !1 });
@@ -4629,16 +4834,16 @@
               [t],
             );
           return r.a.createElement(
-            Ma.a,
+            Ta.a,
             { open: e, onClose: a },
-            r.a.createElement(zr, { onSubmit: a }),
+            r.a.createElement(Dr, { onSubmit: a }),
           );
         },
-        Br = function (e) {
-          var t = on().fetchCreateKey,
+        Xr = function (e) {
+          var t = fn().fetchCreateKey,
             a = Object(n.useMemo)(function () {
-              return Object.keys(Fr).map(function (e) {
-                return { id: e, label: Fr[e] };
+              return Object.keys(Vr).map(function (e) {
+                return { id: e, label: Vr[e] };
               });
             }, []),
             r = e.onSubmit,
@@ -4700,27 +4905,44 @@
             validate: o,
           };
         },
-        Ur = Tr()({ regex: String.raw(Lr()) }),
-        Hr = Tr()({ regex: String.raw(Nr()) }),
-        Jr = Object(Ta.a)(function () {
+        Zr = _r()({ regex: String.raw(Gr()) }),
+        $r = _r()({ regex: String.raw(qr()) }),
+        ec = Object(za.a)(function () {
           return {
             textfield: { width: '100%' },
             progress: { marginLeft: 20 },
             menu: { width: 150, marginLeft: 10 },
           };
         }),
-        Gr = Object($a.a)(function () {
+        tc = Object(za.a)(function () {
           return {
-            container: {
+            loaderWrap: {
+              minHeight: '100%',
               display: 'flex',
-              minWidth: 0,
-              flexGrow: 1,
-              paddingTop: 16,
+              alignItems: 'center',
+              justifyContent: 'center',
+              paddingBottom: 120,
             },
+            container: { minWidth: 0, flexGrow: 1, paddingTop: 24 },
           };
         }),
-        _r = function () {
-          var e = on(),
+        ac = function (e) {
+          var t = e.isLoading,
+            a = tc();
+          return t
+            ? r.a.createElement(
+                'div',
+                { className: a.loaderWrap },
+                r.a.createElement(cn.a, { size: 64 }),
+              )
+            : r.a.createElement(
+                on.a,
+                { className: a.container },
+                r.a.createElement(r.a.Fragment, null, e.children),
+              );
+        },
+        nc = function () {
+          var e = fn(),
             t = e.fetchKeysListWatch,
             a = e.resetList,
             r = e.routeWatcher,
@@ -4755,21 +4977,21 @@
               [a],
             );
         },
-        Vr = function () {
-          var e = Gr();
+        rc = function () {
+          var e = Object(i.c)(Qe);
           return (
-            _r(),
+            nc(),
             r.a.createElement(
-              Za.a,
-              { className: e.container },
-              r.a.createElement(Or, null),
-              r.a.createElement(Sr, null),
+              ac,
+              { isLoading: e.keys },
+              r.a.createElement(Rr, null),
               r.a.createElement(Wr, null),
+              r.a.createElement(Qr, null),
             )
           );
         },
-        qr = function () {
-          var e = gt(),
+        cc = function () {
+          var e = jt(),
             t = Object(n.useCallback)(
               (function () {
                 var t = Object(v.a)(
@@ -4842,10 +5064,10 @@
             fetchRemoveAccounts: a,
           };
         },
-        Dr = { login: '', password: '', admin: '0' },
-        Yr = function (e) {
+        oc = { login: '', password: '', admin: '0' },
+        ic = function (e) {
           var t = e.onSubmit,
-            a = qr().fetchCreateAccount;
+            a = cc().fetchCreateAccount;
           return {
             validate: Object(n.useCallback)(function () {}, []),
             handleSubmit: Object(n.useCallback)(
@@ -4882,20 +5104,20 @@
             fetchCreateAccount: a,
           };
         },
-        Qr = Object(Ta.a)(function () {
+        lc = Object(za.a)(function () {
           return { progress: { marginLeft: 20 } };
         }),
-        Xr = function (e) {
-          var t = Qr(),
-            a = Yr(e),
+        uc = function (e) {
+          var t = lc(),
+            a = ic(e),
             n = a.handleSubmit,
             c = a.validate;
           return r.a.createElement(
-            xa.a,
+            wa.a,
             { style: { width: 400 } },
-            r.a.createElement(ka.a, {
+            r.a.createElement(Sa.a, {
               title: r.a.createElement(
-                wt.a,
+                Rt.a,
                 { variant: 'h3' },
                 'Create new account',
               ),
@@ -4904,26 +5126,26 @@
               Ca.a,
               null,
               r.a.createElement(
-                $t.c,
-                { initialValues: Dr, validate: c, onSubmit: n },
+                ta.c,
+                { initialValues: oc, validate: c, onSubmit: n },
                 function (e) {
                   var a = e.isSubmitting;
                   return r.a.createElement(
-                    $t.b,
+                    ta.b,
                     null,
                     r.a.createElement(
-                      en.a,
+                      rn.a,
                       { container: !0, spacing: 2 },
                       r.a.createElement(
-                        en.a,
+                        rn.a,
                         { item: !0, xs: 12 },
-                        r.a.createElement($t.a, { name: 'login' }, function (
+                        r.a.createElement(ta.a, { name: 'login' }, function (
                           e,
                         ) {
                           var t = e.field,
                             a = e.meta;
                           return r.a.createElement(
-                            Sa.a,
+                            Pa.a,
                             Object.assign(
                               {
                                 fullWidth: !0,
@@ -4937,15 +5159,15 @@
                         }),
                       ),
                       r.a.createElement(
-                        en.a,
+                        rn.a,
                         { item: !0, xs: 12 },
-                        r.a.createElement($t.a, { name: 'password' }, function (
+                        r.a.createElement(ta.a, { name: 'password' }, function (
                           e,
                         ) {
                           var t = e.field,
                             a = e.meta;
                           return r.a.createElement(
-                            Sa.a,
+                            Pa.a,
                             Object.assign(
                               {
                                 fullWidth: !0,
@@ -4961,14 +5183,14 @@
                         }),
                       ),
                       r.a.createElement(
-                        en.a,
+                        rn.a,
                         { item: !0, xs: 12 },
-                        r.a.createElement($t.a, { name: 'admin' }, function (
+                        r.a.createElement(ta.a, { name: 'admin' }, function (
                           t,
                         ) {
                           var a = t.field;
-                          return r.a.createElement(Ir.a, {
-                            control: r.a.createElement(Rr.a, {
+                          return r.a.createElement(Hr.a, {
+                            control: r.a.createElement(Ur.a, {
                               checked: '1' === a.value,
                               onChange: function (t, a) {
                                 e.setFieldValue('admin', a ? '1' : '0');
@@ -4981,7 +5203,7 @@
                         }),
                       ),
                       r.a.createElement(
-                        en.a,
+                        rn.a,
                         {
                           item: !0,
                           container: !0,
@@ -4989,7 +5211,7 @@
                           style: { alignItems: 'center' },
                         },
                         r.a.createElement(
-                          Pt.a,
+                          At.a,
                           {
                             disabled: a,
                             size: 'large',
@@ -5001,7 +5223,7 @@
                           },
                           !a && 'Submit',
                           a &&
-                            r.a.createElement(Mr.a, {
+                            r.a.createElement(cn.a, {
                               className: t.progress,
                               size: 26,
                             }),
@@ -5014,18 +5236,18 @@
             ),
           );
         },
-        Zr = function (e) {
+        sc = function (e) {
           return e.accounts;
         },
-        $r =
-          (Object(Ge.createSelector)(Zr, function (e) {
+        mc =
+          (Object(qe.createSelector)(sc, function (e) {
             return e.create;
           }),
-          Object(Ge.createSelector)(Zr, function (e) {
+          Object(qe.createSelector)(sc, function (e) {
             return e.list;
           })),
-        ec = function () {
-          var e = qr().fetchRemoveAccounts;
+        dc = function () {
+          var e = cc().fetchRemoveAccounts;
           return {
             deleteAccount: Object(n.useCallback)(
               (function () {
@@ -5051,35 +5273,35 @@
             ),
           };
         },
-        tc = Object(Ta.a)(function () {
+        fc = Object(za.a)(function () {
           return { actions: { justifyContent: 'flex-end' } };
         }),
-        ac = function (e) {
-          var t = tc(),
-            a = ec().deleteAccount,
+        pc = function (e) {
+          var t = fc(),
+            a = dc().deleteAccount,
             n = e.data;
           return r.a.createElement(
-            xa.a,
+            wa.a,
             null,
             r.a.createElement(
               Ca.a,
               null,
               r.a.createElement(
-                wt.a,
+                Rt.a,
                 { variant: 'caption', component: 'div' },
                 'Account',
               ),
               r.a.createElement(
-                wt.a,
+                Rt.a,
                 { variant: 'h4', component: 'div' },
                 n.login,
               ),
             ),
             r.a.createElement(
-              dn.a,
+              jn.a,
               { className: t.actions },
               r.a.createElement(
-                Ln,
+                Un,
                 {
                   title: 'Are you sure want to delete account?',
                   content: 'Every associated keys will be unavailable',
@@ -5087,17 +5309,17 @@
                     return a(n.id);
                   },
                 },
-                r.a.createElement(Pt.a, { size: 'small' }, 'Remove account'),
+                r.a.createElement(At.a, { size: 'small' }, 'Remove account'),
               ),
             ),
           );
         },
-        nc = function () {
+        bc = function () {
           var e = Object(n.useState)(!1),
-            t = Object(xn.a)(e, 2),
+            t = Object(Rn.a)(e, 2),
             a = t[0],
             r = t[1],
-            c = qr().fetchAccountsList,
+            c = cc().fetchAccountsList,
             o = Object(n.useCallback)(
               function () {
                 r(!a);
@@ -5114,69 +5336,61 @@
             { isFormOpened: a, toggleForm: r, handleModalToggle: o }
           );
         },
-        rc = function () {
-          var e = Object(i.c)($r),
-            t = nc(),
+        hc = function () {
+          var e = Object(i.c)(mc),
+            t = bc(),
             a = t.isFormOpened,
             n = t.handleModalToggle;
           return r.a.createElement(
             r.a.Fragment,
             null,
             r.a.createElement(
-              Ma.a,
+              Ta.a,
               { open: a, onClose: n },
-              r.a.createElement(Xr, { onSubmit: n }),
+              r.a.createElement(uc, { onSubmit: n }),
             ),
             r.a.createElement(
-              en.a,
+              rn.a,
               { container: !0, spacing: 2 },
               r.a.createElement(
-                en.a,
+                rn.a,
                 { item: !0, xs: 12 },
                 r.a.createElement(
-                  Pt.a,
+                  At.a,
                   {
                     variant: 'outlined',
-                    startIcon: r.a.createElement(an.a, null),
+                    startIcon: r.a.createElement(un.a, null),
                     onClick: n,
                   },
                   'Add account',
                 ),
               ),
               r.a.createElement(
-                en.a,
+                rn.a,
                 { container: !0, item: !0, spacing: 2, xs: 12 },
                 e.accounts.map(function (e) {
                   return r.a.createElement(
-                    en.a,
+                    rn.a,
                     { item: !0, key: e.id, xs: 6 },
-                    r.a.createElement(ac, { data: e }),
+                    r.a.createElement(pc, { data: e }),
                   );
                 }),
               ),
             ),
           );
         },
-        cc = Object(Ta.a)(function () {
-          return { container: { paddingTop: 24, paddingBottom: 24 } };
-        }),
-        oc = function () {
-          var e = cc();
-          return r.a.createElement(
-            Za.a,
-            { className: e.container },
-            r.a.createElement(rc, null),
-          );
+        gc = function () {
+          return r.a.createElement(ac, null, r.a.createElement(hc, null));
         },
-        ic = a(442),
-        uc = function () {
-          var e = gt(),
-            t = Object(i.c)(ot),
-            a = Object(i.c)(it),
-            r = Object(i.c)(Kt),
+        Oc = a(442),
+        vc = function () {
+          var e = jt(),
+            t = Object(i.c)(lt),
+            a = Object(i.c)(ut),
+            r = Object(i.c)(zt),
             c = Object(n.useCallback)(
               function (t) {
-                var a = cn(64);
+                var a = dn(64);
                 return e(
                   he.fetchCreateRepo(
                     Object(j.a)(Object(j.a)({}, t), {}, { accessToken: a }),
@@ -5191,33 +5405,40 @@
               },
               [e],
             ),
+            l = Object(n.useCallback)(
+              function () {
+                return e(he.resetState());
+              },
+              [e],
+            ),
             u = Object(n.useCallback)(
               function (t) {
                 return e(he.changeSearch({ search: t }));
               },
               [e],
             ),
-            l = Object(n.useCallback)(
+            s = Object(n.useCallback)(
               function (t) {
                 return e(he.toggleEditModal(t));
               },
               [e],
             ),
-            s = Object(n.useCallback)(
+            m = Object(n.useCallback)(
               function (t) {
                 return e(he.fetchListRepo(t));
               },
               [e, r],
             ),
-            m = Object(n.useCallback)(
+            d = Object(n.useCallback)(
               function () {
                 var e = { page: t.page, perPage: t.perPage, search: a };
-                return s(e);
+                return m(e);
               },
-              [s, t.page, t.perPage, a],
+              [m, t.page, t.perPage, a],
             );
           return {
-            toggleEditModal: l,
+            resetState: l,
+            toggleEditModal: s,
             createNewRepo: c,
             deleteRepos: Object(n.useCallback)(
               (function () {
@@ -5241,14 +5462,14 @@
               })(),
               [e],
             ),
-            fetchListRepo: s,
+            fetchListRepo: m,
             changePager: o,
-            fetchListRepoWatch: m,
+            fetchListRepoWatch: d,
             changeSearch: u,
           };
         },
-        lc = function () {
-          var e = uc().deleteRepos,
+        jc = function () {
+          var e = vc().deleteRepos,
             t = Object(n.useCallback)(function (e) {
               e.target.select();
             }, []);
@@ -5258,58 +5479,58 @@
             handleFocus: t,
           };
         },
-        sc = Object(Ta.a)(function () {
+        Ec = Object(za.a)(function () {
           return {
             actions: { justifyContent: 'flex-end' },
             contentItems: { display: 'flex' },
             contentItem: { marginRight: 20 },
           };
         }),
-        mc = function (e) {
+        yc = function (e) {
           var t = e.data,
-            a = sc(),
-            n = Object(i.c)(Nt),
-            c = lc(),
+            a = Ec(),
+            n = Object(i.c)(Bt),
+            c = jc(),
             o = c.deleteRepos,
-            u = c.accessRef,
-            l = c.handleFocus,
+            l = c.accessRef,
+            u = c.handleFocus,
             s = ''.concat(n || '', '/repo/bunch/').concat(t.code);
           return r.a.createElement(
-            xa.a,
+            wa.a,
             null,
             r.a.createElement(
               Ca.a,
               null,
               r.a.createElement(
-                en.a,
+                rn.a,
                 { container: !0, spacing: 2 },
                 r.a.createElement(
-                  en.a,
+                  rn.a,
                   { item: !0, xs: 12 },
                   r.a.createElement(
-                    wt.a,
+                    Rt.a,
                     { variant: 'caption', component: 'div' },
                     'Repository',
                   ),
                   r.a.createElement(
-                    wt.a,
+                    Rt.a,
                     { variant: 'h5', component: 'div' },
                     t.name,
                   ),
                 ),
                 r.a.createElement(
-                  en.a,
+                  rn.a,
                   { item: !0, xs: 12 },
-                  r.a.createElement(sn.a, null),
+                  r.a.createElement(hn.a, null),
                 ),
                 r.a.createElement(
-                  en.a,
+                  rn.a,
                   { container: !0, item: !0, xs: 12, spacing: 1 },
                   r.a.createElement(
-                    en.a,
+                    rn.a,
                     { item: !0, xs: 12 },
                     r.a.createElement(
-                      wt.a,
+                      Rt.a,
                       { variant: 'caption', component: 'div' },
                       'Contained keys',
                     ),
@@ -5317,9 +5538,9 @@
                   t.entries.map(function (e, t) {
                     var a = e.name;
                     return r.a.createElement(
-                      en.a,
+                      rn.a,
                       { item: !0, key: t },
-                      r.a.createElement(ic.a, {
+                      r.a.createElement(Oc.a, {
                         label: a,
                         variant: 'outlined',
                       }),
@@ -5327,26 +5548,26 @@
                   }),
                 ),
                 r.a.createElement(
-                  en.a,
+                  rn.a,
                   { item: !0, xs: 12 },
-                  r.a.createElement(sn.a, null),
+                  r.a.createElement(hn.a, null),
                 ),
                 r.a.createElement(
-                  en.a,
+                  rn.a,
                   { item: !0, xs: 12 },
-                  r.a.createElement(Sa.a, {
+                  r.a.createElement(Pa.a, {
                     fullWidth: !0,
                     label: 'Access token',
                     variant: 'outlined',
                     value: t.accessToken,
-                    onFocus: l,
+                    onFocus: u,
                     InputProps: {
-                      inputRef: u,
+                      inputRef: l,
                       endAdornment: r.a.createElement(
-                        vn.a,
+                        wn.a,
                         { position: 'end' },
-                        r.a.createElement(Pn, {
-                          inputRef: u,
+                        r.a.createElement(Ln, {
+                          inputRef: l,
                           message: 'URL has been copied!',
                         }),
                       ),
@@ -5354,15 +5575,15 @@
                   }),
                 ),
                 r.a.createElement(
-                  en.a,
+                  rn.a,
                   { item: !0, xs: 12 },
                   r.a.createElement(
-                    wt.a,
+                    Rt.a,
                     null,
                     'Key can be fetched via POST with access token.',
                   ),
                   r.a.createElement(
-                    Hn,
+                    Dn,
                     null,
                     'curl -d \'{ "accessToken":"'
                       .concat(
@@ -5375,40 +5596,77 @@
               ),
             ),
             r.a.createElement(
-              dn.a,
+              jn.a,
               { className: a.actions },
               r.a.createElement(
-                Ln,
+                Un,
                 {
                   title: 'Are you sure want to delete repo?',
                   onSubmit: function () {
                     return o({ ids: [t.id] });
                   },
                 },
-                r.a.createElement(Pt.a, { size: 'small' }, 'Remove'),
+                r.a.createElement(At.a, { size: 'small' }, 'Remove'),
               ),
             ),
           );
         },
-        fc = function () {
-          var e = uc(),
+        xc = Object(Cn.a)(function () {
+          return { text: { maxWidth: 600 }, buttonBox: { marginTop: 30 } };
+        }),
+        kc = function (e) {
+          var t = xc();
+          return r.a.createElement(
+            ca.a,
+            null,
+            r.a.createElement(
+              Rt.a,
+              { component: 'div', variant: 'h4' },
+              'There are no repositories',
+            ),
+            r.a.createElement(
+              ca.a,
+              { className: t.text },
+              r.a.createElement(
+                'p',
+                null,
+                'Repository is useful when you need to get several keys in one request. For example, you can get all keys while an auth server initialization.',
+              ),
+            ),
+            r.a.createElement(
+              ca.a,
+              { className: t.buttonBox },
+              r.a.createElement(
+                At.a,
+                {
+                  variant: 'outlined',
+                  startIcon: r.a.createElement(un.a, null),
+                  onClick: e.onAddNewOne,
+                },
+                'Add repo',
+              ),
+            ),
+          );
+        },
+        wc = function () {
+          var e = vc(),
             t = e.changePager,
             a = e.changeSearch,
             r = e.toggleEditModal,
-            c = Object(i.c)(ut),
+            c = Object(i.c)(mt),
             o = Object(n.useCallback)(
               function (e) {
                 return a(e);
               },
               [a],
             ),
-            u = Object(n.useCallback)(
+            l = Object(n.useCallback)(
               function (e) {
                 return t({ perPage: e });
               },
               [t],
             ),
-            l = Object(n.useCallback)(
+            u = Object(n.useCallback)(
               function (e, a) {
                 return t({ page: a });
               },
@@ -5422,146 +5680,173 @@
               },
               [r, c],
             ),
-            handleChangePerPage: u,
-            handlePagerChange: l,
+            handleChangePerPage: l,
+            handlePagerChange: u,
           };
         },
-        pc = Object($a.a)(function () {
+        Sc = Object(Cn.a)(function () {
           return {
+            notFound: { marginTop: 20 },
+            footerWrap: { paddingTop: 20, paddingBottom: 20 },
             pagerHolder: { marginLeft: 'auto' },
             searchHolder: { marginLeft: 'auto' },
             noItems: { marginTop: 20 },
           };
         }),
-        dc = function () {
-          var e = pc(),
-            t = Object(i.c)(ct),
-            a = t.items,
-            n = t.pager,
-            c = t.pagerOptions,
-            o = Object(i.c)(it),
-            u = Object(i.c)(lt),
-            l = fc(),
-            s = l.handleModalToggle,
-            m = l.handleChangePerPage,
-            f = l.handlePagerChange,
-            p = l.handleChangeSearch;
+        Cc = function () {
+          var e = Sc(),
+            t = Object(i.c)(it),
+            a = t.loading,
+            n = t.items,
+            c = t.pager,
+            o = t.pagerOptions,
+            l = Object(i.c)(ut),
+            u = Object(i.c)(dt),
+            s = wc(),
+            m = s.handleModalToggle,
+            d = s.handleChangePerPage,
+            f = s.handlePagerChange,
+            p = s.handleChangeSearch;
           return r.a.createElement(
-            na.a,
+            ca.a,
             null,
             r.a.createElement(
-              en.a,
+              rn.a,
               { container: !0, spacing: 2 },
               r.a.createElement(
-                en.a,
-                { item: !0, spacing: 2, container: !0, xs: 12 },
-                r.a.createElement(
-                  en.a,
-                  { item: !0 },
-                  r.a.createElement(
-                    Pt.a,
-                    {
-                      variant: 'outlined',
-                      startIcon: r.a.createElement(an.a, null),
-                      onClick: s,
-                    },
-                    'Add repository',
-                  ),
-                ),
+                rn.a,
+                {
+                  item: !0,
+                  spacing: 2,
+                  container: !0,
+                  xs: 12,
+                  alignItems: 'center',
+                },
                 !u &&
                   r.a.createElement(
-                    en.a,
+                    rn.a,
                     { item: !0 },
-                    r.a.createElement(br, {
-                      defaultValue: o,
+                    r.a.createElement(
+                      At.a,
+                      {
+                        variant: 'outlined',
+                        startIcon: r.a.createElement(un.a, null),
+                        onClick: m,
+                      },
+                      'Add repository',
+                    ),
+                  ),
+                !u &&
+                  r.a.createElement(
+                    rn.a,
+                    { item: !0 },
+                    r.a.createElement(yr, {
+                      defaultValue: l,
                       onThrottledChange: p,
                       placeholder: 'Search by name...',
                     }),
                   ),
+                a &&
+                  r.a.createElement(
+                    rn.a,
+                    { item: !0 },
+                    r.a.createElement(cn.a, { size: 24 }),
+                  ),
               ),
-              a.length > 0 &&
+              n.length > 0 &&
                 r.a.createElement(
-                  en.a,
+                  rn.a,
                   { item: !0, xs: 12 },
                   r.a.createElement(
-                    en.a,
+                    rn.a,
                     { container: !0, spacing: 2 },
-                    a.map(function (e) {
+                    n.map(function (e) {
                       return r.a.createElement(
-                        en.a,
+                        rn.a,
                         { item: !0, xs: 6, key: e.id },
-                        r.a.createElement(mc, { data: e }),
+                        r.a.createElement(yc, { data: e }),
                       );
                     }),
                   ),
                 ),
+              !u &&
+                0 === n.length &&
+                r.a.createElement(
+                  Rt.a,
+                  { className: e.notFound },
+                  'No items found',
+                ),
               u &&
                 r.a.createElement(
-                  en.a,
-                  { item: !0, xs: 12, className: e.noItems },
-                  r.a.createElement(
-                    wt.a,
-                    { variant: 'h5' },
-                    'There is no repositories.',
-                  ),
+                  rn.a,
+                  { item: !0, xs: 12 },
+                  r.a.createElement(kc, { onAddNewOne: m }),
                 ),
-              void 0 !== n.totalItems &&
-                n.totalItems > 0 &&
+              void 0 !== c.totalItems &&
+                c.totalItems > 0 &&
                 r.a.createElement(
-                  en.a,
-                  {
-                    container: !0,
-                    item: !0,
-                    xs: 12,
-                    spacing: 2,
-                    alignItems: 'center',
-                  },
+                  xr,
+                  { id: 'layout_dashboard_footer' },
                   r.a.createElement(
-                    en.a,
-                    { item: !0 },
-                    r.a.createElement(ur, {
-                      current: n.perPage,
-                      options: c,
-                      onSelect: m,
-                    }),
-                  ),
-                  r.a.createElement(
-                    en.a,
-                    { item: !0, className: e.pagerHolder },
-                    void 0 !== n.totalPages &&
-                      n.totalPages > 1 &&
-                      r.a.createElement(rn.a, {
-                        onChange: f,
-                        count: n.totalPages,
-                        page: n.page,
-                      }),
+                    on.a,
+                    { className: e.footerWrap },
+                    r.a.createElement(
+                      rn.a,
+                      {
+                        container: !0,
+                        item: !0,
+                        xs: 12,
+                        spacing: 2,
+                        alignItems: 'center',
+                      },
+                      r.a.createElement(
+                        rn.a,
+                        { item: !0 },
+                        r.a.createElement(br, {
+                          current: c.perPage,
+                          options: o,
+                          onSelect: d,
+                        }),
+                      ),
+                      r.a.createElement(
+                        rn.a,
+                        { item: !0, className: e.pagerHolder },
+                        void 0 !== c.totalPages &&
+                          c.totalPages > 1 &&
+                          r.a.createElement(mn.a, {
+                            onChange: f,
+                            count: c.totalPages,
+                            page: c.page,
+                          }),
+                      ),
+                    ),
                   ),
                 ),
             ),
           );
         },
-        bc = a(310),
-        hc = a.n(bc),
-        gc = function (e) {
+        Pc = a(310),
+        Ic = a.n(Pc),
+        Rc = function (e) {
           var t = e.pickedSet,
             a = e.onUpdate,
             r = Object(n.useState)([]),
-            c = Object(xn.a)(r, 2),
+            c = Object(Rn.a)(r, 2),
             o = c[0],
             i = c[1],
-            u = Object(n.useState)([]),
-            l = Object(xn.a)(u, 2),
-            s = l[0],
-            m = l[1],
-            f = Object(n.useState)({}),
-            p = Object(xn.a)(f, 2),
-            d = p[0],
-            b = p[1],
+            l = Object(n.useState)([]),
+            u = Object(Rn.a)(l, 2),
+            s = u[0],
+            m = u[1],
+            d = Object(n.useState)({}),
+            f = Object(Rn.a)(d, 2),
+            p = f[0],
+            b = f[1],
             h = Object(n.useState)({}),
-            g = Object(xn.a)(h, 2),
+            g = Object(Rn.a)(h, 2),
             O = g[0],
             v = g[1];
-          vc(t, i), jc(o, d, b), Ec(O, m);
+          Mc(t, i), Tc(o, p, b), Nc(O, m);
           var E = Object(n.useCallback)(
               function (e, t) {
                 var n = t
@@ -5594,13 +5879,14 @@
             handleSearchChange: y,
           };
         },
-        Oc = Object(Ta.a)(function () {
+        Ac = Object(za.a)(function () {
           return {
             scrollBar: { height: 220 },
             topDivider: { marginBottom: 5 },
+            noItemsMessage: { padding: '10px 15px' },
           };
         }),
-        vc = function (e, t) {
+        Mc = function (e, t) {
           Object(n.useEffect)(
             function () {
               e && t(e);
@@ -5608,8 +5894,8 @@
             [e, t],
           );
         },
-        jc = function (e, t, a) {
-          var r = on().requestKeysByIds;
+        Tc = function (e, t, a) {
+          var r = fn().requestKeysByIds;
           Object(n.useEffect)(
             function () {
               var a = t,
@@ -5621,25 +5907,25 @@
             [e, t, a, r],
           );
         },
-        Ec = function (e, t) {
+        Nc = function (e, t) {
           var a,
             r,
             c,
-            o = on().requestKeysList,
+            o = fn().requestKeysList,
             i = Object(n.useCallback)(
               function () {
                 return o(e);
               },
               [e, o],
             ),
-            u = Object(n.useCallback)(
+            l = Object(n.useCallback)(
               function (e) {
                 t(e.items);
               },
               [t],
             );
           (a = i),
-            (r = u),
+            (r = l),
             Object(n.useEffect)(
               function () {
                 var e = !1;
@@ -5660,69 +5946,80 @@
               [a, r, c],
             );
         },
-        yc = function (e) {
-          var t = gc(e),
-            a = t.picked,
-            n = t.options,
-            c = t.handleChangeItem,
-            o = t.handleSearchChange,
-            i = Oc();
+        Lc = function (e) {
+          var t = e.noItemsMessage,
+            a = Rc(e),
+            n = a.picked,
+            c = a.options,
+            o = a.handleChangeItem,
+            i = a.handleSearchChange,
+            l = Ac();
           return r.a.createElement(
-            en.a,
+            rn.a,
             { container: !0, spacing: 1 },
             r.a.createElement(
-              en.a,
-              { item: !0, xs: 12, className: i.topDivider },
-              r.a.createElement(sn.a, null),
+              rn.a,
+              { item: !0, xs: 12, className: l.topDivider },
+              r.a.createElement(hn.a, null),
             ),
-            r.a.createElement(
-              en.a,
-              { item: !0, xs: 12 },
-              r.a.createElement(br, {
-                placeholder: 'Select required keys...',
-                onThrottledChange: o,
-                fullWidth: !0,
-              }),
+            0 === c.length &&
+              t &&
               r.a.createElement(
-                na.a,
-                { className: i.scrollBar },
+                Rt.a,
+                { className: l.noItemsMessage, variant: 'caption' },
+                t,
+              ),
+            c.length > 0 &&
+              r.a.createElement(
+                rn.a,
+                { item: !0, xs: 12 },
+                r.a.createElement(yr, {
+                  placeholder: 'Select required keys...',
+                  onThrottledChange: i,
+                  fullWidth: !0,
+                }),
                 r.a.createElement(
-                  hc.a,
-                  null,
+                  ca.a,
+                  { className: l.scrollBar },
                   r.a.createElement(
-                    Na.a,
+                    Ic.a,
                     null,
-                    n.map(function (e) {
-                      return r.a.createElement(
-                        'div',
-                        { key: e.id },
-                        r.a.createElement(
-                          La.a,
+                    r.a.createElement(
+                      La.a,
+                      null,
+                      c.map(function (e) {
+                        return r.a.createElement(
+                          'div',
                           { key: e.id },
                           r.a.createElement(
                             Fa.a,
-                            null,
-                            r.a.createElement(Rr.a, {
-                              edge: 'start',
-                              size: 'small',
-                              disableRipple: !0,
-                              checked: a.includes(e.code),
-                              onChange: function (t) {
-                                return c(e.code, t.target.checked);
-                              },
-                            }),
+                            { key: e.id },
+                            r.a.createElement(
+                              Ka.a,
+                              null,
+                              r.a.createElement(Ur.a, {
+                                edge: 'start',
+                                size: 'small',
+                                disableRipple: !0,
+                                checked: n.includes(e.code),
+                                onChange: function (t) {
+                                  return o(e.code, t.target.checked);
+                                },
+                              }),
+                            ),
+                            r.a.createElement(Wa.a, { primary: e.name }),
                           ),
-                          r.a.createElement(Ka.a, { primary: e.name }),
-                        ),
-                      );
-                    }),
+                        );
+                      }),
+                    ),
                   ),
+                  0 === c.length &&
+                    r.a.createElement(Rt.a, null, 'No items available'),
                 ),
               ),
-            ),
           );
         },
-        xc = function (e) {
+        Fc = function (e) {
           var t = e.code,
             a = e.entries,
             n = {};
@@ -5732,18 +6029,18 @@
             n
           );
         },
-        kc = function (e) {
-          var t = wc(),
-            a = Sc(e).handleSubmit;
+        Kc = function (e) {
+          var t = Bc(),
+            a = zc(e).handleSubmit;
           return r.a.createElement(
             r.a.Fragment,
             null,
             r.a.createElement(
-              xa.a,
+              wa.a,
               { style: { width: 400 } },
-              r.a.createElement(ka.a, {
+              r.a.createElement(Sa.a, {
                 title: r.a.createElement(
-                  wt.a,
+                  Rt.a,
                   { variant: 'h3' },
                   'Create new repository',
                 ),
@@ -5752,30 +6049,30 @@
                 Ca.a,
                 null,
                 r.a.createElement(
-                  $t.c,
+                  ta.c,
                   {
                     initialValues: { code: '', entries: [] },
-                    validate: xc,
+                    validate: Fc,
                     onSubmit: a,
                   },
                   function (e) {
                     var a = e.isSubmitting;
                     return r.a.createElement(
-                      $t.b,
+                      ta.b,
                       null,
                       r.a.createElement(
-                        en.a,
+                        rn.a,
                         { container: !0, spacing: 2 },
                         r.a.createElement(
-                          en.a,
+                          rn.a,
                           { item: !0, xs: 12 },
-                          r.a.createElement($t.a, { name: 'code' }, function (
+                          r.a.createElement(ta.a, { name: 'code' }, function (
                             e,
                           ) {
                             var t = e.field,
                               a = e.meta;
                             return r.a.createElement(
-                              Sa.a,
+                              Pa.a,
                               Object.assign(
                                 {
                                   fullWidth: !0,
@@ -5789,10 +6086,10 @@
                           }),
                         ),
                         r.a.createElement(
-                          en.a,
+                          rn.a,
                           { item: !0, xs: 12 },
                           r.a.createElement(
-                            $t.a,
+                            ta.a,
                             { name: 'entries' },
                             function (a) {
                               var n = a.field,
@@ -5800,7 +6097,7 @@
                               return r.a.createElement(
                                 r.a.Fragment,
                                 null,
-                                r.a.createElement(yc, {
+                                r.a.createElement(Lc, {
                                   onUpdate: function (t) {
                                     e.setFieldValue(
                                       'entries',
@@ -5809,12 +6106,14 @@
                                       }),
                                     );
                                   },
+                                  noItemsMessage:
+                                    'There are no available entries. Create one first.',
                                   pickedSet: n.value,
                                 }),
                                 c.touched &&
                                   c.error &&
                                   r.a.createElement(
-                                    wt.a,
+                                    Rt.a,
                                     {
                                       variant: 'caption',
                                       color: 'error',
@@ -5828,17 +6127,17 @@
                         ),
                         e.errors.server &&
                           r.a.createElement(
-                            en.a,
+                            rn.a,
                             {
                               item: !0,
                               container: !0,
                               xs: 12,
                               style: { alignItems: 'center' },
                             },
-                            r.a.createElement(ma, null, e.errors.server),
+                            r.a.createElement(fa, null, e.errors.server),
                           ),
                         r.a.createElement(
-                          en.a,
+                          rn.a,
                           {
                             item: !0,
                             container: !0,
@@ -5846,7 +6145,7 @@
                             style: { alignItems: 'center' },
                           },
                           r.a.createElement(
-                            Pt.a,
+                            At.a,
                             {
                               disabled: a,
                               size: 'large',
@@ -5858,7 +6157,7 @@
                             },
                             !a && 'Submit',
                             a &&
-                              r.a.createElement(Mr.a, {
+                              r.a.createElement(cn.a, {
                                 className: t.progress,
                                 size: 26,
                               }),
@@ -5872,9 +6171,9 @@
             ),
           );
         },
-        Cc = function () {
-          var e = uc().toggleEditModal,
-            t = Object(i.c)(ut),
+        Wc = function () {
+          var e = vc().toggleEditModal,
+            t = Object(i.c)(mt),
             a = Object(n.useCallback)(
               function () {
                 e({ isOpened: !1 });
@@ -5882,14 +6181,14 @@
               [e],
             );
           return r.a.createElement(
-            Ma.a,
+            Ta.a,
             { open: t, onClose: a },
-            r.a.createElement(kc, { onSubmit: a }),
+            r.a.createElement(Kc, { onSubmit: a }),
           );
         },
-        Sc = function (e) {
+        zc = function (e) {
           var t = e.onSubmit,
-            a = uc().createNewRepo;
+            a = vc().createNewRepo;
           return {
             handleSubmit: Object(n.useCallback)(
               (function () {
@@ -5929,72 +6228,92 @@
             ),
           };
         },
-        wc = Object(Ta.a)(function () {
+        Bc = Object(za.a)(function () {
           return {
             progress: { marginLeft: 20 },
             keyTitle: { marginTop: 10, marginBotton: 10, paddingLeft: 10 },
             keyError: { paddingLeft: 10 },
           };
         }),
-        Pc = Object($a.a)(function () {
-          return { container: { paddingTop: 16, paddingBottom: 24 } };
-        }),
-        Ic = function () {
-          var e = Pc();
-          return (
-            Rc(),
-            r.a.createElement(
-              Za.a,
-              { className: e.container },
-              r.a.createElement(dc, null),
-              r.a.createElement(Cc, null),
-            )
+        Hc = function () {
+          Uc();
+          var e = Object(i.c)(st);
+          return r.a.createElement(
+            ac,
+            { isLoading: e },
+            r.a.createElement(Cc, null),
+            r.a.createElement(Wc, null),
           );
         },
-        Rc = function () {
-          var e = uc().fetchListRepoWatch;
+        Uc = function () {
+          var e = vc(),
+            t = e.fetchListRepoWatch,
+            a = e.resetState;
           Object(n.useEffect)(
             function () {
-              var t = e();
               return function () {
-                t.abort();
+                a();
               };
             },
-            [e],
-          );
+            [a],
+          ),
+            Object(n.useEffect)(
+              function () {
+                var e = t();
+                return function () {
+                  e.abort();
+                };
+              },
+              [t],
+            );
         },
-        Mc = a(439),
-        Ac = function (e) {
+        Jc = a(320),
+        _c = a(439),
+        qc = function (e) {
           return e.storage;
         },
-        Tc = Object(Ge.createSelector)(Ac, function (e) {
+        Gc = Object(qe.createSelector)(qc, function (e) {
           return e.items;
         }),
-        Nc = Object(Ge.createSelector)(Ac, function (e) {
+        Vc = Object(qe.createSelector)(qc, function (e) {
           return e.pager;
         }),
-        Lc = Object(Ge.createSelector)(Ac, function (e) {
+        Yc = Object(qe.createSelector)(qc, function (e) {
           return e.filter;
         }),
-        Fc = Object(Ge.createSelector)(Ac, function (e) {
+        Dc = Object(qe.createSelector)(qc, function (e) {
+          return e.loading;
+        }),
+        Qc = Object(qe.createSelector)(qc, function (e) {
           return e.pagerOptions;
         }),
-        Kc = Object(Ge.createSelector)(Lc, Tc, function (e, t) {
-          var a = e.entryName;
-          return (!a || 0 === a.length) && 0 === t.length;
+        Xc = Object(qe.createSelector)(qc, function (e) {
+          return e.initial;
         }),
-        zc = a(429),
-        Wc = a(430),
-        Bc = a(431),
-        Uc = a(432),
-        Hc = a(433),
-        Jc = a(434),
-        Gc = a(311),
-        _c = a.n(Gc),
-        Vc = a(312),
-        qc = a.n(Vc),
-        Dc = function () {
-          var e = Yn().openKeyPreview;
+        Zc = Object(qe.createSelector)(Yc, Gc, Dc, function (e, t, a) {
+          var n = e.entryName;
+          return (!n || 0 === n.length) && !a && 0 === t.length;
+        }),
+        $c = Object(qe.createSelector)(qc, function (e) {
+          return {
+            initiated: e.initial,
+            loading: e.loading,
+            error: e.error,
+            data: { items: e.items, pager: e.pager },
+          };
+        }),
+        eo = a(429),
+        to = a(430),
+        ao = a(431),
+        no = a(432),
+        ro = a(433),
+        co = a(434),
+        oo = a(311),
+        io = a.n(oo),
+        lo = a(312),
+        uo = a.n(lo),
+        so = function () {
+          var e = ar().openKeyPreview;
           return {
             handleOpenKeyPreview: Object(n.useCallback)(
               (function () {
@@ -6026,38 +6345,38 @@
             ),
           };
         },
-        Yc = function (e) {
+        mo = function (e) {
           var t = e.items,
-            a = Dc().handleOpenKeyPreview;
+            a = so().handleOpenKeyPreview;
           return r.a.createElement(
-            zc.a,
-            { component: aa.a },
+            eo.a,
+            { component: ra.a },
             r.a.createElement(
-              Wc.a,
+              to.a,
               null,
               r.a.createElement(
-                Bc.a,
+                ao.a,
                 null,
                 r.a.createElement(
-                  Uc.a,
+                  no.a,
                   null,
-                  r.a.createElement(Hc.a, null, 'Id'),
-                  r.a.createElement(Hc.a, null, 'Type'),
-                  r.a.createElement(Hc.a, null, 'Algorithm'),
-                  r.a.createElement(Hc.a, null, 'Entry name'),
-                  r.a.createElement(Hc.a, null, 'Entry code'),
-                  r.a.createElement(Hc.a, null, 'Status'),
-                  r.a.createElement(Hc.a, null, 'Period'),
-                  r.a.createElement(Hc.a, { align: 'center' }, 'Actions'),
+                  r.a.createElement(ro.a, null, 'Id'),
+                  r.a.createElement(ro.a, null, 'Type'),
+                  r.a.createElement(ro.a, null, 'Algorithm'),
+                  r.a.createElement(ro.a, null, 'Entry name'),
+                  r.a.createElement(ro.a, null, 'Entry code'),
+                  r.a.createElement(ro.a, null, 'Status'),
+                  r.a.createElement(ro.a, null, 'Period'),
+                  r.a.createElement(ro.a, { align: 'center' }, 'Actions'),
                 ),
               ),
               r.a.createElement(
-                Jc.a,
+                co.a,
                 null,
                 t.map(function (e) {
-                  var t = ln()(),
-                    n = ln.a.unix(e.expUnix),
-                    c = ln.a.unix(e.activateUnix),
+                  var t = bn()(),
+                    n = bn.a.unix(e.expUnix),
+                    c = bn.a.unix(e.activateUnix),
                     o = '';
                   return (
                     (o =
@@ -6069,16 +6388,16 @@
                         ? 'Awaiting'
                         : 'Active'),
                     r.a.createElement(
-                      Uc.a,
+                      no.a,
                       { key: e.key.kid },
-                      r.a.createElement(Hc.a, null, e.key.kid),
-                      r.a.createElement(Hc.a, null, e.key.kty),
-                      r.a.createElement(Hc.a, null, e.key.alg),
-                      r.a.createElement(Hc.a, null, e.entry.name),
-                      r.a.createElement(Hc.a, null, e.entry.code),
-                      r.a.createElement(Hc.a, null, o),
+                      r.a.createElement(ro.a, null, e.key.kid),
+                      r.a.createElement(ro.a, null, e.key.kty),
+                      r.a.createElement(ro.a, null, e.key.alg),
+                      r.a.createElement(ro.a, null, e.entry.name),
+                      r.a.createElement(ro.a, null, e.entry.code),
+                      r.a.createElement(ro.a, null, o),
                       r.a.createElement(
-                        Hc.a,
+                        ro.a,
                         null,
                         e.expUnix
                           ? ''
@@ -6087,23 +6406,23 @@
                           : 'Non-rotatable',
                       ),
                       r.a.createElement(
-                        Hc.a,
+                        ro.a,
                         { align: 'center' },
                         r.a.createElement(
-                          en.a,
+                          rn.a,
                           { container: !0, spacing: 2, justify: 'center' },
                           r.a.createElement(
-                            en.a,
+                            rn.a,
                             { item: !0 },
                             r.a.createElement(
-                              _c.a,
+                              io.a,
                               {
                                 size: 'small',
                                 onClick: function () {
                                   return a(e.key.kid);
                                 },
                               },
-                              r.a.createElement(qc.a, null),
+                              r.a.createElement(uo.a, null),
                             ),
                           ),
                         ),
@@ -6115,30 +6434,36 @@
             ),
           );
         },
-        Qc = function () {
-          var e = gt(),
-            t = Object(i.c)(Nc),
-            a = Object(i.c)(Lc),
-            r = Object(i.c)(Kt),
+        fo = function () {
+          var e = jt(),
+            t = Object(i.c)(Vc),
+            a = Object(i.c)(Yc),
+            r = Object(i.c)(zt),
             c = Object(n.useCallback)(
-              function (t) {
-                return e(Ee.changePager(t));
+              function () {
+                return e(ye.resetState());
               },
               [e],
             ),
             o = Object(n.useCallback)(
               function (t) {
-                return e(Ee.changeFilter(t));
+                return e(ye.changePager(t));
+              },
+              [e],
+            ),
+            l = Object(n.useCallback)(
+              function (t) {
+                return e(ye.changeFilter(t));
               },
               [e],
             ),
             u = Object(n.useCallback)(
               function (t) {
-                return e(Ee.fetchStorageItems(t));
+                return e(ye.fetchStorageItems(t));
               },
               [e, r],
             ),
-            l = Object(n.useCallback)(
+            s = Object(n.useCallback)(
               function () {
                 var e = {
                   page: t.page,
@@ -6150,28 +6475,59 @@
               [u, t.page, t.perPage, a],
             );
           return {
-            changePager: c,
-            changeFilter: o,
+            resetState: c,
+            changePager: o,
+            changeFilter: l,
             fetchStorageItems: u,
-            fetchStorageItemsWatcher: l,
+            fetchStorageItemsWatcher: s,
           };
         },
-        Xc = function () {
-          var e = Qc(),
+        po = Object(za.a)(function () {
+          return { text: { maxWidth: 600 } };
+        }),
+        bo = function () {
+          var e = po();
+          return r.a.createElement(
+            ca.a,
+            null,
+            r.a.createElement(
+              Rt.a,
+              { component: 'div', variant: 'h4' },
+              'Keys storage is empty',
+            ),
+            r.a.createElement(
+              ca.a,
+              { className: e.text },
+              r.a.createElement(
+                'p',
+                null,
+                'After key entry created, the server will generate and rotate keys. Each generated key will be listed in storage.',
+              ),
+            ),
+          );
+        },
+        ho = Object(Cn.a)(function () {
+          return {
+            notFound: { marginTop: 20 },
+            footerWrap: { paddingTop: 20, paddingBottom: 20 },
+          };
+        }),
+        go = function () {
+          var e = fo(),
             t = e.changePager,
             a = e.changeFilter,
-            r = Object(i.c)(Nc),
+            r = Object(i.c)(Vc),
             c = r.totalItems,
             o = r.perPage,
-            u = r.page,
-            l = Object(n.useMemo)(
+            l = r.page,
+            u = Object(n.useMemo)(
               function () {
                 if (void 0 !== c) {
                   var e = Math.ceil(c / o);
-                  return Math.min(e, u);
+                  return Math.min(e, l);
                 }
               },
-              [c, o, u],
+              [c, o, l],
             ),
             s = Object(n.useCallback)(
               function (e) {
@@ -6185,7 +6541,7 @@
               },
               [t],
             ),
-            f = Object(n.useCallback)(
+            d = Object(n.useCallback)(
               function (e) {
                 var a = parseInt(e.target.value, 10);
                 return t({ perPage: a });
@@ -6193,129 +6549,155 @@
               [t],
             );
           return {
-            targetPage: l,
+            targetPage: u,
             storagePager: r,
             totalItems: c,
             handlePagerChange: m,
             handleChangeFilterEntryName: s,
-            handleChangePerPage: f,
+            handleChangePerPage: d,
           };
         },
-        Zc = function () {
-          var e = Object(i.c)(Tc),
-            t = Object(i.c)(Lc),
-            a = Object(i.c)(Fc),
-            n = Object(i.c)(Kc),
-            c = Xc(),
-            o = c.targetPage,
-            u = c.storagePager,
-            l = c.totalItems,
-            s = c.handlePagerChange,
-            m = c.handleChangePerPage,
-            f = c.handleChangeFilterEntryName;
-          return void 0 === l
-            ? null
+        Oo = function () {
+          var e = ho(),
+            t = Object(i.c)($c),
+            a = t.loading,
+            n = t.data,
+            c = t.error,
+            o = n.items,
+            l = Object(i.c)(Yc),
+            u = Object(i.c)(Qc),
+            s = Object(i.c)(Zc),
+            m = go(),
+            d = m.targetPage,
+            f = m.storagePager,
+            p = m.totalItems,
+            b = m.handlePagerChange,
+            h = m.handleChangePerPage,
+            g = m.handleChangeFilterEntryName;
+          return c
+            ? r.a.createElement(sn.a, { severity: 'error' }, c)
             : r.a.createElement(
-                en.a,
+                rn.a,
                 { container: !0, spacing: 2 },
-                !n &&
+                !s &&
                   r.a.createElement(
-                    en.a,
-                    { container: !0, item: !0, xs: 12 },
+                    rn.a,
+                    {
+                      container: !0,
+                      item: !0,
+                      xs: 12,
+                      spacing: 2,
+                      alignItems: 'center',
+                    },
                     r.a.createElement(
-                      en.a,
+                      rn.a,
                       { item: !0 },
-                      r.a.createElement(br, {
+                      r.a.createElement(yr, {
                         placeholder: 'Search by entry name',
-                        defaultValue: t.entryName,
-                        onThrottledChange: f,
+                        defaultValue: l.entryName,
+                        onThrottledChange: g,
                       }),
                     ),
-                  ),
-                n &&
-                  r.a.createElement(
-                    en.a,
-                    { item: !0, xs: 12 },
                     r.a.createElement(
-                      wt.a,
-                      { variant: 'h5' },
-                      'Storage is empty.',
+                      rn.a,
+                      { item: !0 },
+                      r.a.createElement(
+                        Jc.a,
+                        { in: a },
+                        r.a.createElement(cn.a, { size: 24 }),
+                      ),
                     ),
                   ),
-                l > 0 &&
+                s &&
                   r.a.createElement(
-                    en.a,
+                    rn.a,
                     { item: !0, xs: 12 },
-                    r.a.createElement(Yc, { items: e }),
+                    r.a.createElement(bo, null),
                   ),
-                void 0 !== o &&
-                  l > 0 &&
+                void 0 !== p &&
+                  p > 0 &&
                   r.a.createElement(
-                    en.a,
+                    rn.a,
                     { item: !0, xs: 12 },
-                    r.a.createElement(Mc.a, {
-                      component: 'div',
-                      count: l,
-                      page: o - 1,
-                      rowsPerPageOptions: a,
-                      onChangePage: s,
-                      rowsPerPage: u.perPage,
-                      onChangeRowsPerPage: m,
-                    }),
+                    r.a.createElement(mo, { items: o }),
+                  ),
+                !s &&
+                  0 === o.length &&
+                  r.a.createElement(
+                    Rt.a,
+                    { className: e.notFound },
+                    'No items found',
+                  ),
+                void 0 !== d &&
+                  void 0 !== p &&
+                  p > 0 &&
+                  r.a.createElement(
+                    xr,
+                    { id: 'layout_dashboard_footer' },
+                    r.a.createElement(
+                      on.a,
+                      { className: e.footerWrap },
+                      r.a.createElement(
+                        rn.a,
+                        { item: !0, xs: 12 },
+                        r.a.createElement(_c.a, {
+                          component: 'div',
+                          count: p,
+                          page: d - 1,
+                          rowsPerPageOptions: u,
+                          onChangePage: b,
+                          rowsPerPage: f.perPage,
+                          onChangeRowsPerPage: h,
+                        }),
+                      ),
+                    ),
                   ),
               );
         },
-        $c = Object($a.a)(function () {
-          return { container: { paddingTop: 24, paddingBottom: 24 } };
-        }),
-        eo = function () {
-          var e = $c();
-          return (
-            to(),
-            r.a.createElement(
-              Za.a,
-              { className: e.container },
-              r.a.createElement(Zc, null),
-              r.a.createElement(Sr, null),
-            )
+        vo = function () {
+          jo();
+          var e = Object(i.c)(Xc);
+          return r.a.createElement(
+            ac,
+            { isLoading: e },
+            r.a.createElement(Oo, null),
+            r.a.createElement(Wr, null),
           );
         },
-        to = function () {
-          var e = Qc().fetchStorageItemsWatcher;
+        jo = function () {
+          var e = fo(),
+            t = e.fetchStorageItemsWatcher,
+            a = e.resetState;
           Object(n.useEffect)(
             function () {
-              var t = e();
               return function () {
-                t.abort();
+                a();
               };
             },
-            [e],
+            [a],
+          ),
+            Object(n.useEffect)(
+              function () {
+                var e = t();
+                return function () {
+                  e.abort();
+                };
+              },
+              [t],
+            );
+        },
+        Eo = function () {
+          yo();
+          var e = Object(i.c)(Qe);
+          return r.a.createElement(
+            ac,
+            { isLoading: e.archive },
+            r.a.createElement(Rr, { archive: !0 }),
+            r.a.createElement(Wr, null),
           );
         },
-        ao = function () {
-          var e = no();
-          return (
-            ro(),
-            r.a.createElement(
-              Za.a,
-              { className: e.container },
-              r.a.createElement(Or, { archive: !0 }),
-              r.a.createElement(Sr, null),
-            )
-          );
-        },
-        no = Object($a.a)(function () {
-          return {
-            container: {
-              display: 'flex',
-              minWidth: 0,
-              flexGrow: 1,
-              paddingTop: 16,
-            },
-          };
-        }),
-        ro = function () {
-          var e = on(),
+        yo = function () {
+          var e = fn(),
             t = e.fetchArchiveListWatch,
             a = e.resetList,
             r = e.routeParser,
@@ -6350,44 +6732,44 @@
               [a],
             );
         },
-        co = [
+        xo = [
           {
             path: '/',
             exact: !0,
             component: function () {
-              return r.a.createElement(s.a, { to: G });
+              return r.a.createElement(s.a, { to: _ });
             },
           },
           {
             path: B,
-            component: Ra,
-            routes: [{ path: U, exact: !0, component: Ia }],
+            component: Ma,
+            routes: [{ path: H, exact: !0, component: Aa }],
           },
           {
-            path: H,
-            component: Xa,
+            path: U,
+            component: nn,
             routes: [
-              { path: G, component: Vr },
-              { path: J, component: oc },
-              { path: _, component: Ic },
-              { path: V, component: eo },
-              { path: q, component: ao },
+              { path: _, component: rc },
+              { path: J, component: gc },
+              { path: q, component: Hc },
+              { path: G, component: vo },
+              { path: V, component: Eo },
             ],
           },
         ];
-      function oo() {
-        var e = Object(Bt.a)([
+      function ko() {
+        var e = Object(Ut.a)([
           '\n  width: 100vw;\n  min-height: 100vh;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  box-sizing: border-box;\n',
         ]);
         return (
-          (oo = function () {
+          (ko = function () {
             return e;
           }),
           e
         );
       }
-      var io = Ut.a.div(oo()),
-        uo = function () {
+      var wo = Jt.a.div(ko()),
+        So = function () {
           var e = Gt().fetchMe;
           Object(n.useEffect)(
             function () {
@@ -6399,23 +6781,19 @@
             [e],
           );
         },
-        lo = function (e) {
-          var t = Object(i.c)(Mt);
+        Co = function (e) {
+          var t = Object(i.c)(Nt);
           return (
-            uo(),
+            So(),
             t
               ? r.a.createElement(r.a.Fragment, null, e.children)
-              : r.a.createElement(
-                  io,
-                  null,
-                  r.a.createElement(Mr.a, { size: 60 }),
-                )
+              : r.a.createElement(wo, null)
           );
         },
-        so = function (e) {
+        Po = function (e) {
           var t = Object(s.g)(),
             a = Object(i.c)(
-              Object(Ge.createStructuredSelector)({ isUserAuthorized: Rt }),
+              Object(qe.createStructuredSelector)({ isUserAuthorized: Tt }),
             );
           return a.isUserAuthorized && '/auth/login' === t.pathname
             ? r.a.createElement(s.a, { to: '/' })
@@ -6423,33 +6801,33 @@
             ? r.a.createElement(r.a.Fragment, null, e.children)
             : r.a.createElement(s.a, { to: '/auth/login' });
         },
-        mo = document.getElementById('root');
-      if (mo) {
-        var fo = Object(m.a)();
+        Io = document.getElementById('root');
+      if (Io) {
+        var Ro = Object(m.a)();
         o.a.render(
           r.a.createElement(
             i.a,
-            { store: ht },
-            r.a.createElement(f.a, null),
+            { store: vt },
+            r.a.createElement(d.a, null),
             r.a.createElement(
-              u.a,
-              { theme: kt },
+              l.a,
+              { theme: Ct },
               r.a.createElement(
                 s.c,
-                { history: fo },
+                { history: Ro },
                 r.a.createElement(
-                  lo,
+                  Co,
                   null,
-                  r.a.createElement(so, null, Object(l.a)(co)),
+                  r.a.createElement(Po, null, Object(u.a)(xo)),
                 ),
               ),
             ),
           ),
-          mo,
+          Io,
         );
       }
     },
   },
   [[324, 1, 2]],
 ]);
-//# sourceMappingURL=main.d5fc761a.chunk.js.map
+//# sourceMappingURL=main.a96f15a9.chunk.js.map
