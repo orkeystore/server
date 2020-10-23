@@ -10,7 +10,14 @@ import {
   Delete,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiTags,
+  ApiUnauthorizedResponse,
+  ApiBadRequestResponse,
+  ApiAcceptedResponse,
+  ApiOkResponse,
+} from '@nestjs/swagger';
 
 import { IEnvConfig } from 'src/modules/config/env.config';
 
@@ -25,6 +32,8 @@ import { DTOSessionInfo } from './dto/DTOSessionInfo';
 import { plainToClass } from 'class-transformer';
 import { DTOAccountDetails } from './dto/DTOAccountDetails';
 import { DTODeletedAccounts } from './dto/DTODeletedAccounts';
+import { DTOHttpUnauthorizedException } from '../errors/dto/DTOHttpUnauthorizedException';
+import { DTOHttpBadRequestException } from '../errors/dto/DTOHttpBadRequestException';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -47,6 +56,13 @@ export class AuthController {
 
   @UseGuards(LoginGuard)
   @Post('/token')
+  @ApiAcceptedResponse({
+    type: DTOSessionInfo,
+    description:
+      'Return associated session data and token. Client should send token in Authorization header for access to protected routes.',
+  })
+  @ApiUnauthorizedResponse({ type: DTOHttpUnauthorizedException })
+  @ApiBadRequestResponse({ type: DTOHttpBadRequestException })
   @HttpCode(HttpStatus.ACCEPTED)
   async token(
     @Body() _body: DTOAuthUser,
@@ -58,6 +74,11 @@ export class AuthController {
 
   @UseGuards(JwtAuthGuard)
   @Get('/me')
+  @ApiUnauthorizedResponse({ type: DTOHttpUnauthorizedException })
+  @ApiOkResponse({
+    type: DTOSessionInfo,
+    description: 'Return associated session data for authorized user.',
+  })
   @ApiBearerAuth('Authorization')
   async userData(@Req() req: Express.Request): Promise<DTOSessionInfo> {
     const result = await this.getUserData(req);
