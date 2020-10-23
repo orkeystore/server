@@ -1,14 +1,23 @@
 version: '3.6'
 
 services:
-  jwks-rotator:
-    image: porisey/orkeystore:latest
+  backend:
+    image: orkeystore/server:latest
     ports:
-      - '4000:3000'
+      - '3000:3000'
     volumes:
       - /tmp/jwk-db:/tmp/jwk-db
     environment:
       ADMIN_PASSWORD: 'password'
-      DATABASE_PATH: '/tmp/jwk-db/jwk.db'
-      KEYS_HOST: 'http://localhost:3000'
-      GENERATE_KEYS: 'hasura:14_days,test:5_weeks'
+      PRIVATE_HOST: 'http://localhost:3000'
+      SWAGGER: 1
+
+  frontend:
+    depends_on:
+      - backend
+    image: orkeystore/ui:latest
+    ports:
+      - '4000:3000'
+    environment:
+      API_URL: 'http://localhost:3000'
+      API_SSR: 'http://backend:3000'

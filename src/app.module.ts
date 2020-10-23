@@ -1,4 +1,3 @@
-import { join } from 'path';
 import {
   DynamicModule,
   INestApplication,
@@ -7,7 +6,6 @@ import {
 } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ServeStaticModule } from '@nestjs/serve-static';
 import { NestFactory } from '@nestjs/core';
 import passport from 'passport';
 
@@ -67,9 +65,6 @@ export class AppModule {
         AuthModule,
         KeysModule.register({ isPublic: false }),
         ReposModule,
-        ServeStaticModule.forRoot({
-          rootPath: join(__dirname, '..', 'spa'),
-        }),
       ],
     };
   }
@@ -94,10 +89,12 @@ export async function bootstrap(
   const isDev = process.env.DEV === '1';
 
   const logger = isDev ? devLogLevels : prodLogLevels;
+
   const params: NestApplicationOptions = {
     logger,
-    cors: { origin: isDev, credentials: isDev },
+    cors: { origin: true, credentials: true },
   };
+
   const module = opts.isPublic
     ? AppModule.registerPublic()
     : AppModule.registerPrivate();

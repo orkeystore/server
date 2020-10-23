@@ -23,9 +23,6 @@
     "test:e2e": "env ENV_FILE=.testing.env TEST_DB=1 jest --config ./test/jest-e2e.json",
     "typeorm": "node --require ts-node/register ./npm install -g node_modules/typeorm/cli.js"
   },
-  "resolutions": {
-    "swagger-ui-dist": "3.30.0"
-  },
   "dependencies": {
     "@nestjs/common": "^7.0.0",
     "@nestjs/config": "^0.5.0",
