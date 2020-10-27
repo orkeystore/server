@@ -1,21 +1,25 @@
 <h1 align="center">Orkeystore</h1>
 <p align="center">Out-of-the-box solution for crypto-keys management, storing and rotation.</p>
 <p align="center">
-    <a href="https://hub.docker.com/repository/docker/porisey/orkeystore">
-        <img src="https://img.shields.io/docker/pulls/porisey/orkeystore" target="_blank" />
-        <img src="https://img.shields.io/docker/image-size/porisey/orkeystore"/>
+    <a href="https://hub.docker.com/repository/docker/orkeystore/server">
+        <img src="https://img.shields.io/docker/pulls/orkeystore/server" target="_blank" />
+        <img src="https://img.shields.io/docker/image-size/orkeystore/server"/>
     </a>
-    <a href="https://app.circleci.com/pipelines/github/Porisey/orkeystore" target="_blank">
-        <img src="https://img.shields.io/circleci/build/gh/Porisey/orkeystore/master" alt="Build" />
+    <a href="https://app.circleci.com/pipelines/github/orkeystore/server" target="_blank">
+        <img src="https://img.shields.io/circleci/build/gh/orkeystore/server/master" alt="Build" />
     </a>
     <a>
-    <img src="https://img.shields.io/github/license/Porisey/orkeystore" alt="License" />
+    <img src="https://img.shields.io/github/license/orkeystore/server" alt="License" />
     </a>
-    <img src="https://img.shields.io/david/Porisey/orkeystore" alt="Dependencies"/>
-    <a href="https://coveralls.io/github/Porisey/orkeystore" target="_blank">
-        <img src="https://img.shields.io/coveralls/github/Porisey/orkeystore" alt="Coverage" />
+    <img src="https://img.shields.io/david/orkeystore/server" alt="Dependencies"/>
+    <a href="https://coveralls.io/github/orkeystore/server" target="_blank">
+        <img src="https://img.shields.io/coveralls/github/orkeystore/server" alt="Coverage" />
     </a>
 </p>
+
+## Motivation
+
+The current software provides a codeless approach for the creation, storage, rotation and retrieve of crypto-keys.
 
 ## Quick start
 
